@@ -8,8 +8,8 @@ function getDbConnection() {
 
     $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
 
-    if ($conn->connect_error != FALSE) {
-       die("Brak połączenia z bazą danych, błąd: " . $conn->connect_error);
+    if ($conn->connect_error) {
+       die("Brak połączenia z bazą danych, błąd: " . $conn->errno);
     }
 
     $setEncodingSql = "SET CHARSET utf8"; //poprawne zwracanie pl znakow
@@ -21,3 +21,4 @@ function getDbConnection() {
 // include_once 'src/connect.php';
 
 ?>
+

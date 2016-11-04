@@ -6,7 +6,7 @@
  * user_email varchar(255) UNIQUE NOT NULL, 
  * PRIMARY KEY(user_id) ); */
 
-class User {  // mozna wrzucic w setery real escape string
+class User {  // mozna zamiennie wrzucic w setery real escape string
     private $id;
     private $username;
     private $hashedPassword;
