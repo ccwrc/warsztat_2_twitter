@@ -31,6 +31,7 @@
   <div class="container">
 	  
 	  <div class="logo">
+            <img class="logoimage" id="logoimage" src="img/logo.jpg">  
             <h2>dzięcioły.pl</h2>    
 	  </div>
 

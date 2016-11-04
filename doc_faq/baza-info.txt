@@ -1,0 +1,9 @@
+
+nazwa bazy: las
+użytkownik stworzony do obsługi bazy: las
+hasło dla użytkonika las: tajnehaslo
+
+Tabela users:
+CREATE TABLE users ( user_id int AUTO_INCREMENT, user_name varchar(255) NOT NULL, hashed_password varchar(60) NOT NULL, user_email varchar(255) UNIQUE NOT NULL, PRIMARY KEY(user_id) );
+
+
