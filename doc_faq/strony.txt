@@ -1,8 +1,8 @@
-strona glowna - index.php
+strona główna - index.php
 Strona wyświetlająca wszystkie Tweety jakie znajdują się w systemie (od najnowszego do
 najstarszego). Nad nimi ma być widoczny formularz do stworzenia nowego wpisu.
 
-(dostepna bez zalogowania) strona logowania - logon.php
+(dostępna bez zalogowania) strona logowania - logon.php
 Strona ma przyjmować email użytkownika i jego hasło.
 Jeżeli są poprawne, to użytkownik jest przekierowany do strony głównej, jeżeli nie –
 do strony logowania, która ma wtedy wyświetlić komunikat o błędnym loginie lub haśle.

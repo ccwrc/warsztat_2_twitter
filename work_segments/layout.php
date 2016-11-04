@@ -15,7 +15,7 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	
-	<title>Dzięcioły - index</title>
+	<title>Dzięcioły </title>
 	
 	<meta name="description" content="Prawie jak Twitter" />
 	<meta name="keywords" content="dzięcioły, twitter" />
@@ -35,9 +35,7 @@
 
 
       <div class="content">
-      <!-- strona główna - index.php
-Strona wyświetlająca wszystkie Tweety jakie znajdują się w systemie (od najnowszego do
-najstarszego). Nad nimi ma być widoczny formularz do stworzenia nowego wpisu. -->
+      <!-- opis strony -->
    
       
       
