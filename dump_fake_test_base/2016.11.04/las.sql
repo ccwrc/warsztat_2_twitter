@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 04, 2016 at 04:22 PM
+-- Generation Time: Nov 04, 2016 at 05:41 PM
 -- Server version: 5.7.16-0ubuntu0.16.04.1
 -- PHP Version: 7.0.8-0ubuntu0.16.04.3
 
@@ -34,6 +34,16 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `user_name`, `hashed_password`, `user_email`) VALUES
+(1, 'tygrysek', '$2y$10$imvXQUVUY47AKpx7XGya1.xoKco25rXMr9k33Q81ZK.Gedu69v1Ra', 'tygrysek@gmail.elo'),
+(2, 'prosiaczek', '$2y$10$maG52v9d4ZNLm/q.mUiwH.T7DG/72V65THjnnAfXvSpaad.ndVtQG', 'prosiaczek@gmail.elo'),
+(3, 'sowa', '$2y$10$WN5sDJyLNCnJqBbX5zpyYOdhXMsF068qA5oLJ/80cExmJDWBjYqga', 'sowa@gmail.elo'),
+(4, 'mamakrzysia', '$2y$10$TOEUKix7C42IAymIM.xqj.5He14fwfeOrnZjAEe83XLUCmz8oq7fe', 'mamakrzysia@gmail.elo');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -52,7 +62,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
