@@ -5,7 +5,10 @@
 
 
 
-
+  
+  
+  $conn->close();
+  $conn = null;
 
 ?>
 

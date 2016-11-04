@@ -7,6 +7,9 @@
 
 
 
+  //$conn->close();
+  //$conn = null;  
+  
 ?>
 
 <!DOCTYPE HTML>
@@ -38,8 +41,8 @@
 
       <div class="content">
       <!-- strona główna - index.php
-Strona wyświetlająca wszystkie Tweety jakie znajdują się w systemie (od najnowszego do
-najstarszego). Nad nimi ma być widoczny formularz do stworzenia nowego wpisu. -->
+      Strona wyświetlająca wszystkie Tweety jakie znajdują się w systemie (od najnowszego do
+      najstarszego). Nad nimi ma być widoczny formularz do stworzenia nowego wpisu. -->
    
       
       

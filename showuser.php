@@ -6,7 +6,9 @@
 
 
 
-
+  $conn->close();
+  $conn = null;
+  
 ?>
 
 <!DOCTYPE HTML>

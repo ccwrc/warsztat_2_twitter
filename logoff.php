@@ -6,6 +6,8 @@
 
 
 
+  $conn->close();
+  $conn = null;  
 
 ?>
 
