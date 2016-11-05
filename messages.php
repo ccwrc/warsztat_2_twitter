@@ -1,6 +1,11 @@
 <?php
 
   session_start();
+  
+  include_once "src/User.php";
+  include_once "src/connect.php";
+
+  $conn = getDbConnection();
 
 
 

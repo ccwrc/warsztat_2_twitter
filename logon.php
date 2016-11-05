@@ -1,6 +1,11 @@
 <?php
 
-  session_start();
+  session_start();   // strona dostepna bez zalogowania !
+  
+  include_once "src/User.php";
+  include_once "src/connect.php";
+
+  $conn = getDbConnection();
 
 
 

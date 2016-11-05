@@ -1,14 +1,19 @@
 <?php
 
-  session_start();
+  session_start(); //Strona glowna wyświetlająca wszystkie Tweety
+  
+  include_once "src/User.php";
+  include_once "src/connect.php";
+
+  $conn = getDbConnection();
 
 
 
 
 
 
-  //$conn->close();
-  //$conn = null;  
+  $conn->close();
+  $conn = null;  
   
 ?>
 
