@@ -60,7 +60,7 @@ class Tweet {
         }
     }
     
-    static public function loadAllTweetsByUserId(mysqli $conn, $userId) {
+    static public function loadAllTweetsByUserId(mysqli $conn, $userId) { //do pop. nie dziala
         $sql = "SELECT users.user_name, users.user_id, tweet.tweet_text, tweet.tweet_date,"
                 . "tweet.tweet_id FROM users JOIN tweet ON users.user_id = tweet.tweet_user_id"
                 . "WHERE user_id = $userId ORDER BY tweet.tweet_date ASC";
@@ -83,7 +83,7 @@ class Tweet {
         return $ret; 
     }
     
-    static public function loadAllTweets(mysqli $conn) {
+    static public function loadAllTweets(mysqli $conn) { //do poprawy, nie dziala
         $sql = "SELECT users.user_name, tweet.tweed_id, tweet.tweet_user_id, "
                 . "tweet.tweet_text, tweet.tweet_date FROM users JOIN tweet ON users.user_id="
                 . "tweet.tweet_user_id ORDER BY tweet_date ASC";

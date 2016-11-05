@@ -3,12 +3,14 @@
   session_start();  //strona dostepna bez zalogowania !
   
   include_once "src/User.php";
+  include_once "src/Tweet.php";
   include_once "src/connect.php";
 
   $conn = getDbConnection();
 
-echo date("Y-m-d H:i:s");
 
+ $loadall = Tweet::loadTweetById($conn, 2);
+ var_dump($loadall);
 
 
 
@@ -51,7 +53,25 @@ Jeżeli takiego emaila nie ma jeszcze w systemie, to dodać go i zalogować (prz
   główną).
 Jeżeli taki email jest, to przekierować znowu do strony tworzenia użytkownika i wyświetlić
 komunikat o zajętym adresie email. -->
-   div test display
+<?php
+
+  include_once "src/Tweet.php";
+  include_once "src/connect.php";
+
+  $conn = getDbConnection();
+
+
+ $loadall = Tweet::loadAllTweets($conn);
+ var_dump($loadall);
+
+
+
+  $conn->close();
+  $conn = null;  
+
+
+
+?>
       
       
       
