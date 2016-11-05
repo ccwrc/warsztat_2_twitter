@@ -7,7 +7,7 @@
 
   $conn = getDbConnection();
 
-
+echo date("Y-m-d H:i:s");
 
 
 
@@ -51,7 +51,7 @@ Jeżeli takiego emaila nie ma jeszcze w systemie, to dodać go i zalogować (prz
   główną).
 Jeżeli taki email jest, to przekierować znowu do strony tworzenia użytkownika i wyświetlić
 komunikat o zajętym adresie email. -->
-   
+   div test display
       
       
       

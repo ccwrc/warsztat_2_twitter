@@ -1,0 +1,1 @@
+http://stackoverflow.com/questions/2215354/php-date-format-when-inserting-into-datetime-in-mysql
