@@ -1,4 +1,5 @@
 
+// do testów
 function maxLength(elm,maximum){
    if (elm.value.length > maximum){
       alert("Wprowadź maksymalnie " + maximum + " znaków");

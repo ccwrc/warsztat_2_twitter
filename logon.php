@@ -2,6 +2,11 @@
 
   session_start();   // strona dostepna bez zalogowania !
   
+  if (isset($_SESSION['logged'])) {
+    header("location: index.php");
+    exit;
+  }
+  
   include_once "src/User.php";
   include_once "src/Tweet.php";
   include_once "src/connect.php";
@@ -9,11 +14,40 @@
   $message = ""; //wiadomosc podawana po blednej probie zalogowania
   
   $conn = getDbConnection();
-
-
-
-
-
+  
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      if (isset($_POST['useremail']) && isset($_POST['userpassword'])
+         && trim($_POST['useremail']) != '' && trim($_POST['userpassword'])) {
+     
+         $userEmail = $conn->real_escape_string($_POST['useremail']);
+         $userPassword = $conn->real_escape_string($_POST['userpassword']);
+         
+         $sql = "SELECT * FROM users WHERE user_email = '$userEmail'";
+         $result = $conn->query($sql);
+         
+         if ($result->num_rows == 1) {
+             foreach($result as $row) {
+                 $getUserId = $row['user_id'];
+                 $getHashedPassword = $row['hashed_password'];
+                 $getUserEmail = $row['user_email'];
+                 $getName = $row['user_name'];
+             }
+             if (password_verify($userPassword, $getHashedPassword)) {
+                 $_SESSION['logged'] = $getName;
+                 $_SESSION['user_id'] = $getUserId;
+                 $_SESSION['user_email'] = $getUserEmail;
+                 header("location: index.php");
+             } else {
+                $message = "Błędny e-mail lub hasło, wprowadź ponownie:";
+             }
+         } else {
+             $message = "Adres mailowy nie ma własnej dziupli";
+         }
+          
+      } else {
+          $message = "Błędny e-mail lub hasło, wprowadź ponownie:";
+      }
+  }
 
   $conn->close();
   $conn = null;
@@ -43,7 +77,6 @@
 	  
 	  <div class="logo">
             <img class="logoimage" id="logoimage" src="img/logo.jpg">  
-            <h2>dzięcioły.pl</h2> 
 	  </div>
 
 
@@ -54,21 +87,21 @@ Jeżeli są poprawne, to użytkownik jest przekierowany do strony głównej, je�
 do strony logowania, która ma wtedy wyświetlić komunikat o błędnym loginie lub haśle.
 Strona logowania ma mieć też link do strony tworzenia użytkownika. -->
         <br /> <center>
-        <?=$message?>
+        <h4><?=$message?></h4>
         </center>    
       
         <br />
         <center>
-        <form method="POST">
-            <input type="email" name="useremail" placeholder="Podaj e-mail">  
-            <input type="password" name="userpassword" placeholder="I wpisz hasło">
-            <input type="button" value="Wejdź do dziupli">
+        <form method='POST' action=''>
+            <input type="email" name="useremail" placeholder="Podaj e-mail"/>  
+            <input type="password" name="userpassword" placeholder="I wpisz hasło"/>
+            <input type="submit" value="Wejdź do dziupli"/>
         </form>
         </center>
         
         <br />
         <center>
-            <a href="create.php">Nie masz własnej dziupli? Kliknij tutaj żeby ją stworzyć.</a>
+            <h4><a href="create.php">Nie masz własnej dziupli? Kliknij tutaj żeby ją stworzyć.</a></h4>
         </center>    
       
       </div>

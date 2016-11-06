@@ -10,5 +10,6 @@ Tabela tweet:
 CREATE TABLE tweet (tweet_id int NOT NULL AUTO_INCREMENT, tweet_user_id int NOT NULL,
 tweet_text varchar(250) NOT NULL, tweet_date date, PRIMARY KEY(tweet_id),
 FOREIGN KEY(tweet_user_id) REFERENCES users(user_id) );  
+Zmiana: ALTER TABLE `tweet` CHANGE `tweet_date` `tweet_date` DATETIME NULL DEFAULT NULL;
 
 

@@ -1,0 +1,6 @@
+
+http://www.forumweb.pl/poczatkujacy-webmaster/php-szyfrowanie-hasla,91103
+
+http://php.net/manual/en/function.password-verify.php
+
+

@@ -56,7 +56,7 @@
       <br />
       <center>
         <form method="POST" action="#">
-      Masz wiadomość z lasu? Wpisz ją poniżej i nie przekrocz 140 znaków, bo las zapłonie.<br>
+      <?=$_SESSION['logged']?>, masz wiadomość z lasu? Wpisz ją poniżej i nie przekrocz 140 znaków, bo las zapłonie.<br>
         <input type="text" maxlength="140" size="100" name="newtweet"> <br />
         <input type="submit" value="Opublikuj !">
       </form>
