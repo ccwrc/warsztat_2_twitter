@@ -46,7 +46,6 @@
 	  
 	  <div class="logo">
             <img class="logoimage" id="logoimage" src="img/logo.jpg">  
-            <h2>dzięcioły.pl</h2> 
 	  </div>
 
 
@@ -62,6 +61,8 @@ Formularz do tworzenia nowego komentarza przypisanego do tego postu. -->
 
 
       <div class ="footer">
+                  <br/><br/>
+                  <a href="http://www.lesnepogotowie.pl/" target="_blank">Leśne pogotowie</a>
 		  <a href="index.php">Dzięcioły</a> 
 		  <a href="logon.php">Logowanie</a> 
 		  <a href="create.php">Stwórz dziuplę</a> 

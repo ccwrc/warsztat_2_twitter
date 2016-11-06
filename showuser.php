@@ -47,7 +47,6 @@
 	  
 	  <div class="logo">
             <img class="logoimage" id="logoimage" src="img/logo.jpg">  
-            <h2>dzięcioły.pl</h2> 
 	  </div>
 
 
@@ -64,6 +63,8 @@ Na tej stronie ma być też guzik, który umożliwi nam wysłanie wiadomości do
 
 
       <div class ="footer">
+                  <br/><br/>
+                  <a href="http://www.lesnepogotowie.pl/" target="_blank">Leśne pogotowie</a>
 		  <a href="index.php">Dzięcioły</a> 
 		  <a href="logon.php">Logowanie</a> 
 		  <a href="create.php">Stwórz dziuplę</a> 

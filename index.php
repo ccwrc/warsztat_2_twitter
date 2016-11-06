@@ -78,11 +78,12 @@
     $conn->close();
     $conn = null; 
 ?>
-      
+      <br/><br/><br/><br/><br/>
       </div>
 
-
       <div class ="footer">
+                  <br/><br/>
+                  <a href="http://www.lesnepogotowie.pl/" target="_blank">Leśne pogotowie</a>
 		  <a href="index.php">Dzięcioły</a> 
 		  <a href="logon.php">Logowanie</a> 
 		  <a href="create.php">Stwórz dziuplę</a> 

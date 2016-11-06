@@ -46,7 +46,6 @@
 	  
 	  <div class="logo">
             <img class="logoimage" id="logoimage" src="img/logo.jpg">  
-            <h2>dzięcioły.pl</h2> 
 	  </div>
 
 
@@ -62,6 +61,8 @@ Użytkownik ma mieć możliwość edycji informacji o sobie i zmiany hasła. Pam
 
 
       <div class ="footer">
+                  <br/><br/>
+                  <a href="http://www.lesnepogotowie.pl/" target="_blank">Leśne pogotowie</a>
 		  <a href="index.php">Dzięcioły</a> 
 		  <a href="logon.php">Logowanie</a> 
 		  <a href="create.php">Stwórz dziuplę</a> 
@@ -69,7 +70,7 @@ Użytkownik ma mieć możliwość edycji informacji o sobie i zmiany hasła. Pam
 		  <a href="edituser.php">Edycja dziupli</a> 
 		  <a href="messages.php">Wiadomości</a> 
 		  <a href="logoff.php">Wyloguj</a> 
-      </div>     
+      </div>      
           
   </div>
 </body>

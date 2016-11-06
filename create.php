@@ -1,7 +1,7 @@
 <?php
 
   session_start();  //strona dostepna bez zalogowania !
-  
+  // koment do captcha: zaznacz ptaszka, potwierdz, ze nie jestes borsukiem
   include_once "src/User.php";
   include_once "src/Tweet.php";
   include_once "src/connect.php";
@@ -9,8 +9,6 @@
   $conn = getDbConnection();
 
 
- $loadall = Tweet::loadTweetById($conn, 2);
- var_dump($loadall);
 
 
 
@@ -41,8 +39,7 @@
   <div class="container">
 	  
 	  <div class="logo">
-            <img class="logoimage" id="logoimage" src="img/logo.jpg">  
-            <h2>dzięcioły.pl</h2>    
+            <img class="logoimage" id="logoimage" src="img/logo.jpg">    
 	  </div>
 
 
@@ -55,19 +52,7 @@ Jeżeli taki email jest, to przekierować znowu do strony tworzenia użytkownika
 komunikat o zajętym adresie email. -->
 <?php
 
-  include_once "src/Tweet.php";
-  include_once "src/connect.php";
-
-  $conn = getDbConnection();
-
-
- $loadall = Tweet::loadAllTweets($conn);
- var_dump($loadall);
-
-
-
-  $conn->close();
-  $conn = null;  
+// captcha np. z google
 
 
 
@@ -79,6 +64,8 @@ komunikat o zajętym adresie email. -->
 
 
       <div class ="footer">
+                  <br/><br/>
+                  <a href="http://www.lesnepogotowie.pl/" target="_blank">Leśne pogotowie</a>
 		  <a href="index.php">Dzięcioły</a> 
 		  <a href="logon.php">Logowanie</a> 
 		  <a href="create.php">Stwórz dziuplę</a> 

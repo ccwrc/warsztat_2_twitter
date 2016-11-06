@@ -18,7 +18,5 @@ function getDbConnection() {
     return $conn; //pamietac o zamknieciu po kazdej operacji (close+null)
 }
 
-// include_once 'src/connect.php';
-
 ?>
 

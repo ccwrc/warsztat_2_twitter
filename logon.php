@@ -108,6 +108,8 @@ Strona logowania ma mieć też link do strony tworzenia użytkownika. -->
 
 
       <div class ="footer">
+                  <br/><br/>
+                  <a href="http://www.lesnepogotowie.pl/" target="_blank">Leśne pogotowie</a>
 		  <a href="index.php">Dzięcioły</a> 
 		  <a href="logon.php">Logowanie</a> 
 		  <a href="create.php">Stwórz dziuplę</a> 
@@ -115,7 +117,7 @@ Strona logowania ma mieć też link do strony tworzenia użytkownika. -->
 		  <a href="edituser.php">Edycja dziupli</a> 
 		  <a href="messages.php">Wiadomości</a> 
 		  <a href="logoff.php">Wyloguj</a> 
-      </div>     
+      </div>      
           
   </div>
 </body>
