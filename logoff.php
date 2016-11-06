@@ -2,14 +2,13 @@
 
   session_start();
   
+  unset($_SESSION['logged']);
+  
   include_once "src/User.php";
+  include_once "src/Tweet.php";
   include_once "src/connect.php";
 
   $conn = getDbConnection();
-
-
-
-
 
   $conn->close();
   $conn = null;  
@@ -45,12 +44,16 @@
 
       <div class="content">
       <!-- Strona wylogowania, dodatek - logoff.php -->
-   
-      
-      
+        <br /><br />
+        <center>
+          <h2>Opuściłeś dziuplę.</h2>  
+        </center> <br /><br />
+        
+        <center>
+          <a href="logon.php">Kliknij tutaj żeby przejść do strony logowania.</a>
+        </center>
       
       </div>
-
 
       <div class ="footer">
 		  <a href="index.php">Dzięcioły</a> 
