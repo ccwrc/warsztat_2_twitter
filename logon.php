@@ -15,7 +15,7 @@
   
   $conn = getDbConnection();
   
-  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') { //pisane w transie i dziala (walidacja do korekty)
       if (isset($_POST['useremail']) && isset($_POST['userpassword'])
          && trim($_POST['useremail']) != '' && trim($_POST['userpassword'])) {
      
@@ -46,7 +46,7 @@
           
       } else {
           $message = "Błędny e-mail lub hasło, wprowadź ponownie:";
-      }
+        }
   }
 
   $conn->close();

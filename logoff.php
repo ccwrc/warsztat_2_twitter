@@ -50,11 +50,11 @@
       <!-- Strona wylogowania, dodatek - logoff.php -->
         <br /><br />
         <center>
-          <h2>Opuściłeś dziuplę.</h2>  
+          <h3>Opuściłeś dziuplę.</h3>  
         </center> <br /><br />
         
         <center>
-          <a href="logon.php">Kliknij tutaj żeby przejść do strony logowania.</a>
+          <h4><a href="logon.php">Kliknij tutaj żeby przejść do strony logowania.</a></h4>
         </center>
       
       </div>
