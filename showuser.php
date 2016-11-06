@@ -2,6 +2,11 @@
 
   session_start();
   
+  if (!isset($_SESSION['logged'])) {
+    header("location: logon.php");
+    exit;
+  }
+  
   //  $_SESSION['logged'] = "mail@mail.pl"; -testowe ustawienie sesji
   
   include_once "src/User.php";

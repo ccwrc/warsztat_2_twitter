@@ -2,6 +2,11 @@
 
   session_start();
   
+  if (!isset($_SESSION['logged'])) {
+    header("location: logon.php");
+    exit;
+  }
+  
   unset($_SESSION['logged']);
   
   include_once "src/User.php";

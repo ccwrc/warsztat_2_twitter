@@ -5,7 +5,9 @@
   include_once "src/User.php";
   include_once "src/Tweet.php";
   include_once "src/connect.php";
-
+  
+  $message = ""; //wiadomosc podawana po blednej probie zalogowania
+  
   $conn = getDbConnection();
 
 
@@ -51,9 +53,23 @@ Strona ma przyjmować email użytkownika i jego hasło.
 Jeżeli są poprawne, to użytkownik jest przekierowany do strony głównej, jeżeli nie –
 do strony logowania, która ma wtedy wyświetlić komunikat o błędnym loginie lub haśle.
 Strona logowania ma mieć też link do strony tworzenia użytkownika. -->
-   
+        <br /> <center>
+        <?=$message?>
+        </center>    
       
-      
+        <br />
+        <center>
+        <form method="POST">
+            <input type="email" name="useremail" placeholder="Podaj e-mail">  
+            <input type="password" name="userpassword" placeholder="I wpisz hasło">
+            <input type="button" value="Wejdź do dziupli">
+        </form>
+        </center>
+        
+        <br />
+        <center>
+            <a href="create.php">Nie masz własnej dziupli? Kliknij tutaj żeby ją stworzyć.</a>
+        </center>    
       
       </div>
 

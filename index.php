@@ -1,6 +1,11 @@
 <?php
 
   session_start(); //Strona glowna wyświetlająca wszystkie Tweety
+  /* wykasowac koment po zrobieniu logowania
+  if (!isset($_SESSION['logged'])) {
+    header("location: logon.php");
+    exit;
+  } */
   
   include_once "src/User.php";
   include_once "src/Tweet.php";
@@ -33,7 +38,7 @@
 	<link rel="stylesheet" href="css/style.css" type="text/css" />
 	
 	<script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/app.js"></script>	
+        <script src="js/app.js"></script>	
 </head>
 
 <body>
@@ -41,7 +46,6 @@
 	  
 	  <div class="logo">
             <img class="logoimage" id="logoimage" src="img/logo.jpg">  
-            <h2>dzięcioły.pl</h2> 
 	  </div>
 
 
@@ -49,9 +53,31 @@
       <!-- strona główna - index.php
       Strona wyświetlająca wszystkie Tweety jakie znajdują się w systemie (od najnowszego do
       najstarszego). Nad nimi ma być widoczny formularz do stworzenia nowego wpisu. -->
-   
-      
-      
+      <br />
+      <center>
+        <form method="POST" action="#">
+      Masz wiadomość z lasu? Wpisz ją poniżej i nie przekrocz 140 znaków, bo las zapłonie.<br>
+        <input type="text" maxlength="140" size="100" name="newtweet"> <br />
+        <input type="submit" value="Opublikuj !">
+      </form>
+      </center> <br/>
+<?php
+// wersja testowa, do poprawy i w tabele
+    $conn = getDbConnection();
+    
+    $sql = "SELECT * FROM tweet ORDER BY tweet_date DESC LIMIT 60"; // dodalem limit zeby to jakos wygladalo
+    $result = $conn->query($sql);
+    
+   foreach ($result as $row) {
+    echo ("Tweet ID: " . $row['tweet_id']." * ");
+    echo ("Data publikacji: " . $row['tweet_date'] . "<br>");
+    echo ("Tweet: " . $row['tweet_text'] . "<br><br>"); 
+   }
+
+  
+    $conn->close();
+    $conn = null; 
+?>
       
       </div>
 

@@ -17,8 +17,8 @@ div.logo {
   background-image: url("../img/backlogo.jpg");
   width: 989px; 
   min-height:120px;
-  text-align: center;
-  color: white;
+  margin: 5px;
+  border-radius: 7px;
   }
   
 div.content {
@@ -39,4 +39,10 @@ div.footer {
   border-radius: 45px;
   margin: 15px;
   float: left;
+}
+
+a {
+    border: dotted 1px;
+    border-radius: 4px;
+    border-color: green;
 }
