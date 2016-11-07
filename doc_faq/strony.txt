@@ -1,20 +1,20 @@
-strona główna - index.php
+strona główna - index.php (działa, do poprawek)
 Strona wyświetlająca wszystkie Tweety jakie znajdują się w systemie (od najnowszego do
 najstarszego). Nad nimi ma być widoczny formularz do stworzenia nowego wpisu.
 
-(dostępna bez zalogowania) strona logowania - logon.php
+(dostępna bez zalogowania) strona logowania - logon.php (SKOŃCZONA)
 Strona ma przyjmować email użytkownika i jego hasło.
 Jeżeli są poprawne, to użytkownik jest przekierowany do strony głównej, jeżeli nie –
 do strony logowania, która ma wtedy wyświetlić komunikat o błędnym loginie lub haśle.
 Strona logowania ma mieć też link do strony tworzenia użytkownika.
 
-(dostepna bez zalogowania) Strona tworzenia użytkownika - create.php
+(dostępna bez zalogowania) Strona tworzenia użytkownika - create.php (SKOŃCZONA)
 Strona ma pobierać email i hasło.
 Jeżeli takiego emaila nie ma jeszcze w systemie, to dodać go i zalogować (przekierować na stronę główną).
 Jeżeli taki email jest, to przekierować znowu do strony tworzenia użytkownika i wyświetlić
 komunikat o zajętym adresie email.
 
-Strona wyświetlania użytkownika - showuser.php
+Strona wyświetlania użytkownika - showuser.php (działa, na razie dla zalogowanego usera)
 Strona ma pokazać wszystkie wpisy danego użytkownika (dodatkowo pod każdym liczbę komentarzy do danego wpisu).
 Na tej stronie ma być też guzik, który umożliwi nam wysłanie wiadomości do tego użytkownika.
 
@@ -35,4 +35,6 @@ Wiadomości jeszcze nieprzeczytane powinny być jakoś oznaczone.
 Stronę wiadomości - messageinfo.php
 Wszystkie informacje o wiadomości: nadawca, odbiorca, treść.
 
-Strona wylogowania, dodatek - logoff.php
+Strona wylogowania, dodatek - logoff.php (SKOŃCZONA)
+
+Strona detali 'tweeta'(postu), dodatek - detail.php (działa, do uzupełnienia)

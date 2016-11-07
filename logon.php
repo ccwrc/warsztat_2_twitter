@@ -17,10 +17,10 @@
   
   if ($_SERVER['REQUEST_METHOD'] == 'POST') { //pisane w transie i dziala 
       if (isset($_POST['useremail']) && isset($_POST['userpassword'])
-         && trim($_POST['useremail']) != '' && trim($_POST['userpassword'])) {
+         && trim($_POST['useremail']) != '' && trim($_POST['userpassword']) != '') {
      
          $userEmail = strtolower(trim($_POST['useremail'])); // na wyrost, dodatkowe zabez. jest w form.
-         $userPassword = trim($_POST['userpassword']);
+         $userPassword = trim($_POST['userpassword']); //ktore to zabezp. nie dziala przy spacjach :)
          $userEmail = $conn->real_escape_string($userEmail);
          $userPassword = $conn->real_escape_string($userPassword);
          

@@ -1,0 +1,8 @@
+
+http://webmade.org/porady/mechanizm-prywatnych-wiadomosci.php
+
+przeczytana, nieprzeczytana poprzez podmiane klas css?...
+
+
+do poczytania:
+http://www.forumweb.pl/porady-i-tutoriale-www/php-panel-administracyjny-edytor-stron,15157?postdays=0&postorder=helpful&start=30
