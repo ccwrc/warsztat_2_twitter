@@ -64,6 +64,7 @@
 	  
 	  <div class="logo">
             <img class="logoimage" id="logoimage" src="img/logo.jpg">  
+            <div class="logged"> <?=$_SESSION['logged']?> jest w dziupli. </div>
 	  </div>
 
 
@@ -87,10 +88,15 @@
     $sql = "SELECT * FROM tweet ORDER BY tweet_date DESC LIMIT 60"; // dodalem limit zeby to jakos wygladalo
     $result = $conn->query($sql);
     
-   foreach ($result as $row) {
+   foreach ($result as $row) { //tabela do zmiany, do całkowitej przebudowy
+    echo "<table class='tweet'>";   
+    echo "<tr><td>";
     echo ("Tweet ID: " . $row['tweet_id']." * ");
     echo ("Data publikacji: " . $row['tweet_date'] . "<br>");
-    echo ("Tweet: " . $row['tweet_text'] . "<br><br>"); 
+    echo "</td></tr><tr><td>";
+    echo ("Tweet: " . $row['tweet_text'] . "<br>"); 
+    echo "</td></tr>";
+    echo "</table> <br/>";
    }
 
   

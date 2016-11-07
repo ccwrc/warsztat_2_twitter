@@ -64,3 +64,13 @@ a {
 .warning {
     color: red;
 }
+
+.tweet {
+    border: dashed 1px green;
+    border-radius: 4px;
+}
+
+div.logged {
+    text-align: right;
+    color: white;
+}

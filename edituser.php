@@ -46,6 +46,7 @@
 	  
 	  <div class="logo">
             <img class="logoimage" id="logoimage" src="img/logo.jpg">  
+            <div class="logged"> <?=$_SESSION['logged']?> jest w dziupli. </div>
 	  </div>
 
 
