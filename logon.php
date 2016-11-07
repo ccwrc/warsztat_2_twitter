@@ -15,12 +15,14 @@
   
   $conn = getDbConnection();
   
-  if ($_SERVER['REQUEST_METHOD'] == 'POST') { //pisane w transie i dziala (walidacja do korekty)
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') { //pisane w transie i dziala 
       if (isset($_POST['useremail']) && isset($_POST['userpassword'])
          && trim($_POST['useremail']) != '' && trim($_POST['userpassword'])) {
      
-         $userEmail = $conn->real_escape_string($_POST['useremail']);
-         $userPassword = $conn->real_escape_string($_POST['userpassword']);
+         $userEmail = strtolower(trim($_POST['useremail'])); // na wyrost, dodatkowe zabez. jest w form.
+         $userPassword = trim($_POST['userpassword']);
+         $userEmail = $conn->real_escape_string($userEmail);
+         $userPassword = $conn->real_escape_string($userPassword);
          
          $sql = "SELECT * FROM users WHERE user_email = '$userEmail'";
          $result = $conn->query($sql);
@@ -34,7 +36,7 @@
              }
              if (password_verify($userPassword, $getHashedPassword)) {
                  $_SESSION['logged'] = $getName;
-                 $_SESSION['user_id'] = $getUserId;
+               //$_SESSION['user_id'] = $getUserId; - zbedne
                  $_SESSION['user_email'] = $getUserEmail;
                  header("location: index.php");
              } else {
@@ -87,15 +89,17 @@ Jeżeli są poprawne, to użytkownik jest przekierowany do strony głównej, je�
 do strony logowania, która ma wtedy wyświetlić komunikat o błędnym loginie lub haśle.
 Strona logowania ma mieć też link do strony tworzenia użytkownika. -->
         <br /> <center>
-        <h4><?=$message?></h4>
+        <h4 class="warning"><?=$message?></h4>
         </center>    
       
         <br />
         <center>
         <form method='POST' action=''>
-            <input type="email" name="useremail" placeholder="Podaj e-mail"/>  
-            <input type="password" name="userpassword" placeholder="I wpisz hasło"/>
+            <label> <center>Podaj dane logowania: <br/><br/></center>
+            <input type="email" name="useremail" placeholder="Podaj e-mail" maxlength="250"/>  
+            <input type="password" name="userpassword" placeholder="I wpisz hasło" maxlength="65"/>
             <input type="submit" value="Wejdź do dziupli"/>
+            </label>
         </form>
         </center>
         

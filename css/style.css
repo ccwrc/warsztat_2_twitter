@@ -60,3 +60,7 @@ a {
     text-decoration: none;
     background-color: greenyellow; 
 }
+
+.warning {
+    color: red;
+}

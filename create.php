@@ -2,15 +2,61 @@
 
   session_start();  //strona dostepna bez zalogowania !
   // koment do captcha: zaznacz ptaszka, potwierdz, ze nie jestes borsukiem
+  
+  if (isset($_SESSION['logged'])) {
+    header("location: index.php");
+    exit;
+  }
+  
   include_once "src/User.php";
   include_once "src/Tweet.php";
   include_once "src/connect.php";
+  
+  $message = ""; //wiadomosc podawana przy zajetym adresie mailowym i bledach hasla
 
   $conn = getDbConnection();
 
-
-
-
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      if (isset($_POST['username']) && trim($_POST['username']) != ''
+         && isset($_POST['useremail']) && trim($_POST['useremail']) != ''
+         && isset($_POST['userpassword1']) && trim($_POST['userpassword1']) != ''
+         && isset($_POST['userpassword2']) && trim($_POST['userpassword2']) != '') {
+           if (trim($_POST['userpassword1']) == trim($_POST['userpassword2'])) {
+               $userEmail = strtolower(trim($_POST['useremail']));
+               $userPassword = trim($_POST['userpassword1']);
+               $userName = trim($_POST['username']);
+               
+               $userEmail = $conn->real_escape_string($userEmail);
+               $userPassword = $conn->real_escape_string($userPassword);
+               $userName = $conn->real_escape_string($userName);
+               
+               $sql = "SELECT * FROM users WHERE user_email = '$userEmail'";
+               $result = $conn->query($sql);
+               
+               if ($result->num_rows > 0) {
+                   $message = "Podany adres e-mail ma już dziuplę, wybierz inny";
+               } else {
+                   $user = new User();
+                   $user->setEmail($userEmail);
+                   $user->setHashedPassword($userPassword);
+                   $user->setUsername($userName);
+                   $user->saveToDB($conn);
+                     if ($user->saveToDB($conn) == true) {
+                         $_SESSION['logged'] = $userName;
+                         $_SESSION['user_email'] = $userEmail;
+                         header("location: index.php");
+                     } else {
+                         $message = "Błąd połączenia z bazą, spróbuj za kilka minut";
+                       }
+                 }
+               
+           } else {
+               $message = "Hasła nie są identyczne, trzeba się zdecydować, którego używać";
+             }
+        } else {
+          $message = "Wypełnij wszystkie pola, nie rób byle jakiej dziupli.";
+          }
+  }
 
   $conn->close();
   $conn = null;  
@@ -32,7 +78,7 @@
 	<link rel="stylesheet" href="css/style.css" type="text/css" />
 	
 	<script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/app.js"></script>	
+        <script src="js/app.js"></script>	
 </head>
 
 <body>
@@ -50,6 +96,24 @@ Jeżeli takiego emaila nie ma jeszcze w systemie, to dodać go i zalogować (prz
   główną).
 Jeżeli taki email jest, to przekierować znowu do strony tworzenia użytkownika i wyświetlić
 komunikat o zajętym adresie email. -->
+        <br /> <center>
+        <h4 class="warning"><?=$message?></h4>
+        </center>  
+        
+        <form method="POST" action="">
+            <label> Aby mieć dziuplę w lesie wypełnij wszystkie pola: <br/><br/>
+              <input type="text" name="username" placeholder="Podaj nazwę dzięcioła" size="50" maxlength="250"/>  <br/> 
+              <input type="email" name="useremail" placeholder="Tu wpisz e-mail" size="50" maxlength="250"/>  <br/>
+              <input type="password" name="userpassword1" placeholder="I ustal hasło" size="50" maxlength="65"/> <br/>
+              <input type="password" name="userpassword2" placeholder="Dla pewności wpisz hasło ponownie" size="50"/> <br/><br/>
+              <input type="submit" value=" Kliknij żeby stworzyć własną dziuplę "/>
+            </label>    
+        </form>
+      
+      
+      
+      
+      
 <?php
 
 // captcha np. z google
