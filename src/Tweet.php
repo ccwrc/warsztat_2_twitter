@@ -60,27 +60,22 @@ class Tweet {
         }
     }
     
-    static public function loadAllTweetsByUserId(mysqli $conn, $userId) { //do pop. nie dziala
-        $sql = "SELECT users.user_name, users.user_id, tweet.tweet_text, tweet.tweet_date,"
-                . "tweet.tweet_id FROM users JOIN tweet ON users.user_id = tweet.tweet_user_id"
-                . "WHERE user_id = $userId ORDER BY tweet.tweet_date ASC";
-        
+     static public function loadAllTweetByUserId(mysqli $conn, $userid){ //dziala. nie do konca...
+        $sql = "SELECT * FROM tweet WHERE tweet_user_id = $userid";
         $ret = [];
         $result = $conn->query($sql);
         
-        if ($result == true && $result->num_rows > 0) {
-            foreach ($result as $row) {
-                $loadTweet = new Tweet();
-                $loadTweet->id = $row['tweet_id'];
-                $loadTweet->userId = $row['user_id'];
-                $loadTweet->username = $row['user_name'];
-                $loadTweet->text = $row['tweet_text'];
-                $loadTweet->creationDate = $row['tweet_date'];
-                
-                $ret[$loadTweet->id] = $loadTweet;
-            }
-        }
-        return $ret; 
+        if($result == true && $result->num_rows != 0){
+           foreach($result as $row){
+           $loadTweet = new Tweet();
+           $loadTweet->id = $row['tweet_id'];
+           $loadTweet->userId = $row['tweet_user_id'];
+           $loadTweet->text = $row['tweet_text'];
+           $loadTweet->creationDate = $row['tweet_date'];
+           $ret[$loadTweet->id] = $loadTweet;
+           }
+         }
+           return $ret; 
     }
     
     static public function loadAllTweets(mysqli $conn) { //do poprawy, nie dziala

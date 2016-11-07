@@ -7,6 +7,11 @@
     exit;
   } 
   
+  if (!isset($_GET['tweetid'])) {
+    header("location: index.php");
+    exit;
+  } 
+  
   include_once "src/User.php";
   include_once "src/Tweet.php";
   include_once "src/connect.php";
@@ -30,7 +35,7 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	
-	<title>Dzięcioły - pokaż użytkownika </title>
+	<title>Dzięcioły - detale wpisu </title>
 	
 	<meta name="description" content="Prawie jak Twitter" />
 	<meta name="keywords" content="dzięcioły, twitter" />
@@ -51,39 +56,24 @@
 
 
       <div class="content">
-      <!-- Strona wyświetlania użytkownika - showuser.php
-Strona ma pokazać wszystkie wpisy danego użytkownika (dodatkowo pod każdym liczbę komentarzy 
-      do danego wpisu).
-Na tej stronie ma być też guzik, który umożliwi nam wysłanie wiadomości do tego użytkownika. -->
+      <!-- detale wpisu, dodatek - detail.php  -->
+
 
       <br/>
+      <a href="showuser.php">Powrót do poprzedniej strony</a> 
+      <br/><br/>
+     
       <?php
-      $conn = getDbConnection();
-      $userid = $_SESSION['user_id'];
+       
+      echo "detale wpisu";
       
-      $sql = "SELECT * FROM tweet WHERE tweet_user_id = $userid";
-      $result = $conn->query($sql);
-      
-      if($result == true && $result->num_rows != 0){
-           foreach($result as $row){
-           echo "Wpis o ID " . $row['tweet_id'] . ": ";
-           echo $row['tweet_text'] . "<br/>";
-           echo "Data utworzenia wpisu: " . $row['tweet_date'] . " " . "<a href=\"detail.php?tweetid=".$row['tweet_id']."\">Detale wpisu</a>" . "<br/><br/>";
-           }
-       } else {
-           echo "Nie podzieliłeś się z nikim wiadomością, może czas to zmienić?";
-           echo "<a href='index.php'>Kliknij tutaj.</a> ";
-       }
-      
-      
-      $conn->close();
-      $conn = null;
       ?>
       
-      
+      <br/><br/>
+      <a href="showuser.php">Powrót do poprzedniej strony</a> 
+      <br/><br/>
       
       </div>
-
 
       <div class ="footer">
                   <br/><br/>
