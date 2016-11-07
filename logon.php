@@ -96,8 +96,10 @@ Strona logowania ma mieć też link do strony tworzenia użytkownika. -->
         <center>
         <form method='POST' action=''>
             <label> <center>Podaj dane logowania: <br/><br/></center>
-            <input type="email" name="useremail" placeholder="Podaj e-mail" maxlength="250"/>  
-            <input type="password" name="userpassword" placeholder="I wpisz hasło" maxlength="65"/>
+            <input type="email" name="useremail" placeholder="Podaj e-mail"
+              pattern=".{5,250}"   required title="Minimalna liczba znaków to 5, maksymalna 250"/>  
+            <input type="password" name="userpassword" placeholder="I wpisz hasło"
+              pattern=".{3,65}"   required title="Minimalna liczba znaków to 3, maksymalna 65"/>
             <input type="submit" value="Wejdź do dziupli"/>
             </label>
         </form>
