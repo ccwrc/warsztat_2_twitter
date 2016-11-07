@@ -44,6 +44,14 @@
                      if ($user->saveToDB($conn) == true) {
                          $_SESSION['logged'] = $userName;
                          $_SESSION['user_email'] = $userEmail;
+                         
+                         $sql = "SELECT * FROM users WHERE user_email = '$userEmail'";
+                         $result = $conn->query($sql);
+                         foreach($result as $row) {
+                             $userId = $row['user_id'];
+                         }
+                         $_SESSION['user_id'] = $userId;
+                         
                          header("location: index.php");
                      } else {
                          $message = "Błąd połączenia z bazą, spróbuj za kilka minut";
@@ -110,7 +118,7 @@ komunikat o zajętym adresie email. -->
                 pattern=".{3,65}"   required title="Minimalna liczba znaków to 3, maksymalna 65"/> <br/>
               <input type="password" name="userpassword2" placeholder="Dla pewności wpisz hasło ponownie" size="50"
                 pattern=".{3,65}"   required title="Minimalna liczba znaków to 3, maksymalna 65"/> <br/><br/>
-              <input type="submit" value=" Kliknij żeby stworzyć własną dziuplę "/>
+              <input type="submit" value=" Kliknij tutaj żeby stworzyć własną dziuplę "/>
             </label>    
         </form>
       

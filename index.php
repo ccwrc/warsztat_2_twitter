@@ -1,6 +1,10 @@
 <?php
 
   session_start(); //Strona glowna wyświetlająca wszystkie Tweety
+  
+//  var_dump($_SESSION['logged']); - kosmetyka (komunikat) i check
+//  var_dump($_SESSION['user_email']); - moze sie przyda
+//  var_dump($_SESSION['user_id']); - do identyfikacji tweeta itd.  
 
   if (!isset($_SESSION['logged'])) {
     header("location: logon.php");
@@ -11,10 +15,11 @@
   include_once "src/Tweet.php";
   include_once "src/connect.php";
 
+  $actualDate = date("Y-m-d H:i:s");
   $conn = getDbConnection();
 
 
-
+  
 
 
 

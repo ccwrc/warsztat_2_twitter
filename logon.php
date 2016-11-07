@@ -36,7 +36,7 @@
              }
              if (password_verify($userPassword, $getHashedPassword)) {
                  $_SESSION['logged'] = $getName;
-               //$_SESSION['user_id'] = $getUserId; - zbedne
+                 $_SESSION['user_id'] = $getUserId; 
                  $_SESSION['user_email'] = $getUserEmail;
                  header("location: index.php");
              } else {
