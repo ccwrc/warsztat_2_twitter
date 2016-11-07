@@ -17,8 +17,21 @@
 
   $actualDate = date("Y-m-d H:i:s");
   $conn = getDbConnection();
-
-
+  
+  // dodawanie nowego'tweeta' name="newtweet"
+  if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user_id'])
+      && isset($_POST['newtweet']) && trim($_POST['newtweet']) != '') {
+        $userId = $_SESSION['user_id'];
+        $userTweet = trim($_POST['newtweet']);
+        $userTweet = $conn->real_escape_string($userTweet);
+        
+        $newTweet = new Tweet();
+        $newTweet->setUserId($userId);
+        $newTweet->setText($userTweet);
+        $newTweet->setCreationDate($actualDate); 
+        $newTweet->saveToDb($conn);
+        
+  }
   
 
 
