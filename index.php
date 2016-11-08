@@ -79,7 +79,7 @@
       </form>
       </center> <br/>
 <?php
-// wersja testowa, do poprawy i w tabele
+
 $conn = getDbConnection();
 
 $allTweets = Tweet::loadAllTweets($conn);
@@ -97,9 +97,8 @@ foreach ($allTweets as $tweet) {
     echo "</td></tr>";
     echo "</table> <br/>";
 }
-
-    
-    /*
+  
+    /* wersja testowa
     $sql = "SELECT * FROM tweet ORDER BY tweet_date DESC"; 
     $result = $conn->query($sql);
     
@@ -117,20 +116,20 @@ foreach ($allTweets as $tweet) {
     $conn->close();
     $conn = null; 
 ?>
-      <br/><br/><br/><br/><br/>
+      <br/><br/><br/><br/><br/> <!-- beerki do odsloniecia ostatniego tweeta (przyklejony dolny panel) -->
       </div>
 
       <div class ="footer">
                   <br/><br/>
                   <a href="http://www.lesnepogotowie.pl/" target="_blank">Leśne pogotowie</a>
 		  <a href="index.php">Dzięcioły</a> 
-		  <a href="logon.php">Logowanie</a> 
-		  <a href="create.php">Stwórz dziuplę</a> 
+		  <a id="footerlink2" href="logon.php">Logowanie</a> 
+		  <a id="footerlink3" href="create.php">Stwórz dziuplę</a> 
 		  <a href="showuser.php">Pokaż dzięcioła</a> 
 		  <a href="edituser.php">Edycja dziupli</a> 
 		  <a href="messages.php">Wiadomości</a> 
 		  <a href="logoff.php">Wyloguj</a> 
-      </div>     
+      </div>      
           
   </div>
 </body>

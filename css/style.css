@@ -74,3 +74,15 @@ div.logged {
     text-align: right;
     color: white;
 }
+
+a.linklogged {
+    border: dotted 1px;
+    border-radius: 4px;
+    border-color: green;
+    text-decoration: none;
+    background-color: greenyellow; 
+}
+
+#footerlink8, #footerlink7, #footerlink6, #footerlink5, #footerlink4, #footerlink3, #footerlink2 {
+    background-color: lightgray; 
+}

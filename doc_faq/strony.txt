@@ -31,10 +31,11 @@ Użytkownik ma mieć możliwość wyświetlenia listy wiadomości, które otrzym
  Wiadomości wysłane mają wyświetlać odbiorcę, datę wysłania i początek wiadomości (pierwsze 30 znaków).
  Wiadomości odebrane mają wyświetlać nadawcę, datę wysłania i początek wiadomości (pierwsze 30 znaków).
 Wiadomości jeszcze nieprzeczytane powinny być jakoś oznaczone.
+Uwagi: 2x message + 2x check dla nadawcy i odbiorcy do 'kasowania'
 
 Stronę wiadomości - messageinfo.php
 Wszystkie informacje o wiadomości: nadawca, odbiorca, treść.
 
 Strona wylogowania, dodatek - logoff.php (SKOŃCZONA)
 
-Strona detali 'tweeta'(postu), dodatek - detail.php (działa, do uzupełnienia)
+Strona detali 'tweeta'(postu), dodatek - detail.php (działa, do uzupełnienia)...a właściwie podmianka na showpost
