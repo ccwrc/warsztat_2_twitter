@@ -16,16 +16,12 @@
   include_once "src/Tweet.php";
   include_once "src/connect.php";
 
-  $conn = getDbConnection();
-
-  
-  
+  // $conn = getDbConnection();
 
 
 
-
-  $conn->close();
-  $conn = null;
+  // $conn->close();
+  // $conn = null;
   
 ?>
 
@@ -59,19 +55,26 @@
       <div class="content">
       <!-- detale wpisu, dodatek - detail.php  -->
 
-
-      <br/>
-      <a href="showuser.php">Powrót do poprzedniej strony</a> 
       <br/><br/>
      
-      <?php
-       
-      echo "detale wpisu";
+    <?php
       
-      ?>
+      $conn = getDbConnection();
+      $id = $_GET['tweetid']; 
+      $tweetDetail = Tweet::loadTweetById($conn, $id);
+
+      echo "ID wpisu: " . $tweetDetail->getId() . "<br/>";
+      echo "Treść wpisu: " . $tweetDetail->getText() . "<br/>";
+      echo "ID dzięcioła: " . $tweetDetail->getUserId() . "<br/>";
+      echo "Data utworzenia wpisu: " . $tweetDetail->getCreationDate() . "<br/>";
       
-      <br/><br/>
-      <a href="showuser.php">Powrót do poprzedniej strony</a> 
+     $conn->close();
+     $conn = null;
+      
+    ?>
+      
+      <br/>
+      &nbsp; <a href="showuser.php">Powrót do poprzedniej strony</a> 
       <br/><br/>
       
       </div>
