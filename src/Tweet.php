@@ -78,24 +78,20 @@ class Tweet {
            return $ret; 
     }
     
-    static public function loadAllTweets(mysqli $conn) { //do poprawy, nie dziala
-        $sql = "SELECT users.user_name, tweet.tweed_id, tweet.tweet_user_id, "
-                . "tweet.tweet_text, tweet.tweet_date FROM users JOIN tweet ON users.user_id="
-                . "tweet.tweet_user_id ORDER BY tweet_date ASC";
-        
+    static public function loadAllTweets(mysqli $conn) { // dziala. pierd. 4 dni nad literowka
+        $sql = "SELECT * FROM tweet ORDER BY tweet_date DESC";
+        $result = $conn->query($sql);
         $ret = [];
         
-        $result = $conn->query($sql);
-        if ($result == true && $result->num_rows > 0) {
+        if ($result == true && $result->num_rows != 0) {
             foreach ($result as $row) {
                 $loadTweet = new Tweet();
-                $loadTweet->id = $row['tweet_id'];
-                $loadTweet->userId = $row['user_id'];
-                $loadTweet->username = $row['user_name'];
+                $loadTweet->tweetId = $row['tweet_id'];
+                $loadTweet->userId = $row['tweet_user_id'];
                 $loadTweet->text = $row['tweet_text'];
                 $loadTweet->creationDate = $row['tweet_date'];
                 
-                $ret[$loadTweet->id] = $loadTweet;
+                $ret[$loadTweet->tweetId] = $loadTweet;
             }
         }
         return $ret;

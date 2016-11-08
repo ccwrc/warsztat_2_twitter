@@ -23,11 +23,11 @@ class User {  // mozna zamiennie wrzucic w setery real escape string
         return $this->id;
     }
     
-    public function getUsername($username) {
+    public function getUsername() {
         return $this->username;
     }
     
-    public function getEmail($email) {
+    public function getEmail() {
         return $this->email;
     }
     

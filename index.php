@@ -32,9 +32,6 @@
         $newTweet->saveToDb($conn);
         unset($_POST['newtweet']);
   }
-  
-
-
 
   $conn->close();
   $conn = null;  
@@ -83,9 +80,27 @@
       </center> <br/>
 <?php
 // wersja testowa, do poprawy i w tabele
-    $conn = getDbConnection();
+$conn = getDbConnection();
+
+$allTweets = Tweet::loadAllTweets($conn);
+
+foreach ($allTweets as $tweet) {
+    $userId = $tweet->getUserId();
+    $tweetId = $tweet->getId();
     
-    $sql = "SELECT * FROM tweet ORDER BY tweet_date DESC LIMIT 60"; // dodalem limit zeby to jakos wygladalo
+    echo "<table class='tweet'>";
+    echo "<tr><td> ";
+    echo "Autor: <a href=\"showuser.php?strangeuser=$userId\">" .User::loadUserById($conn, $userId)->getUsername(). "</a> ";
+    echo "Data publikacji: " . $tweet->getCreationDate();
+    echo "</td></tr> <tr><td>";
+    echo $tweet->getText();
+    echo "</td></tr>";
+    echo "</table> <br/>";
+}
+
+    
+    /*
+    $sql = "SELECT * FROM tweet ORDER BY tweet_date DESC"; 
     $result = $conn->query($sql);
     
    foreach ($result as $row) { //tabela do zmiany, do całkowitej przebudowy
@@ -97,9 +112,8 @@
     echo ("Tweet: " . $row['tweet_text'] . "<br>"); 
     echo "</td></tr>";
     echo "</table> <br/>";
-   }
+   } */
 
-  
     $conn->close();
     $conn = null; 
 ?>
