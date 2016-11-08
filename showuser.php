@@ -13,12 +13,6 @@
 
   $conn = getDbConnection();
 
-  
-  
-
-
-
-
   $conn->close();
   $conn = null;
   
@@ -59,26 +53,59 @@ Na tej stronie ma być też guzik, który umożliwi nam wysłanie wiadomości do
 
       <br/>
       <?php
-      $conn = getDbConnection();
-      $userid = $_SESSION['user_id'];
       
-      $sql = "SELECT * FROM tweet WHERE tweet_user_id = $userid";
-      $result = $conn->query($sql);
+      if (!isset($_GET['strangeuser'])) {
+        $conn = getDbConnection();
+        $userid = $_SESSION['user_id'];
+        
+        echo "<strong>";
+        echo "Wszystkie twoje wpisy w lesie: <br/><br/>";
+        echo "</strong>";
       
-      if($result == true && $result->num_rows != 0){
+        $sql = "SELECT * FROM tweet WHERE tweet_user_id = $userid";
+        $result = $conn->query($sql);
+      
+        if($result == true && $result->num_rows != 0){
            foreach($result as $row){
-           echo "Wpis o ID " . $row['tweet_id'] . ": ";
-           echo $row['tweet_text'] . "<br/>";
-           echo "Data utworzenia wpisu: " . $row['tweet_date'] . " " . "<a href=\"detail.php?tweetid=".$row['tweet_id']."\">Detale wpisu</a>" . "<br/><br/>";
+             echo "Wpis o ID " . $row['tweet_id'] . ": ";
+             echo $row['tweet_text'] . "<br/>";
+             echo "Data utworzenia wpisu: " . $row['tweet_date'] . " " . "<a href=\"detail.php?tweetid=".$row['tweet_id']."\">Detale wpisu</a>" . "<br/><br/>";
            }
-       } else {
+        } else {
            echo "Nie podzieliłeś się z nikim wiadomością, może czas to zmienić?";
            echo "<a href='index.php'>Kliknij tutaj.</a> ";
-       }
+          }
+      
+        $conn->close();
+        $conn = null;
+      }
       
       
-      $conn->close();
-      $conn = null;
+      if (isset($_GET['strangeuser'])) {
+        $conn = getDbConnection();
+        $userid = $_GET['strangeuser'];
+        
+        echo "<strong>";
+        echo "Jesteś na stronie dzięcioła o nicku: " . User::loadUserById($conn, $userid)->getUsername() . "<br/><br/>";
+        echo "</strong>";
+        
+        $sql = "SELECT * FROM tweet WHERE tweet_user_id = $userid";
+        $result = $conn->query($sql);
+      
+        if($result == true && $result->num_rows != 0){
+           foreach($result as $row){
+             echo "Wpis o ID " . $row['tweet_id'] . ": ";
+             echo $row['tweet_text'] . "<br/>";
+             echo "Data utworzenia wpisu: " . $row['tweet_date'] . " " . "<a href=\"detail.php?tweetid=".$row['tweet_id']."&strangeuser=".$_GET['strangeuser']."\">Detale wpisu</a>" . "<br/><br/>";
+           }
+        } else {
+           echo "Użytkownik nie zostawił w lesie żadnego wpisu.";
+          }
+      
+        $conn->close();
+        $conn = null;
+      }
+      
       ?>
       
       

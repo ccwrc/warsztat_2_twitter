@@ -59,23 +59,55 @@
      
     <?php
       
+    if (isset($_GET['tweetid']) && !isset($_GET['strangeuser'])) {
       $conn = getDbConnection();
       $id = $_GET['tweetid']; 
       $tweetDetail = Tweet::loadTweetById($conn, $id);
+      
+      echo "ID wpisu: " . $tweetDetail->getId() . "<br/>";
+      echo "Treść wpisu: " . $tweetDetail->getText() . "<br/>";
+      echo "ID dzięcioła: " . $tweetDetail->getUserId() . "<br/>";
+      $userId = $tweetDetail->getUserId();
+      echo "Nazwa dzięcioła: " . User::loadUserById($conn, $userId)->getUsername(). "<br/>";
+      echo "Data utworzenia wpisu: " . $tweetDetail->getCreationDate() . "<br/>";
+
+      /* echo "ID wpisu: " . $tweetDetail->getId() . "<br/>";
+      echo "Treść wpisu: " . $tweetDetail->getText() . "<br/>";
+      echo "ID dzięcioła: " . $tweetDetail->getUserId() . "<br/>";
+      echo "Data utworzenia wpisu: " . $tweetDetail->getCreationDate() . "<br/>"; */
+      
+     $conn->close();
+     $conn = null;
+     
+     echo "<br/>";
+     echo "&nbsp;"."<a href='showuser.php'>Powrót do poprzedniej strony</a>"; 
+     echo "<br/><br/>";
+    }
+    
+    
+    if (isset($_GET['tweetid']) && isset($_GET['strangeuser'])) {
+      $conn = getDbConnection();
+      $id = $_GET['tweetid']; 
+      $tweetDetail = Tweet::loadTweetById($conn, $id);
+      $userId = $tweetDetail->getUserId();
 
       echo "ID wpisu: " . $tweetDetail->getId() . "<br/>";
       echo "Treść wpisu: " . $tweetDetail->getText() . "<br/>";
       echo "ID dzięcioła: " . $tweetDetail->getUserId() . "<br/>";
+      echo "Nazwa dzięcioła: " . User::loadUserById($conn, $userId)->getUsername(). "<br/>";
       echo "Data utworzenia wpisu: " . $tweetDetail->getCreationDate() . "<br/>";
       
      $conn->close();
      $conn = null;
-      
+     
+     echo "<br/>";
+     echo "&nbsp;"."<a href=\"showuser.php?strangeuser=".$tweetDetail->getUserId()."\">Powrót do poprzedniej strony</a>"; 
+     echo "<br/><br/>";
+     
+     unset($_GET['strangeuser']);
+    }
+    
     ?>
-      
-      <br/>
-      &nbsp; <a href="showuser.php">Powrót do poprzedniej strony</a> 
-      <br/><br/>
       
       </div>
 
