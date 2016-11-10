@@ -72,7 +72,7 @@ Na tej stronie ma być też guzik, który umożliwi nam wysłanie wiadomości do
              echo "Data utworzenia wpisu: " . $row['tweet_date'] . " " . "<a href=\"detail.php?tweetid=".$row['tweet_id']."\">Detale wpisu</a>" . "<br/><br/>";
            }
         } else {
-           echo "Nie podzieliłeś się z nikim wiadomością, może czas to zmienić?";
+           echo "Nie podzieliłeś się z nikim wiadomością, może czas to zmienić? ";
            echo "<a href='index.php'>Kliknij tutaj.</a> ";
           }
       

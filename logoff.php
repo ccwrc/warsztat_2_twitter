@@ -7,9 +7,12 @@
     exit;
   }
   
+  session_unset();
+  
+  /* po testach - też zbędne
   unset($_SESSION['logged']);
   unset($_SESSION['user_id']);
-  unset($_SESSION['user_email']);
+  unset($_SESSION['user_email']); */
   
   /* po testach, ponizsze niepotrzebne
   include_once "src/User.php";
@@ -53,7 +56,7 @@
       <!-- Strona wylogowania, dodatek - logoff.php -->
         <br /><br />
         <center>
-          <h3>Opuściłeś dziuplę.</h3>  
+          <h3>Opuściłeś dziuplę, zostały tylko pióra.</h3>  
         </center> <br /><br />
         
         <center>

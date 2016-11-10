@@ -1,8 +1,33 @@
 
-// do testów
-function maxLength(elm,maximum){
-   if (elm.value.length > maximum){
-      alert("Wprowadź maksymalnie " + maximum + " znaków");
-      elm.value = elm.value.substr(0,maximum);
-   }   
-}
+$(document).ready(function() {
+
+  var divMainLogo = $('#mainBackLogo');
+  var smallImageDivMainLogo = $('#logoimage');
+ 
+  var logoSound = new Audio('sound_sample/logosound.mp3');
+  var backLogoSound = new Audio('sound_sample/backlogosound.mp3');
+
+    // start i stop dla dzwieku na belce gornej
+  divMainLogo.on('mouseenter', function() {
+    backLogoSound.play();
+  });
+
+  divMainLogo.on('mouseleave', function() {
+    backLogoSound.pause();
+    backLogoSound.currentTime = 0;
+  });
+  
+    // start i stop dla dzwieku na malym logo (gora, lewa strona)
+  smallImageDivMainLogo.on('mouseenter', function() {
+    logoSound.play();
+  });
+
+  smallImageDivMainLogo.on('mouseleave', function() {
+    logoSound.pause();
+    logoSound.currentTime = 0;
+  });
+
+
+
+});
+

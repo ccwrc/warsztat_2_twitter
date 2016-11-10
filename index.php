@@ -59,7 +59,7 @@
 <body>
   <div class="container">
 	  
-	  <div class="logo">
+	  <div class="logo" id="mainBackLogo"> <!--mainBackLogo - dodac wszedzie?-->
             <img class="logoimage" id="logoimage" src="img/logo.jpg">  
             <div class="logged"> <?=$_SESSION['logged']?> jest w dziupli. </div>
 	  </div>
@@ -69,22 +69,22 @@
       <!-- strona główna - index.php
       Strona wyświetlająca wszystkie Tweety jakie znajdują się w systemie (od najnowszego do
       najstarszego). Nad nimi ma być widoczny formularz do stworzenia nowego wpisu. -->
-      <br />
+      <br/>
       <center>
         <form method="POST" action="#">
-      <?=$_SESSION['logged']?>, masz wiadomość z lasu? Wpisz ją poniżej i nie przekrocz 140 znaków, bo las zapłonie.<br/>
-        <input type="text" size="100" name="newtweet"
-          pattern=".{3,140}" required title="Minimalna liczba znaków to 3, maksymalna 140"> <br/>
-        <input type="submit" value="Opublikuj !">
+          <?=$_SESSION['logged']?>, masz wiadomość z lasu? Wpisz ją poniżej i nie przekrocz 140 znaków, bo las zapłonie.<br/>
+          <input type="text" size="100" name="newtweet"
+            pattern=".{3,140}" required title="Minimalna liczba znaków to 3, maksymalna 140"/> <br/>
+          <input type="submit" value="Opublikuj !"/>
       </form>
       </center> <br/>
+      
 <?php
 
-$conn = getDbConnection();
+  $conn = getDbConnection();
+  $allTweets = Tweet::loadAllTweets($conn);
 
-$allTweets = Tweet::loadAllTweets($conn);
-
-foreach ($allTweets as $tweet) {
+  foreach ($allTweets as $tweet) {
     $userId = $tweet->getUserId();
     $tweetId = $tweet->getId();
     
@@ -96,31 +96,18 @@ foreach ($allTweets as $tweet) {
     echo $tweet->getText();
     echo "</td></tr>";
     echo "</table> <br/>";
-}
+  }
   
-    /* wersja testowa
-    $sql = "SELECT * FROM tweet ORDER BY tweet_date DESC"; 
-    $result = $conn->query($sql);
-    
-   foreach ($result as $row) { //tabela do zmiany, do całkowitej przebudowy
-    echo "<table class='tweet'>";   
-    echo "<tr><td>";
-    echo ("Tweet ID: " . $row['tweet_id']." * ");
-    echo ("Data publikacji: " . $row['tweet_date'] . "<br>");
-    echo "</td></tr><tr><td>";
-    echo ("Tweet: " . $row['tweet_text'] . "<br>"); 
-    echo "</td></tr>";
-    echo "</table> <br/>";
-   } */
-
-    $conn->close();
-    $conn = null; 
+  $conn->close();
+  $conn = null; 
 ?>
-      <br/><br/><br/><br/><br/> <!-- beerki do odsloniecia ostatniego tweeta (przyklejony dolny panel) -->
+      
+      <br/><br/><br/><br/><br/> <!-- 5x br do odsloniecia ostatniego tweeta (przyklejony dolny panel) -->
       </div>
 
       <div class ="footer">
                   <br/><br/>
+                  <a href="index.php">Ptasi los</a>
                   <a href="http://www.lesnepogotowie.pl/" target="_blank">Leśne pogotowie</a>
 		  <a href="index.php">Dzięcioły</a> 
 		  <a id="footerlink2" href="logon.php">Logowanie</a> 

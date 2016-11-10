@@ -18,8 +18,8 @@ Strona wyświetlania użytkownika - showuser.php (działa, na razie dla zalogowa
 Strona ma pokazać wszystkie wpisy danego użytkownika (dodatkowo pod każdym liczbę komentarzy do danego wpisu).
 Na tej stronie ma być też guzik, który umożliwi nam wysłanie wiadomości do tego użytkownika.
 
-Strona wyświetlania postu - showpost.php
-Ta strona ma wyświetlać: post, autora postu, wszystkie komentarze do każdego z postów.
+Strona wyświetlania postu - detail.php (dawny showpost.php)
+Ta strona ma wyświetlać: post('tweet'), autora postu, wszystkie komentarze do każdego z postów.
 Formularz do tworzenia nowego komentarza przypisanego do tego postu.
 
 Strona edycji użytkownika - edituser.php
@@ -31,11 +31,10 @@ Użytkownik ma mieć możliwość wyświetlenia listy wiadomości, które otrzym
  Wiadomości wysłane mają wyświetlać odbiorcę, datę wysłania i początek wiadomości (pierwsze 30 znaków).
  Wiadomości odebrane mają wyświetlać nadawcę, datę wysłania i początek wiadomości (pierwsze 30 znaków).
 Wiadomości jeszcze nieprzeczytane powinny być jakoś oznaczone.
-Uwagi: 2x message + 2x check dla nadawcy i odbiorcy do 'kasowania'
+---Uwagi: 2x message + 2x check dla nadawcy i odbiorcy do 'kasowania'
 
 Stronę wiadomości - messageinfo.php
 Wszystkie informacje o wiadomości: nadawca, odbiorca, treść.
 
 Strona wylogowania, dodatek - logoff.php (SKOŃCZONA)
 
-Strona detali 'tweeta'(postu), dodatek - detail.php (działa, do uzupełnienia)...a właściwie podmianka na showpost

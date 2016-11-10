@@ -95,7 +95,7 @@ Strona logowania ma mieć też link do strony tworzenia użytkownika. -->
         <br />
         <center>
         <form method='POST' action=''>
-            <label> <center>Podaj dane logowania: <br/><br/></center>
+            <label> <center>Podaj dane dostępu do dziupli: <br/><br/></center>
             <input type="email" name="useremail" placeholder="Podaj e-mail"
               pattern=".{5,250}"   required title="Minimalna liczba znaków to 5, maksymalna 250"/>  
             <input type="password" name="userpassword" placeholder="I wpisz hasło"
@@ -107,9 +107,11 @@ Strona logowania ma mieć też link do strony tworzenia użytkownika. -->
         
         <br />
         <center>
-            <h4><a href="create.php">Nie masz własnej dziupli? Kliknij tutaj żeby ją stworzyć.</a></h4>
+            <h4><a href="create.php">Nie masz własnej dziupli w lesie? Kliknij tutaj żeby ją stworzyć.</a></h4>
         </center>    
       
+      <p class="warning">Testowy login(mail): admin@dziecioly.pl hasło: admin</p>  
+        
       </div>
 
 

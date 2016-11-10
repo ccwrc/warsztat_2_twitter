@@ -40,7 +40,7 @@
 	<link rel="stylesheet" href="css/style.css" type="text/css" />
 	
 	<script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/app.js"></script>	
+        <script src="js/app.js"></script>	
 </head>
 
 <body>
@@ -53,7 +53,9 @@
 
 
       <div class="content">
-      <!-- detale wpisu, dodatek - detail.php  -->
+      <!-- Strona wyświetlania postu - detail.php (dawny showpost.php)
+Ta strona ma wyświetlać: post, autora postu, wszystkie komentarze do każdego z postów.
+Formularz do tworzenia nowego komentarza przypisanego do tego postu. -->
 
       <br/><br/>
      
@@ -63,11 +65,11 @@
       $conn = getDbConnection();
       $id = $_GET['tweetid']; 
       $tweetDetail = Tweet::loadTweetById($conn, $id);
+      $userId = $tweetDetail->getUserId();
       
       echo "ID wpisu: " . $tweetDetail->getId() . "<br/>";
       echo "Treść wpisu: " . $tweetDetail->getText() . "<br/>";
       echo "ID dzięcioła: " . $tweetDetail->getUserId() . "<br/>";
-      $userId = $tweetDetail->getUserId();
       echo "Nazwa dzięcioła: " . User::loadUserById($conn, $userId)->getUsername(). "<br/>";
       echo "Data utworzenia wpisu: " . $tweetDetail->getCreationDate() . "<br/>";
 

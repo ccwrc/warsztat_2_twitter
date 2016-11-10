@@ -9,11 +9,11 @@ html, body {
 div.container {
   min-height:100%;
   position:relative;
-  width: 991px; 
+  width: 989px; 
   margin: 0 auto;
   }
   
-div.logo {
+div.logo { /* belka na górze z nazwą zalogowanego użytkownika */
   background-image: url("../img/backlogo.jpg");
   width: 989px; 
   min-height:120px;
@@ -26,13 +26,7 @@ div.content {
   }
   
 div.footer {
-  /*
-  position:absolute;
-  bottom:0;
-  width: 989px; 
-  min-height:60px;
-  text-align: center; 
-  */
+/* przyklejona stopka z linkami */
   clear: both;
   position: fixed;
   bottom: 0;
@@ -45,7 +39,7 @@ div.footer {
   color: white; 
   }
   
-.logoimage {
+.logoimage { /* małe logo po lewej górnej stronie ekranu */
   height: 90px;
   width: 90px;
   border-radius: 45px;
@@ -61,7 +55,7 @@ a {
     background-color: greenyellow; 
 }
 
-.warning {
+.warning { /* nieprawidłowe hasła / loginy / ostrzeżenia, itp */
     color: red;
 }
 
@@ -70,19 +64,19 @@ a {
     border-radius: 4px;
 }
 
-div.logged {
+div.logged { /* wyświetlana nazwa zalogowanego użytkonika na górnej belce */
     text-align: right;
     color: white;
 }
 
-a.linklogged {
+/* a.linklogged { tylko na potrzeby testów
     border: dotted 1px;
     border-radius: 4px;
     border-color: green;
     text-decoration: none;
     background-color: greenyellow; 
-}
+} */
 
 #footerlink8, #footerlink7, #footerlink6, #footerlink5, #footerlink4, #footerlink3, #footerlink2 {
-    background-color: #c2c2a3; 
+    background-color: #c2c2a3; /* zabronione/nieaktywne linki na dolnej belce */
 }
