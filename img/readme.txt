@@ -1,3 +1,5 @@
+.jpg (logo, backlogo) - License: Public Domain
+http://www.publicdomainpictures.net/
 
 ========================================================
  Pattern grey_sandbag is downloaded from www.subtlepatterns.com 
@@ -5,7 +7,7 @@
  =======================================================
 
 logo.jpg
-- na każdej podstronie, lewy górny róg. Przekierowanie z obrazu na github.
+- na każdej podstronie, lewy górny róg. (w planach)Przekierowanie z obrazu na github.
 
 backlogo.jpg
 - na każdej podstronie jako belka na górze i przyklejona belka na dole z linkami
