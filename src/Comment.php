@@ -1,14 +1,16 @@
 <?php
 
-class Tweet {
+class Comment {
     private $id;
     private $userId;
+    private $tweetId;
     private $text;
     private $creationDate;
     
     public function __construct() {
         $this->id = -1;
         $this->userId = 0;
+        $this->tweetId = 0;
         $this->text = "";
         $this->creationDate = "";
     }
@@ -21,6 +23,10 @@ class Tweet {
         return $this->userId;
     }
     
+    public function getTweetId() {
+        return $this->tweetId;
+    }
+    
     public function getText() {
         return $this->text;
     }
@@ -28,42 +34,69 @@ class Tweet {
     public function getCreationDate() {
         return $this->creationDate;
     }
-    
+  
     public function setUserId($userId) {
-        $this->userId = $userId;
+        if (is_numeric($userId)) {
+            $this->userId = $userId;
+        } else {
+            return FALSE;
+        }
+    }
+    
+    public function setTweetId($tweetId) {
+        if (is_numeric($tweetId)) {
+            $this->tweetId = $tweetId;
+        } else {
+            return FALSE;
+        }
     }
     
     public function setText($text) {
-        $this->text = $text;
+        if ((strlen(trim($text)) >= 3) && (strlen(trim($text)) <= 60)) {
+            $this->text = trim($text);
+        } else {
+            return FALSE;
+        }
     }
     
     public function setCreationDate($creationDate) {
         $this->creationDate = $creationDate;
     }
-    
-    static public function loadTweetById(mysqli $conn, $id) {
-        $sql = "SELECT * FROM tweet WHERE tweet_id = $id";
+
+    static public function loadCommentById(mysqli $conn, $id) {
+        $id = $conn->real_escape_string($id);
+        $sql = "SELECT * FROM comment WHERE comment_id = $id";
         $result = $conn->query($sql);
         
         if ($result != false && $result->num_rows == 1) {
             $row = $result->fetch_assoc();
             
-            $loadTweet = new Tweet();
-            $loadTweet->id = $row['tweet_id'];
-            $loadTweet->userId = $row['tweet_user_id'];
-            $loadTweet->text = $row['tweet_text'];
-            $loadTweet->creationDate = $row['tweet_date'];
+            $loadedComment = new Comment();
+            $loadedComment->id = $row['comment_id'];
+            $loadedComment->userId = $row['comment_user_id'];
+            $loadedComment->tweetId = $row['comment_tweet_id'];
+            $loadedComment->creationDate = $row['comment_creation_date'];
+            $loadedComment->text = $row['comment_text'];
             
-            return $loadTweet;
+            return $loadedComment;
         } else {
-            return null;
+            return NULL;
         }
     }
     
-     static public function loadAllTweetByUserId(mysqli $conn, $userid){ //dziala. nie do konca...
-        $sql = "SELECT * FROM tweet WHERE tweet_user_id = $userid";
+    static public function loadAllCommentsByTweetId(mysqli $conn, $tweetId) {
+        $tweetId = $conn->real_escape_string($tweetId);
+        $sql = "SELECT * FROM comment WHERE comment_tweet_id = $tweetId";
         $ret = [];
         $result = $conn->query($sql);
+        
+        if($result == true && $result->num_rows != 0) {
+            //
+        }
+    }
+
+    /*      
+
         
         if($result == true && $result->num_rows != 0){
            foreach($result as $row){
@@ -78,7 +111,7 @@ class Tweet {
            return $ret; 
     }
     
-    static public function loadAllTweets(mysqli $conn) { 
+    static public function loadAllTweets(mysqli $conn) { // dziala. pierd. 4 dni nad literowka
         $sql = "SELECT * FROM tweet ORDER BY tweet_date DESC";
         $result = $conn->query($sql);
         $ret = [];
@@ -122,7 +155,7 @@ class Tweet {
     
     
     
-    
+  */  
     
 }
 
