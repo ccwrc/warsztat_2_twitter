@@ -1,3 +1,5 @@
+Założenia projektowe:
+
 strona główna - index.php (działa, do poprawek)
 Strona wyświetlająca wszystkie Tweety jakie znajdują się w systemie (od najnowszego do
 najstarszego). Nad nimi ma być widoczny formularz do stworzenia nowego wpisu.
@@ -14,7 +16,7 @@ Jeżeli takiego emaila nie ma jeszcze w systemie, to dodać go i zalogować (prz
 Jeżeli taki email jest, to przekierować znowu do strony tworzenia użytkownika i wyświetlić
 komunikat o zajętym adresie email.
 
-Strona wyświetlania użytkownika - showuser.php (działa, na razie dla zalogowanego usera)
+Strona wyświetlania użytkownika - showuser.php (działa, do uzupełnienia)
 Strona ma pokazać wszystkie wpisy danego użytkownika (dodatkowo pod każdym liczbę komentarzy do danego wpisu).
 Na tej stronie ma być też guzik, który umożliwi nam wysłanie wiadomości do tego użytkownika.
 
@@ -31,9 +33,9 @@ Użytkownik ma mieć możliwość wyświetlenia listy wiadomości, które otrzym
  Wiadomości wysłane mają wyświetlać odbiorcę, datę wysłania i początek wiadomości (pierwsze 30 znaków).
  Wiadomości odebrane mają wyświetlać nadawcę, datę wysłania i początek wiadomości (pierwsze 30 znaków).
 Wiadomości jeszcze nieprzeczytane powinny być jakoś oznaczone.
----Uwagi: 2x message + 2x check dla nadawcy i odbiorcy do 'kasowania'
+-Uwagi: 2x message + 2x check dla nadawcy i odbiorcy do 'kasowania'
 
-Stronę wiadomości - messageinfo.php
+Strona wiadomości - messageinfo.php
 Wszystkie informacje o wiadomości: nadawca, odbiorca, treść.
 
 Strona wylogowania, dodatek - logoff.php (SKOŃCZONA)

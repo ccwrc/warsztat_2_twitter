@@ -29,6 +29,7 @@
         $newTweet->setUserId($userId);
         $newTweet->setText($userTweet);
         $newTweet->setCreationDate($actualDate); 
+        // $newTweet->setCreationDate(now()); 
         $newTweet->saveToDb($conn);
         unset($_POST['newtweet']);
   }
@@ -59,7 +60,7 @@
 <body>
   <div class="container">
 	  
-	  <div class="logo" id="mainBackLogo"> <!--mainBackLogo - dodac wszedzie?-->
+	  <div class="logo" id="mainBackLogo"> 
             <img class="logoimage" id="logoimage" src="img/logo.jpg">  
             <div class="logged"> <?=$_SESSION['logged']?> jest w dziupli. </div>
 	  </div>

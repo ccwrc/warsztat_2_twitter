@@ -4,8 +4,8 @@ $(document).ready(function() {
   var divMainLogo = $('#mainBackLogo');
   var smallImageDivMainLogo = $('#logoimage');
  
-  var logoSound = new Audio('sound_sample/logosound.mp3');
   var backLogoSound = new Audio('sound_sample/backlogosound.mp3');
+  var logoSound = new Audio('sound_sample/logosound.mp3');
 
     // start i stop dla dzwieku na belce gornej
   divMainLogo.on('mouseenter', function() {

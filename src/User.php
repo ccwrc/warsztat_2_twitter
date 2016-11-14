@@ -1,11 +1,5 @@
 <?php
 
-/* CREATE TABLE users ( user_id int AUTO_INCREMENT, 
- * user_name varchar(255) NOT NULL, 
- * hashed_password varchar(60) NOT NULL, 
- * user_email varchar(255) UNIQUE NOT NULL, 
- * PRIMARY KEY(user_id) ); */
-
 class User {  // mozna zamiennie wrzucic w setery real escape string
     private $id;
     private $username;
@@ -114,11 +108,9 @@ class User {  // mozna zamiennie wrzucic w setery real escape string
     }
     
     public function saveToDB(mysqli $conn) {
-        if ($this->id == -1) { //  prepare statements
+        if ($this->id == -1) {
             $statement = $conn->prepare("INSERT INTO users(user_name, hashed_password, user_email)
             VALUES (?,?,?)");
-         //   $sql = "INSERT INTO users(username, hashedPassword, email)
-          //  VALUES ('$this->username', '$this->hashedPassword', '$this->email')";
             $statement->bind_param('sss', $this->username, $this->hashedPassword, $this->email);
             if ($statement->execute()) { //execute wysyla zapytanie do bazy
                 $this->id = $statement->insert_id;
@@ -138,7 +130,7 @@ class User {  // mozna zamiennie wrzucic w setery real escape string
         }
     }
     
-    public function delete(mysqli $conn){
+    public function deleteById(mysqli $conn){
           if($this->id != -1){
             $sql = "DELETE FROM users WHERE user_id=$this->id";
             $result = $conn->query($sql);

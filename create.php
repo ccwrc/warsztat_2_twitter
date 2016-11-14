@@ -92,7 +92,7 @@
 <body>
   <div class="container">
 	  
-	  <div class="logo">
+	  <div class="logo" id="mainBackLogo">
             <img class="logoimage" id="logoimage" src="img/logo.jpg">    
 	  </div>
 

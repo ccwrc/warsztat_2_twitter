@@ -77,7 +77,7 @@
 <body>
   <div class="container">
 	  
-	  <div class="logo">
+	  <div class="logo" id="mainBackLogo">
             <img class="logoimage" id="logoimage" src="img/logo.jpg">  
 	  </div>
 
@@ -109,8 +109,6 @@ Strona logowania ma mieć też link do strony tworzenia użytkownika. -->
         <center>
             <h4><a href="create.php">Nie masz własnej dziupli w lesie? Kliknij tutaj żeby ją stworzyć.</a></h4>
         </center>    
-      
-      <p class="warning">Testowy login(mail): admin@dziecioly.pl hasło: admin</p>  
         
       </div>
 

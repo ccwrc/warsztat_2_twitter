@@ -1,0 +1,4 @@
+
+Testowy login(mail): admin@dziecioly.pl 
+
+hasło: admin
