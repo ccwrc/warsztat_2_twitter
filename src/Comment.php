@@ -63,9 +63,9 @@ class Comment {
         $this->creationDate = $creationDate;
     }
 
-    static public function loadCommentById(mysqli $conn, $id) {
-        $id = $conn->real_escape_string($id);
-        $sql = "SELECT * FROM comment WHERE comment_id = $id";
+    static public function loadCommentById(mysqli $conn, $idc) {
+        $idc = $conn->real_escape_string($idc);
+        $sql = "SELECT * FROM comment WHERE comment_id = $idc";
         $result = $conn->query($sql);
         
         if ($result != false && $result->num_rows == 1) {
@@ -84,47 +84,21 @@ class Comment {
         }
     }
     
-    static public function loadAllCommentsByTweetId(mysqli $conn, $tweetId) {
-        $tweetId = $conn->real_escape_string($tweetId);
-        $sql = "SELECT * FROM comment WHERE comment_tweet_id = $tweetId";
+    static public function loadAllCommentsByTweetId(mysqli $conn, $ctweetId) {
+        $ctweetId = $conn->real_escape_string($ctweetId);
+        $sql = "SELECT * FROM comment WHERE comment_tweet_id = $ctweetId";
         $ret = [];
         $result = $conn->query($sql);
         
         if($result == true && $result->num_rows != 0) {
-            //
-        }
-    }
-
-    /*      
-
-        
-        if($result == true && $result->num_rows != 0){
-           foreach($result as $row){
-           $loadTweet = new Tweet();
-           $loadTweet->id = $row['tweet_id'];
-           $loadTweet->userId = $row['tweet_user_id'];
-           $loadTweet->text = $row['tweet_text'];
-           $loadTweet->creationDate = $row['tweet_date'];
-           $ret[$loadTweet->id] = $loadTweet;
-           }
-         }
-           return $ret; 
-    }
-    
-    static public function loadAllTweets(mysqli $conn) { // dziala. pierd. 4 dni nad literowka
-        $sql = "SELECT * FROM tweet ORDER BY tweet_date DESC";
-        $result = $conn->query($sql);
-        $ret = [];
-        
-        if ($result == true && $result->num_rows != 0) {
-            foreach ($result as $row) {
-                $loadTweet = new Tweet();
-                $loadTweet->tweetId = $row['tweet_id'];
-                $loadTweet->userId = $row['tweet_user_id'];
-                $loadTweet->text = $row['tweet_text'];
-                $loadTweet->creationDate = $row['tweet_date'];
-                
-                $ret[$loadTweet->tweetId] = $loadTweet;
+            foreach($result as $row) {
+                $loadedComment = new Comment();
+                $loadedComment->id = $row['comment_id'];
+                $loadedComment->userId = $row['comment_user_id'];
+                $loadedComment->tweetId = $row['comment_tweet_id'];
+                $loadedComment->creationDate = $row['comment_creation_date'];
+                $loadedComment->text = $row['comment_text'];
+                $ret[] = $loadedComment;
             }
         }
         return $ret;
@@ -132,30 +106,25 @@ class Comment {
     
     public function saveToDb(mysqli $conn) {
         if ($this->id == -1) {
-            $sql = "INSERT INTO tweet (tweet_user_id, tweet_text, tweet_date) VALUES "
-                    . "('$this->userId', '$this->text', '$this->creationDate')";
+            $sql = "INSERT INTO comment (comment_user_id, comment_tweet_id, comment_creation_date, comment_text) VALUES ('$this->userId', '$this->tweetId', '$this->creationDate', '$this->text')";
             $result = $conn->query($sql);
             if ($result == true) {
                 $this->id = $conn->insert_id;
                 return true;
-            } else {
-                $sql = "UPDATE tweet SET tweet_user_id = $this->userId, "
-                        . "tweet_text = '$this->text', tweet_date = '$this->creationDate'"
-                        . "WHERE tweet_id = $this->id";
-                $result = $conn->query($sql);
-                if ($result) {
-                    return true;
-                }
+            }
+        } else {
+            $sql = "UPDATE comment SET comment_user_id = $this->userId, "
+                    . "comment_tweet_id = $this->tweetId, "
+                    . "comment_creation_date = $this->creationDate, "
+                    . "comment_text = '$this->text' WHERE comment_id = $this->id";
+            $result = $conn->query($sql);
+            if ($result == true) {
+                return true;
             }
             return false;
         }
     }
-
-
-    
-    
-    
-  */  
+ 
     
 }
 
