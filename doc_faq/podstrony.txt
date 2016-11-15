@@ -40,3 +40,5 @@ Wszystkie informacje o wiadomości: nadawca, odbiorca, treść.
 
 Strona wylogowania, dodatek - logoff.php (SKOŃCZONA)
 
+Strona potwierdzenia dodania komentarza, dodatek - commentadded.php (działa, została 1 poprawka)
+

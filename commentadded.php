@@ -58,6 +58,7 @@
     
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $commentText = $conn->real_escape_string(trim($_POST['newtweetcomment']));
+        $commentText = htmlentities($commentText, ENT_QUOTES, "UTF-8");
         // dopisac warunek trim 3-60 znakow
         $newComment = new Comment();
         $newComment->setUserId($_SESSION['user_id']);

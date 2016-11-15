@@ -26,6 +26,7 @@
                $userEmail = strtolower(trim($_POST['useremail']));
                $userPassword = trim($_POST['userpassword1']);
                $userName = trim($_POST['username']);
+               $userName = htmlentities($userName, ENT_QUOTES, "UTF-8");
                
                $userEmail = $conn->real_escape_string($userEmail);
                $userPassword = $conn->real_escape_string($userPassword);

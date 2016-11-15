@@ -90,6 +90,12 @@ Na tej stronie ma być też guzik, który umożliwi nam wysłanie wiadomości do
         echo "Jesteś na stronie dzięcioła o nicku: " . User::loadUserById($conn, $userid)->getUsername() . "<br/><br/>";
         echo "</strong>";
         
+        //formularz wysylania wiadomosci do uzytkownika
+        echo "<form method=\"POST\" action=\"jeszczeniewiem.php\">";
+        echo "<textarea name=\"messageforstranger\" cols=50 placeholder=\"Tu wpisz wiadomość do dzięcioła.\"></textarea><br/>";
+        echo " <input type=\"submit\" value=\"Kliknij żeby wysłać\"/>";
+        echo "<form> <br/><br/>";
+        
         $sql = "SELECT * FROM tweet WHERE tweet_user_id = $userid";
         $result = $conn->query($sql);
       

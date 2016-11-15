@@ -24,6 +24,7 @@
       && isset($_POST['newtweet']) && trim($_POST['newtweet']) != '') {
         $userId = $_SESSION['user_id'];
         $userTweet = trim($_POST['newtweet']);
+        $userTweet = htmlentities($userTweet, ENT_QUOTES, "UTF-8");
         $userTweet = $conn->real_escape_string($userTweet);
         
         $newTweet = new Tweet();
