@@ -14,6 +14,7 @@
   include_once "src/User.php";
   include_once "src/Tweet.php";
   include_once "src/connect.php";
+  include_once 'src/Comment.php';
 
   $actualDate = date("Y-m-d H:i:s");
   $conn = getDbConnection();
@@ -87,12 +88,13 @@
 
   foreach ($allTweets as $tweet) {
     $userId = $tweet->getUserId();
-    $tweetId = $tweet->getId();
+    $tweetId = $tweet->tweetId;
     
     echo "<table class='tweet'>";
     echo "<tr><td> ";
     echo "Autor: <a href=\"showuser.php?strangeuser=$userId\">" .User::loadUserById($conn, $userId)->getUsername(). "</a> ";
-    echo "Data publikacji: " . $tweet->getCreationDate();
+    echo "Data publikacji: " . $tweet->getCreationDate() . " ";
+    echo "<a href=\"detail.php?tweetid=$tweetId&fromindex=true\">Skomentuj</a>";
     echo "</td></tr> <tr><td>";
     echo $tweet->getText();
     echo "</td></tr>";

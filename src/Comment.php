@@ -86,7 +86,8 @@ class Comment {
     
     static public function loadAllCommentsByTweetId(mysqli $conn, $ctweetId) {
         $ctweetId = $conn->real_escape_string($ctweetId);
-        $sql = "SELECT * FROM comment WHERE comment_tweet_id = $ctweetId";
+        $sql = "SELECT * FROM comment WHERE comment_tweet_id = $ctweetId "
+                . "ORDER BY comment_creation_date DESC";
         $ret = [];
         $result = $conn->query($sql);
         
@@ -106,7 +107,9 @@ class Comment {
     
     public function saveToDb(mysqli $conn) {
         if ($this->id == -1) {
-            $sql = "INSERT INTO comment (comment_user_id, comment_tweet_id, comment_creation_date, comment_text) VALUES ('$this->userId', '$this->tweetId', '$this->creationDate', '$this->text')";
+            $sql = "INSERT INTO comment (comment_user_id, comment_tweet_id, comment_creation_date, "
+                    . "comment_text) VALUES ('$this->userId', '$this->tweetId', "
+                    . "'$this->creationDate', '$this->text')";
             $result = $conn->query($sql);
             if ($result == true) {
                 $this->id = $conn->insert_id;

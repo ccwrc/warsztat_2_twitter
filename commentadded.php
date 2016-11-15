@@ -1,26 +1,20 @@
 <?php
 
   session_start();
-  
-  if (!isset($_SESSION['logged'])) {
+
+  if (!isset($_SESSION['logged']) || !isset($_SESSION['actualTweetId']) 
+      || !isset($_POST['newtweetcomment'])) {
     header("location: logon.php");
     exit;
-  }
+  } 
   
   include_once "src/User.php";
   include_once "src/Tweet.php";
   include_once "src/connect.php";
   include_once 'src/Comment.php';
-
-  $conn = getDbConnection();
-
-
-
-
-
-
-  $conn->close();
-  $conn = null;  
+  
+  $actualDate = date("Y-m-d H:i:s");
+  $message = "";
   
 ?>
 
@@ -30,7 +24,7 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	
-	<title>Dzięcioły - edycja użytkownika </title>
+	<title>Dzięcioły - dodawanie komentarza </title>
 	
 	<meta name="description" content="Prawie jak Twitter" />
 	<meta name="keywords" content="dzięcioły, twitter" />
@@ -39,7 +33,7 @@
 	<link rel="stylesheet" href="css/style.css" type="text/css" />
 	
 	<script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/app.js"></script>	
+        <script src="js/app.js"></script>	
 </head>
 
 <body>
@@ -52,15 +46,48 @@
 
 
       <div class="content">
-      <!-- Strona edycji użytkownika - edituser.php
-Użytkownik ma mieć możliwość edycji informacji o sobie i zmiany hasła. Pamiętaj o tym,
-że użytkownik może edytować tylko i wyłącznie swoje informacje. -->
-   
+      <!-- Strona potwierdzenia dodania komentarza - commentadded.php -->
       
+        <br/><br/>
       
+
+     
+    <?php  
+    
+    $conn = getDbConnection();
+    
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $commentText = $conn->real_escape_string(trim($_POST['newtweetcomment']));
+        // dopisac warunek trim 3-60 znakow
+        $newComment = new Comment();
+        $newComment->setUserId($_SESSION['user_id']);
+        $newComment->setTweetId($_SESSION['actualTweetId']);
+        $newComment->setCreationDate($actualDate);
+        $newComment->setText($commentText);
+        $newComment->saveToDb($conn);
+        
+        $message = "Komentarz dodany!";
+        unset($_SESSION['actualTweetId']);
+        
+    } else {
+        $message = "Dodanie komentarza nie było możliwe.";
+        unset($_SESSION['actualTweetId']);
+    }
+      
+     $conn->close();
+     $conn = null;
+     
+     echo "<br/>";
+     echo "&nbsp;"."<a href='index.php'>Powrót do strony głównej</a>"; 
+     echo "<br/><br/>";
+    
+    ?>
+        
+        <br /> <center>
+        <h4 class="warning"><?=$message?></h4>
+        </center>  
       
       </div>
-
 
       <div class ="footer">
                   <br/><br/>
@@ -72,7 +99,7 @@ Użytkownik ma mieć możliwość edycji informacji o sobie i zmiany hasła. Pam
 		  <a href="edituser.php">Edycja dziupli</a> 
 		  <a href="messages.php">Wiadomości</a> 
 		  <a href="logoff.php">Wyloguj</a> 
-      </div>       
+      </div>     
           
   </div>
 </body>
