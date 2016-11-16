@@ -113,7 +113,8 @@ Na tej stronie ma być też guzik, który umożliwi nam wysłanie wiadomości do
         
         //formularz wysylania wiadomosci do uzytkownika
         echo "<form method=\"POST\" action=\"jeszczeniewiem.php\">";
-        echo "<textarea name=\"messageforstranger\" cols=50 placeholder=\"Tu wpisz wiadomość do dzięcioła.\"></textarea><br/>";
+        echo "<textarea name=\"messageforstranger\" cols=50 placeholder=\"Tu wpisz wiadomość "
+        . "do dzięcioła (maksymalnie 25000 znaków).\" maxlength=\"20000\"></textarea><br/>";
         echo " <input type=\"submit\" value=\"Kliknij żeby wysłać\"/>";
         echo "<form> <br/><br/>";
         
