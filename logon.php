@@ -12,6 +12,13 @@
   include_once "src/connect.php";
   include_once 'src/Comment.php';
   include_once 'src/arrays.php';
+  // ptasi los - link generowany losowo
+  $searchMax = count($searchIn);
+  $wordMax = count($searchWords);
+  $randSearch = rand(1, $searchMax) - 1;
+  $randWord = rand(1, $wordMax) - 1;
+  $linkSearch = $searchIn[$randSearch];
+  $linkWord = $searchWords[$randWord];
   
   $message = ""; //wiadomosc podawana po blednej probie zalogowania
   
@@ -117,6 +124,7 @@ Strona logowania ma mieć też link do strony tworzenia użytkownika. -->
 
       <div class ="footer">
                   <br/><br/>
+                  <a href="<?=$linkSearch?><?=$linkWord?>" target="_blank">Ptasi los</a>
                   <a href="http://www.lesnepogotowie.pl/" target="_blank">Leśne pogotowie</a>
 		  <a id="footerlink2" href="index.php">Dzięcioły</a> 
 		  <a href="logon.php">Logowanie</a> 

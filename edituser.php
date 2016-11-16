@@ -12,6 +12,13 @@
   include_once "src/connect.php";
   include_once 'src/Comment.php';
   include_once 'src/arrays.php';
+  // ptasi los - link generowany losowo
+  $searchMax = count($searchIn);
+  $wordMax = count($searchWords);
+  $randSearch = rand(1, $searchMax) - 1;
+  $randWord = rand(1, $wordMax) - 1;
+  $linkSearch = $searchIn[$randSearch];
+  $linkWord = $searchWords[$randWord];
   
   $message = ""; // wiadomosc informacyjna
   $conn = getDbConnection();
@@ -29,7 +36,7 @@
          && (strlen(trim($_POST['newusername']))) >= 3 
          && (strlen(trim($_POST['newusername']))) <=65
          && (password_verify($_POST['oldpassword'], $getHashedPassword))) {
-           $newUserName = $_POST['newusername'];
+           $newUserName = trim($_POST['newusername']);
            $newUserName = $conn->real_escape_string($newUserName);
            $newUserName = htmlentities($newUserName, ENT_QUOTES, "UTF-8");
            $userId = $_SESSION['user_id'];        
@@ -192,6 +199,7 @@ Użytkownik ma mieć możliwość edycji informacji o sobie i zmiany hasła. Pam
 
       <div class ="footer">
                   <br/><br/>
+                  <a href="<?=$linkSearch?><?=$linkWord?>" target="_blank">Ptasi los</a>
                   <a href="http://www.lesnepogotowie.pl/" target="_blank">Leśne pogotowie</a>
 		  <a href="index.php">Dzięcioły</a> 
 		  <a id="footerlink2" href="logon.php">Logowanie</a> 
