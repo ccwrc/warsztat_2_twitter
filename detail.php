@@ -16,6 +16,7 @@
   include_once "src/Tweet.php";
   include_once "src/connect.php";
   include_once 'src/Comment.php';
+  include_once 'src/arrays.php';
   
   $actualDate = date("Y-m-d H:i:s");
   $_SESSION['actualTweetId'] = $_GET['tweetid'];
@@ -63,7 +64,7 @@ Formularz do tworzenia nowego komentarza przypisanego do tego postu. -->
             pattern=".{3,60}" required title="Minimalna liczba znaków to 3, maksymalna 60"/> <br/>
           <input type="submit" value="Skomentuj !"/>
       </form>
-      </center>
+      </center> <br/>
      
     <?php
     
@@ -74,11 +75,13 @@ Formularz do tworzenia nowego komentarza przypisanego do tego postu. -->
       $tweetDetail = Tweet::loadTweetById($conn, $id);
       $userId = $tweetDetail->getUserId();
       
+      echo "<div class=\"tweetbold\">";
       echo "ID wpisu: " . $tweetDetail->getId() . "<br/>";
       echo "Treść wpisu: " . $tweetDetail->getText() . "<br/>";
       echo "ID dzięcioła: " . $tweetDetail->getUserId() . "<br/>";
       echo "Nazwa dzięcioła: " . User::loadUserById($conn, $userId)->getUsername(). "<br/>";
       echo "Data utworzenia wpisu: " . $tweetDetail->getCreationDate() . "<br/><br/>";
+      echo "</div><br/>";
       
       // ladowanie komentarzy do wpisu
       $allComments = Comment::loadAllCommentsByTweetId($conn, $_GET['tweetid']);
@@ -109,11 +112,13 @@ Formularz do tworzenia nowego komentarza przypisanego do tego postu. -->
       $tweetDetail = Tweet::loadTweetById($conn, $id);
       $userId = $tweetDetail->getUserId();
 
+      echo "<div class=\"tweetbold\">";
       echo "ID wpisu: " . $tweetDetail->getId() . "<br/>";
       echo "Treść wpisu: " . $tweetDetail->getText() . "<br/>";
       echo "ID dzięcioła: " . $tweetDetail->getUserId() . "<br/>";
       echo "Nazwa dzięcioła: " . User::loadUserById($conn, $userId)->getUsername(). "<br/>";
       echo "Data utworzenia wpisu: " . $tweetDetail->getCreationDate() . "<br/><br/>";
+      echo "</div><br/>";
       
       // ladowanie komentarzy do wpisu
       $allComments = Comment::loadAllCommentsByTweetId($conn, $_GET['tweetid']);
@@ -146,11 +151,13 @@ Formularz do tworzenia nowego komentarza przypisanego do tego postu. -->
       $tweetDetail = Tweet::loadTweetById($conn, $id);
       $userId = $tweetDetail->getUserId();
 
+      echo "<div class=\"tweetbold\">";
       echo "ID wpisu: " . $tweetDetail->getId() . "<br/>";
       echo "Treść wpisu: " . $tweetDetail->getText() . "<br/>";
       echo "ID dzięcioła: " . $tweetDetail->getUserId() . "<br/>";
       echo "Nazwa dzięcioła: " . User::loadUserById($conn, $userId)->getUsername(). "<br/>";
       echo "Data utworzenia wpisu: " . $tweetDetail->getCreationDate() . "<br/><br/>";
+      echo "</div><br/>";
       
       // ladowanie komentarzy do wpisu
       $allComments = Comment::loadAllCommentsByTweetId($conn, $_GET['tweetid']);
@@ -191,11 +198,13 @@ Formularz do tworzenia nowego komentarza przypisanego do tego postu. -->
       $newComment->setText($_GET['newtweetcomment']);
       $newComment->saveToDb($conn);
 
+      echo "<div class=\"tweetbold\">";
       echo "ID wpisu: " . $tweetDetail->getId() . "<br/>";
       echo "Treść wpisu: " . $tweetDetail->getText() . "<br/>";
       echo "ID dzięcioła: " . $tweetDetail->getUserId() . "<br/>";
       echo "Nazwa dzięcioła: " . User::loadUserById($conn, $userId)->getUsername(). "<br/>";
       echo "Data utworzenia wpisu: " . $tweetDetail->getCreationDate() . "<br/><br/>";
+      echo "</div><br/>";
       
       // ladowanie komentarzy do wpisu
       $allComments = Comment::loadAllCommentsByTweetId($conn, $_GET['tweetid']);

@@ -73,6 +73,11 @@ a.warning {
     border-radius: 4px;
 }
 
+.tweetbold {
+    border: dashed 1px black;
+    border-radius: 4px;
+}
+
 div.logged { /* wyświetlana nazwa zalogowanego użytkonika na górnej belce */
     text-align: right;
     color: white;

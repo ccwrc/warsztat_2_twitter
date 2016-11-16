@@ -8,6 +8,8 @@
   }
   
   session_unset();
+  
+  include_once 'src/arrays.php';
 
 ?>
 

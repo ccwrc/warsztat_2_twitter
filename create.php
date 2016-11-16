@@ -12,6 +12,7 @@
   include_once "src/Tweet.php";
   include_once "src/connect.php";
   include_once 'src/Comment.php';
+  include_once 'src/arrays.php';
   
   $message = ""; //wiadomosc podawana przy zajetym adresie mailowym i bledach hasla
 
