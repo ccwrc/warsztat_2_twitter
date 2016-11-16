@@ -55,6 +55,15 @@ a {
     background-color: greenyellow; 
 }
 
+a.warning {
+    border: dotted 1px;
+    border-radius: 4px;
+    border-color: yellow;
+    text-decoration: none;
+    background-color: red; 
+    color: black;
+}
+
 .warning { /* nieprawidłowe hasła / loginy / ostrzeżenia, itp */
     color: red;
 }

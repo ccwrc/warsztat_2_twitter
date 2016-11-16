@@ -113,7 +113,7 @@ komunikat o zajętym adresie email. -->
         <form method="POST" action="">
             <label> Aby mieć dziuplę w lesie wypełnij wszystkie pola: <br/><br/>
               <input type="text" name="username" placeholder="Podaj nazwę dzięcioła" size="50"
-                pattern=".{1,250}"   required title="Minimalna liczba znaków to 1, maksymalna 250"/>  <br/> 
+                pattern=".{3,65}"   required title="Minimalna liczba znaków to 3, maksymalna 65"/>  <br/> 
               <input type="email" name="useremail" placeholder="Tu wpisz e-mail" size="50"
                 pattern=".{5,250}"   required title="Minimalna liczba znaków to 5, maksymalna 250"/>  <br/>
               <input type="password" name="userpassword1" placeholder="I ustal hasło" size="50"
@@ -123,10 +123,7 @@ komunikat o zajętym adresie email. -->
               <input type="submit" value=" Kliknij tutaj żeby stworzyć własną dziuplę "/>
             </label>    
         </form>
-      
-      
-      
-      
+         
       
 <?php
 
