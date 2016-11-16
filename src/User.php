@@ -39,21 +39,6 @@ class User {  // mozna zamiennie wrzucic w setery real escape string
         $newHashedPassword = password_hash($hashedPassword, PASSWORD_BCRYPT);
         $this->hashedPassword = $newHashedPassword;
     }
-    /* nowsza wersja funkcji na dole
-    public function saveToDB(mysqli $conn) {
-        if ($this->id == -1) { // zastosowac prepare statements
-            $statement = $conn->prepare("INSERT INTO users(username, hashedPassword, email)
-            VALUES (?,?,?)");
-         //   $sql = "INSERT INTO users(username, hashedPassword, email)
-          //  VALUES ('$this->username', '$this->hashedPassword', '$this->email')";
-            $statement->bind_param('sss', $this->username, $this->hashedPassword, $this->email);
-            if ($statement->execute()) { //execute wysyla zapytanie do bazy
-                $this->id = $statement->insert_id;
-                return true;
-            }
-            return false;
-        }
-    } */
     
     static public function loadUserById(mysqli $conn, $id){
         $sql = "SELECT * FROM users WHERE user_id=$id";

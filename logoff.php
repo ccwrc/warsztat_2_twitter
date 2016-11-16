@@ -8,21 +8,6 @@
   }
   
   session_unset();
-  
-  /* po testach - też zbędne
-  unset($_SESSION['logged']);
-  unset($_SESSION['user_id']);
-  unset($_SESSION['user_email']); */
-  
-  /* po testach, ponizsze niepotrzebne
-  include_once "src/User.php";
-  include_once "src/Tweet.php";
-  include_once "src/connect.php";
-  
-  $conn = getDbConnection();
-
-  $conn->close();
-  $conn = null;  */
 
 ?>
 

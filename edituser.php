@@ -25,8 +25,9 @@
       
       // zmiana nazwy usera
       if (isset($_POST['newusername']) && isset($_POST['oldpassword']) 
-         && strlen(trim($_POST['newusername'])) >= 3 && strlen(trim($_POST['newusername'])) <=65
-         && password_verify($_POST['oldpassword'], $getHashedPassword)) {
+         && (strlen(trim($_POST['newusername']))) >= 3 
+         && (strlen(trim($_POST['newusername']))) <=65
+         && (password_verify($_POST['oldpassword'], $getHashedPassword))) {
            $newUserName = $_POST['newusername'];
            $newUserName = $conn->real_escape_string($newUserName);
            $newUserName = htmlentities($newUserName, ENT_QUOTES, "UTF-8");
@@ -40,17 +41,16 @@
            } else {
                $message = "Błąd połączenia z bazą, zapukaj za kilka minut";
            }
-      } else {
-          $message = "Podałeś błędne hasło lub nazwa dzięcioła nie trzyma standardu (3-65 znaków)...";
-          unset($_POST['newusername']);
-      }  // koniec edycji nazwy usera
+      }  
           
         // zmiana hasła usera
-      if (isset($_POST['newpassword1']) && isset($_POST['newpassword2']) && isset($_POST['oldpassword']) 
-         && strlen(trim($_POST['newpassword1'])) >= 3 && strlen(trim($_POST['newpassword1'])) <=65
+      if (isset($_POST['newpassword1']) && isset($_POST['newpassword2']) 
+         && isset($_POST['oldpassword']) 
+         && (strlen(trim($_POST['newpassword1'])) >= 3) 
+         && (strlen(trim($_POST['newpassword1'])) <=65)
          && ($_POST['newpassword1'] === $_POST['newpassword2'])     
-         && password_verify($_POST['oldpassword'], $getHashedPassword)) {
-           $newHashedPassword = password_hash($_POST['newpassword1'], PASSWORD_BCRYPT);
+         && (password_verify($_POST['oldpassword'], $getHashedPassword))) {
+           $newHashedPassword = password_hash(trim($_POST['newpassword1']), PASSWORD_BCRYPT);
            $userId = $_SESSION['user_id'];        
            $sql = "UPDATE users SET hashed_password = '$newHashedPassword' WHERE user_id = $userId";
            $result = $conn->query($sql);
@@ -62,16 +62,29 @@
            } else {
                $message = "Błąd połączenia z bazą, zapukaj za kilka minut";
            }
-      } else {
-          $message = "Podałeś błędne hasło lub długość nie trzyma standardu (3-65 znaków)...";
-          unset($_POST['newpassword1']);          
-          unset($_POST['newpassword2']);        
-      }  // koniec zmiany hasła        
+      }      
+      
+        // usuniecie usera
+      if (isset($_POST['deleteuser'])   
+         && (password_verify($_POST['deleteuser'], $getHashedPassword))) {
+           $userId = $_SESSION['user_id'];        
+           $sql = "DELETE FROM users WHERE user_id = $userId";
+           $result = $conn->query($sql);
+           if($result == true) {
+               $message = "Dziupla usunięta...";
+               session_unset();
+               header("location: logon.php");
+               exit;
+           } else {
+               $message = "Błąd połączenia z bazą, zapukaj za kilka minut";
+           }
+      } 
           
-          
-          
-          
-          
+    unset($_POST['deleteuser']);      
+    unset($_POST['newusername']);
+    unset($_POST['newpassword1']);          
+    unset($_POST['newpassword2']); 
+    unset($_POST['oldpassword']);         
   }
 
   $conn->close();

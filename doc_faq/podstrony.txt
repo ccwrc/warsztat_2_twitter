@@ -1,8 +1,9 @@
 Założenia projektowe:
 
-strona główna - index.php (działa, do poprawek)
+strona główna - index.php (działa zgodnie z założeniami, do poprawek)
 Strona wyświetlająca wszystkie Tweety jakie znajdują się w systemie (od najnowszego do
 najstarszego). Nad nimi ma być widoczny formularz do stworzenia nowego wpisu.
+- Uwagi: kontrolę licznika znaków można zrobić na JS
 
 (dostępna bez zalogowania) strona logowania - logon.php (SKOŃCZONA)
 Strona ma przyjmować email użytkownika i jego hasło.
@@ -20,13 +21,14 @@ Strona wyświetlania użytkownika - showuser.php (działa, do uzupełnienia)
 Strona ma pokazać wszystkie wpisy danego użytkownika (dodatkowo pod każdym liczbę komentarzy do danego wpisu).
 Na tej stronie ma być też guzik, który umożliwi nam wysłanie wiadomości do tego użytkownika.
 
-Strona wyświetlania postu - detail.php (dawny showpost.php)
+Strona wyświetlania postu - detail.php (dawny showpost.php) (SKOŃCZONA)
 Ta strona ma wyświetlać: post('tweet'), autora postu, wszystkie komentarze do każdego z postów.
 Formularz do tworzenia nowego komentarza przypisanego do tego postu.
 
-Strona edycji użytkownika - edituser.php
+Strona edycji użytkownika - edituser.php (działa, pobieżnie skończona)
 Użytkownik ma mieć możliwość edycji informacji o sobie i zmiany hasła. Pamiętaj o tym,
 że użytkownik może edytować tylko i wyłącznie swoje informacje.
+- Uwagi: do całkowitej przebudowy (koncepcja nie do końca prawidłowa), dodać komunikaty o błędach
 
 Strona z wiadomościami - messages.php
 Użytkownik ma mieć możliwość wyświetlenia listy wiadomości, które otrzymał i wysłał.
@@ -41,4 +43,5 @@ Wszystkie informacje o wiadomości: nadawca, odbiorca, treść.
 Strona wylogowania, dodatek - logoff.php (SKOŃCZONA)
 
 Strona potwierdzenia dodania komentarza, dodatek - commentadded.php (działa, została 1 poprawka)
+- Uwagi: można przebudować i zespolić z detail.php (do przemyślenia)
 

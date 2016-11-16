@@ -58,7 +58,7 @@ a {
 a.warning {
     border: dotted 1px;
     border-radius: 4px;
-    border-color: yellow;
+    border-color: violet;
     text-decoration: none;
     background-color: red; 
     color: black;

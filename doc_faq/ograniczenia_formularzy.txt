@@ -1,0 +1,14 @@
+
+post/tweet - od 3 do 140 znaków
+
+komentarz do postu/tweeta - od 3 do 60 znaków
+
+e-mail - od 5 do 250 znaków
+
+nazwa użytkownika - od 3 do 65 znaków
+
+hasło - od 3 do 65 znaków
+
+prywatna wiadmość wysyłana do inego użytkownika - do ustalenia
+
+
