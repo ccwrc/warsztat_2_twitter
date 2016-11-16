@@ -222,7 +222,7 @@ Formularz do tworzenia nowego komentarza przypisanego do tego postu. -->
     }
     
     ?>
-      
+      <br/><br/><br/><br/><br/> <!-- 5x br do odsloniecia tresci (przyklejony dolny panel)-->
       </div>
 
       <div class ="footer">

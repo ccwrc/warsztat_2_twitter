@@ -58,7 +58,7 @@ Użytkownik ma mieć możliwość edycji informacji o sobie i zmiany hasła. Pam
    
       
       
-      
+      <br/><br/><br/><br/><br/> <!-- 5x br do odsloniecia tresci (przyklejony dolny panel)-->
       </div>
 
 

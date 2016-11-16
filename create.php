@@ -137,7 +137,7 @@ komunikat o zajętym adresie email. -->
 ?>
       
       
-      
+      <br/><br/><br/><br/><br/> <!-- 5x br do odsloniecia tresci (przyklejony dolny panel)-->
       </div>
 
 

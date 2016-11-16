@@ -7,6 +7,11 @@
     exit;
   } 
   
+  // blokada wyslania wiadomosci do samego siebie
+  if (isset($_GET['strangeuser']) && (($_GET['strangeuser']) == ($_SESSION['user_id']))) {
+      unset($_GET['strangeuser']);
+  }
+  
   include_once "src/User.php";
   include_once "src/Tweet.php";
   include_once "src/connect.php";
@@ -69,8 +74,12 @@ Na tej stronie ma być też guzik, który umożliwi nam wysłanie wiadomości do
         if($result == true && $result->num_rows != 0){
            foreach($result as $row){
              echo "Wpis o ID " . $row['tweet_id'] . ": ";
+             //wczytywanie ilosci komentarzy
+             $commentsCount = 0;
+             $comments = Comment::loadAllCommentsByTweetId($conn, $row['tweet_id']);
+             foreach ($comments as $comment) {$commentsCount++;}
              echo $row['tweet_text'] . "<br/>";
-             echo "Data utworzenia wpisu: " . $row['tweet_date'] . " " . "<a href=\"detail.php?tweetid=".$row['tweet_id']."\">Detale wpisu</a>" . "<br/><br/>";
+             echo "Data utworzenia wpisu: " . $row['tweet_date'] . " <b>Komentarze: " . $commentsCount . "</b> &nbsp;" . "<a href=\"detail.php?tweetid=".$row['tweet_id']."\">Detale wpisu</a>" . "<br/><br/>";
            }
         } else {
            echo "Nie podzieliłeś się z nikim wiadomością, może czas to zmienić? ";
@@ -102,8 +111,12 @@ Na tej stronie ma być też guzik, który umożliwi nam wysłanie wiadomości do
         if($result == true && $result->num_rows != 0){
            foreach($result as $row){
              echo "Wpis o ID " . $row['tweet_id'] . ": ";
+             //wczytywanie ilosci komentarzy
+             $commentsCount = 0;
+             $comments = Comment::loadAllCommentsByTweetId($conn, $row['tweet_id']);
+             foreach ($comments as $comment) {$commentsCount++;}
              echo $row['tweet_text'] . "<br/>";
-             echo "Data utworzenia wpisu: " . $row['tweet_date'] . " " . "<a href=\"detail.php?tweetid=".$row['tweet_id']."&strangeuser=".$_GET['strangeuser']."\">Detale wpisu</a>" . "<br/><br/>";
+             echo "Data utworzenia wpisu: " . $row['tweet_date'] . " <b>Komentarze: " . $commentsCount . "</b> &nbsp;" . "<a href=\"detail.php?tweetid=".$row['tweet_id']."&strangeuser=".$_GET['strangeuser']."\">Detale wpisu</a>" . "<br/><br/>";
            }
         } else {
            echo "Użytkownik nie zostawił w lesie żadnego wpisu.";
@@ -115,8 +128,7 @@ Na tej stronie ma być też guzik, który umożliwi nam wysłanie wiadomości do
       
       ?>
       
-      
-      
+      <br/><br/><br/><br/><br/> <!-- 5x br do odsloniecia tresci (przyklejony dolny panel)-->
       </div>
 
 

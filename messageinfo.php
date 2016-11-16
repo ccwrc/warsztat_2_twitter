@@ -57,7 +57,7 @@ Wszystkie informacje o wiadomości: nadawca, odbiorca, treść. -->
    
       
       
-      
+      <br/><br/><br/><br/><br/> <!-- 5x br do odsloniecia tresci (przyklejony dolny panel)-->
       </div>
 
 
