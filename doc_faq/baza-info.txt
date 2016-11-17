@@ -36,7 +36,8 @@ message_receiver_visible int NOT NULL,
 PRIMARY KEY(message_id),
 FOREIGN KEY(message_sender_id) REFERENCES users(user_id) ON DELETE CASCADE, 
 FOREIGN KEY(message_receiver_id) REFERENCES users(user_id) ON DELETE CASCADE);
-
+- message_read int NOT NULL, -0 wiadomość nieprzeczytana -1 wiadomość przeczytana
+- message_s/r_visible -0 wiadomość nieskasowana -1 wiadomość skasowana przed nadawcę/odbiorcę (if 1 i 1 -> del message)
 
 
 
