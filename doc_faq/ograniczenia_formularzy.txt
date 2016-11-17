@@ -9,6 +9,6 @@ nazwa użytkownika - od 3 do 65 znaków
 
 hasło - od 3 do 65 znaków
 
-prywatna wiadmość wysyłana do inego użytkownika - do ustalenia
+prywatna wiadmość wysyłana do inego użytkownika - 25 000 znaków
 
 

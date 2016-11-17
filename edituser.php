@@ -154,6 +154,7 @@ Użytkownik ma mieć możliwość edycji informacji o sobie i zmiany hasła. Pam
 <?php
   //zmiana nazwy
   if (isset($_GET['changename'])) {
+      if($_GET['changename'] !== 'true') {$_GET['changename'] = false;}
       echo "<form method=\"POST\" action=\"edituser.php\">";
       echo "<label> Podaj nową nazwę dzięcioła i hasło: <br/>";
       echo "<input type=\"text\" name=\"newusername\" placeholder=\"Tu wpisz nową nazwę (3-65 znaków)\" size=\"50\"/> <br/>";
@@ -161,12 +162,12 @@ Użytkownik ma mieć możliwość edycji informacji o sobie i zmiany hasła. Pam
       echo "<input type=\"submit\" value=\"Zatwierdź\"/>";
       echo "</label>";
       echo "</form>";
-     
       unset($_GET['changename']);
   }
   
   // zmiana hasla
   if (isset($_GET['changepassword'])) {
+      if($_GET['changepassword'] !== 'true') {$_GET['changepassword'] = false;}
       echo "<form method=\"POST\" action=\"edituser.php\">";
       echo "<label> Podaj stare i nowe hasło: <br/>";
       echo "<input type=\"password\" name=\"oldpassword\" placeholder=\"Tu wpisz swoje stare hasło\" size=\"50\"/> <br/>";
@@ -181,6 +182,7 @@ Użytkownik ma mieć możliwość edycji informacji o sobie i zmiany hasła. Pam
   
   // usuniecie uzytkownika
   if (isset($_GET['deleteuser'])) {
+      if($_GET['deleteuser'] !== 'true') {$_GET['deleteuser'] = false;}
       echo "<form method=\"POST\" action=\"edituser.php\">";
       echo "<label class=\"warning\"> Usunięcie dziupli jest bezpowrotne! <br/>";
       echo "<input type=\"password\" name=\"deleteuser\" placeholder=\"Dla potwierdzenia podaj hasło\" size=\"50\"/> <br/>";

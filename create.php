@@ -21,12 +21,15 @@
   $linkSearch = $searchIn[$randSearch];
   $linkWord = $searchWords[$randWord];
   
+  $randCaptcha = rand(1, 10); //generowanie linka do zabezp. captcha
   $message = ""; //wiadomosc podawana przy zajetym adresie mailowym i bledach hasla
 
   $conn = getDbConnection();
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       if (isset($_POST['username']) && trim($_POST['username']) != ''
+         && isset($_POST['captcha']) && ($_POST['captcha'] >= 10)
+         && ($_POST['captcha'] <= 85) && is_numeric($_POST['captcha'])        
          && isset($_POST['useremail']) && trim($_POST['useremail']) != ''
          && isset($_POST['userpassword1']) && trim($_POST['userpassword1']) != ''
          && isset($_POST['userpassword2']) && trim($_POST['userpassword2']) != '') {
@@ -72,7 +75,7 @@
                $message = "Hasła nie są identyczne, trzeba się zdecydować, którego używać";
              }
         } else {
-          $message = "Wypełnij wszystkie pola, nie rób byle jakiej dziupli.";
+          $message = "Wypełnij wszystkie pola prawidłowo, nie rób byle jakiej dziupli.";
           }
   }
 
@@ -128,20 +131,14 @@ komunikat o zajętym adresie email. -->
                 pattern=".{3,65}"   required title="Minimalna liczba znaków to 3, maksymalna 65"/> <br/>
               <input type="password" name="userpassword2" placeholder="Dla pewności wpisz hasło ponownie" size="50"
                 pattern=".{3,65}"   required title="Minimalna liczba znaków to 3, maksymalna 65"/> <br/><br/>
+              Potwierdź, że nie jesteś borsukiem i przepisz drugi i 3 znak: <br/>
+              <img src="img/<?=$randCaptcha?>.png"/><br/>
+              <input type="text" name="captcha" placeholder="Tu wpisz drugi i 3 znak z obrazka" size="50"/><br/>
               <input type="submit" value=" Kliknij tutaj żeby stworzyć własną dziuplę "/>
             </label>    
         </form>
          
-      
-<?php
-
-// captcha np. z google
-
-
-
-?>
-      
-      
+           
       <br/><br/><br/><br/><br/> <!-- 5x br do odsloniecia tresci (przyklejony dolny panel)-->
       </div>
 

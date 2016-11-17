@@ -104,6 +104,7 @@ Na tej stronie ma być też guzik, który umożliwi nam wysłanie wiadomości do
       
       
       if (isset($_GET['strangeuser'])) {
+        if (!is_numeric($_GET['strangeuser'])) {$_GET['strangeuser'] = 1;}  
         $conn = getDbConnection();
         $userid = $_GET['strangeuser'];
         

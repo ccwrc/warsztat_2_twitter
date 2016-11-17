@@ -114,6 +114,8 @@ Formularz do tworzenia nowego komentarza przypisanego do tego postu. -->
     
     // wejscie ze strony usera obcego
     if (isset($_GET['tweetid']) && isset($_GET['strangeuser'])) {
+      if (!is_numeric($_GET['strangeuser'])) {$_GET['strangeuser'] = 1;}
+      if (!is_numeric($_GET['tweetid'])) {$_GET['tweetid'] = 1;}
       $conn = getDbConnection();
       $id = $_GET['tweetid']; 
       $tweetDetail = Tweet::loadTweetById($conn, $id);

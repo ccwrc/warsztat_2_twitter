@@ -39,7 +39,6 @@
         $newTweet->setUserId($userId);
         $newTweet->setText($userTweet);
         $newTweet->setCreationDate($actualDate); 
-        // $newTweet->setCreationDate(now()); 
         $newTweet->saveToDb($conn);
         unset($_POST['newtweet']);
   }
