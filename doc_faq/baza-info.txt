@@ -1,7 +1,7 @@
 --------------------------------------------
 nazwa bazy: las
 użytkownik stworzony do obsługi bazy: las
-hasło dla użytkonika las: tajnehaslo
+hasło dla użytkownika las: tajnehaslo
 --------------------------------------------
 
 Tabela users:
@@ -23,3 +23,38 @@ comment_text varchar(80) NOT NULL,
 PRIMARY KEY(comment_id),
 FOREIGN KEY(comment_user_id) REFERENCES users(user_id) ON DELETE CASCADE,    
 FOREIGN KEY(comment_tweet_id) REFERENCES tweet(tweet_id) ON DELETE CASCADE);
+
+Tabela message:
+CREATE TABLE message (message_id int NOT NULL AUTO_INCREMENT,
+message_read int NOT NULL,
+message_sender_id int NOT NULL,
+message_receiver_id int NOT NULL,
+message_content text,
+message_creation_date DATETIME NOT NULL,
+message_sender_visible int NOT NULL,
+message_receiver_visible int NOT NULL,
+PRIMARY KEY(message_id),
+FOREIGN KEY(message_sender_id) REFERENCES users(user_id) ON DELETE CASCADE, 
+FOREIGN KEY(message_receiver_id) REFERENCES users(user_id) ON DELETE CASCADE);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

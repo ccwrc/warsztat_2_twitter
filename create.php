@@ -133,7 +133,8 @@ komunikat o zajętym adresie email. -->
                 pattern=".{3,65}"   required title="Minimalna liczba znaków to 3, maksymalna 65"/> <br/><br/>
               Potwierdź, że nie jesteś borsukiem i przepisz drugi i 3 znak: <br/>
               <img src="img/<?=$randCaptcha?>.png"/><br/>
-              <input type="text" name="captcha" placeholder="Tu wpisz drugi i 3 znak z obrazka" size="50"/><br/>
+              <input type="text" name="captcha" placeholder=
+                 "Tu wpisz drugi i 3 znak z powyższego obrazka" size="50"/><br/>
               <input type="submit" value=" Kliknij tutaj żeby stworzyć własną dziuplę "/>
             </label>    
         </form>

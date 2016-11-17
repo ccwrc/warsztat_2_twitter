@@ -15,4 +15,5 @@ https://kosiorowski.usermd.net/2016/04/18/csp-sposob-na-xss-clickjacking-css-inj
 ! https://www.owasp.org/index.php/XSS_%28Cross_Site_Scripting%29_Prevention_Cheat_Sheet
 - zabezpieczyć dodatkowo dane przesyłane/otrzymywane matodą GET !
 
-
+użytkownicy
+- dodać opcję wyszukania użytkownika
