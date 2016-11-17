@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 17, 2016 at 05:43 PM
+-- Generation Time: Nov 17, 2016 at 11:43 PM
 -- Server version: 5.7.16-0ubuntu0.16.04.1
 -- PHP Version: 7.0.8-0ubuntu0.16.04.3
 
@@ -81,6 +81,30 @@ CREATE TABLE `message` (
   `message_sender_visible` int(11) NOT NULL,
   `message_receiver_visible` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Dumping data for table `message`
+--
+
+INSERT INTO `message` (`message_id`, `message_read`, `message_sender_id`, `message_receiver_id`, `message_content`, `message_creation_date`, `message_sender_visible`, `message_receiver_visible`) VALUES
+(1, 0, 2, 1, 'testowa wiad nr 1', '2016-11-05 02:00:00', 0, 0),
+(2, 0, 2, 1, 'testowa wiadomosc nr 2', '2016-11-17 22:48:06', 0, 0),
+(3, 0, 2, 1, 'testowa wiadomosc nr 3', '2016-11-17 22:50:02', 0, 0),
+(4, 0, 2, 1, 'testowa wiadomosc nr 4', '2016-11-17 22:52:05', 0, 0),
+(5, 0, 1, 2, 'testowa wiadomosc nr 5', '2016-11-17 22:56:17', 0, 0),
+(6, 0, 1, 2, 'testowa wiadomosc nr 6', '2016-11-17 22:58:04', 0, 0),
+(7, 0, 1, 2, 'testowa wiadomosc nr 7', '2016-11-17 22:59:51', 0, 0),
+(8, 0, 1, 2, 'testowa wiadomosc nr 7', '2016-11-17 23:00:54', 0, 0),
+(9, 0, 1, 2, 'testowa wiadomosc nr 7', '2016-11-17 23:02:26', 0, 0),
+(10, 0, 1, 2, 'testowa wiadomosc nr 7', '2016-11-17 23:02:49', 0, 0),
+(11, 0, 1, 2, 'testowa wiadomosc nr 7', '2016-11-17 23:03:58', 0, 0),
+(12, 0, 1, 2, 'testowa wiadomosc nr 7', '2016-11-17 23:07:16', 0, 0),
+(13, 0, 1, 2, 'testowa wiadomosc nr 7', '2016-11-17 23:07:52', 0, 0),
+(14, 0, 1, 2, 'testowa wiadomosc nr 7', '2016-11-17 23:09:06', 0, 0),
+(15, 0, 1, 2, 'testowa wiadomosc nr 7', '2016-11-17 23:09:41', 0, 0),
+(16, 0, 1, 2, 'testowa wiadomosc nr 7', '2016-11-17 23:10:33', 0, 0),
+(17, 0, 2, 3, 'testowa wiadomosc nr 999', '2016-11-17 23:40:33', 0, 0),
+(18, 0, 2, 3, 'testowa wiadomosc nr 999', '2016-11-17 23:40:55', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -214,7 +238,7 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `tweet`
 --
