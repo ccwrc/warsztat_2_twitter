@@ -12,6 +12,7 @@
   include_once "src/connect.php";
   include_once 'src/Comment.php';
   include_once 'src/arrays.php';
+  include_once 'src/Message.php';
   // ptasi los - link generowany losowo
   $searchMax = count($searchIn);
   $wordMax = count($searchWords);

@@ -17,6 +17,7 @@
   include_once "src/connect.php";
   include_once 'src/Comment.php';
   include_once 'src/arrays.php';
+  include_once 'src/Message.php';
   // ptasi los - link generowany losowo
   $searchMax = count($searchIn);
   $wordMax = count($searchWords);
@@ -24,11 +25,37 @@
   $randWord = rand(1, $wordMax) - 1;
   $linkSearch = $searchIn[$randSearch];
   $linkWord = $searchWords[$randWord];
+  
+  $message = ""; //wiadomość informacyjna (pomyślne wysłanie wiadomosci do uzytkownika)
+  $actualDate = date("Y-m-d H:i:s");
 
   $conn = getDbConnection();
+  
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+   
+    if (isset($_POST['messageforstranger']) && (trim($_POST['messageforstranger']) != '')) {
+      $receiverId = $_SESSION['strangeUserIdForMessage'];
+      $senderId = $_SESSION['user_id'];
+      $messageForStranger = trim($_POST['messageforstranger']);
+      $messageForStranger = htmlentities($messageForStranger, ENT_QUOTES, "UTF-8");
+      
+      $newMessage = new Message();
+      $newMessage->setMessageContent($messageForStranger);
+      $newMessage->setMessageCreationDate($actualDate);
+      $newMessage->setMessageReceiverId($receiverId);
+      $newMessage->setMessageSenderId($senderId);
+      $newMessage->saveToDb($conn);
+ 
+      $message = "Wiadomość wysłana <br/><br/>";
+    }
+  }
 
   $conn->close();
   $conn = null;
+  
+  if (isset($_SESSION['strangeUserIdForMessage'])) {
+      unset($_SESSION['strangeUserIdForMessage']);
+  }
   
 ?>
 
@@ -65,7 +92,7 @@ Strona ma pokazać wszystkie wpisy danego użytkownika (dodatkowo pod każdym li
       do danego wpisu).
 Na tej stronie ma być też guzik, który umożliwi nam wysłanie wiadomości do tego użytkownika. -->
 
-      <br/>
+      <br/> <span class="warning"><?=$message?></span>
       <?php
       
       if (!isset($_GET['strangeuser'])) {
@@ -112,12 +139,13 @@ Na tej stronie ma być też guzik, który umożliwi nam wysłanie wiadomości do
         echo "Jesteś na stronie dzięcioła o nicku: " . User::loadUserById($conn, $userid)->getUsername() . "<br/><br/>";
         echo "</strong>";
         
+        $_SESSION['strangeUserIdForMessage'] = $userid;
         //formularz wysylania wiadomosci do uzytkownika
-        echo "<form method=\"POST\" action=\"jeszczeniewiem.php\">";
+        echo "<form method=\"POST\" action=\"\">";
         echo "<textarea name=\"messageforstranger\" cols=50 placeholder=\"Tu wpisz wiadomość "
         . "do dzięcioła (maksymalnie 25000 znaków).\" maxlength=\"20000\"></textarea><br/>";
         echo " <input type=\"submit\" value=\"Kliknij żeby wysłać\"/>";
-        echo "<form> <br/><br/>";
+        echo "</form> <br/><br/>";
         
         $sql = "SELECT * FROM tweet WHERE tweet_user_id = $userid";
         $result = $conn->query($sql);
