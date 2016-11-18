@@ -47,6 +47,13 @@
              if (password_verify($userPassword, $getHashedPassword)) {
                  $_SESSION['logged'] = $getName;
                  $_SESSION['user_id'] = $getUserId; 
+                 //sprawdzanie nowych wiadomosci
+                 $sqlMessage = "SELECT * FROM message WHERE message_receiver_id ="
+                         . " $getUserId && message_read = 0 && message_receiver_visible = 0";
+                 $resultMessage = $conn->query($sqlMessage);
+                 if ($resultMessage->num_rows >= 1) {
+                     $_SESSION['newPrivateMessage'] = "set";
+                 }
                  $_SESSION['user_email'] = $getUserEmail;
                  header("location: index.php");
              } else {

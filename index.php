@@ -43,7 +43,14 @@
         $newTweet->saveToDb($conn);
         unset($_POST['newtweet']);
   }
-
+  
+  //info o nowych wiadomosciach po zalogowaniu
+  $messageInfo = "";
+  if (isset($_SESSION['newPrivateMessage'])) {
+      $messageInfo = "<p class=\"warning\">Zajrzyj do <a href=\"messages.php\""
+              . ">skrzynki odbiorczej</a>, coś tam na ciebie czeka</p>";
+      unset($_SESSION['newPrivateMessage']);
+  }
   $conn->close();
   $conn = null;  
   
@@ -81,6 +88,7 @@
       Strona wyświetlająca wszystkie Tweety jakie znajdują się w systemie (od najnowszego do
       najstarszego). Nad nimi ma być widoczny formularz do stworzenia nowego wpisu. -->
       <br/>
+      <?=$messageInfo?>
       <center>
         <form method="POST" action="#">
           <?=$_SESSION['logged']?>, masz wiadomość z lasu? Wpisz ją poniżej i nie przekrocz 140 znaków, bo las zapłonie.<br/>

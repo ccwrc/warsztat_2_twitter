@@ -18,3 +18,7 @@ https://kosiorowski.usermd.net/2016/04/18/csp-sposob-na-xss-clickjacking-css-inj
 
 użytkownicy
 - dodać opcję wyszukania użytkownika
+
+wiadomości
+- usuwanie zrobić na trigger (event?) w mysql (if 2x visible = 1)
+- błąd do poprawienia: jeden bardzo długi wyraz nie łamie się do następnego wiersza, rozkład strony jest zaburzony

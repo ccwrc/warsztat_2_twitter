@@ -85,6 +85,7 @@ Wiadomości jeszcze nieprzeczytane powinny być jakoś oznaczone. -->
             echo "<a href=\"messageinfo.php?messageid=$messageIdForGet&reciv=true\">Przeczytaj całość</a> ";
         //    echo "<a href=\"messageinfo.php?messageid=$messageIdForGet&recive=true&deletemessage=true\">Usuń wiadomość</a> ";
             echo " <a href=\"showuser.php?strangeuser=$senderId\">Odpowiedz</a>";
+            echo " <a href=\"messagedelete.php?messageid=$messageIdForGet&reciv=true\">USUŃ</a> ";
             echo "</div><br/>";
         }
         
@@ -111,6 +112,7 @@ Wiadomości jeszcze nieprzeczytane powinny być jakoś oznaczone. -->
             echo "<a href=\"messageinfo.php?messageid=$messageIdForGet&send=true\">Przeczytaj całość</a> ";       
        //     echo " <a href=\"messageinfo.php?messageid=$messageIdForGet&send=true&deletemessage=true\">Usuń wiadomość</a> ";
             echo " <a href=\"showuser.php?strangeuser=$receiverId\">Wyślij kolejną</a>";
+            echo " <a href=\"messagedelete.php?messageid=$messageIdForGet&send=true\">USUŃ</a> ";
             echo "</div><br/>";
         }
         
