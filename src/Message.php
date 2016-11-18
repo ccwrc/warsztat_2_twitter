@@ -166,6 +166,34 @@ class Message {
        return $ret;
    }
    
+   static public function loadAllCutMessagesBySenderId(mysqli $conn, $senderId) {
+       $senderId = $conn->real_escape_string($senderId);
+       $ret = [];
+       $sql = "SELECT substring(message_content,1,30) as message_content, message_creation_date,"
+               . "message_id, message_read, message_receiver_id, "
+               . "message_receiver_visible, message_sender_id, "
+               . "message_sender_visible FROM message WHERE message_sender_id = $senderId &&"
+               . "message_sender_visible = 0";
+       $result = $conn->query($sql);
+       
+       if ($result != false && $result->num_rows != 0) {
+           foreach ($result as $row) {
+               $loadedMessage = new Message();
+               $loadedMessage->messageContent = $row['message_content'];
+               $loadedMessage->messageCreationDate = $row['message_creation_date'];
+               $loadedMessage->messageId = $row['message_id'];
+               $loadedMessage->messageRead = $row['message_read'];
+               $loadedMessage->messageReceiverId = $row['message_receiver_id'];
+               $loadedMessage->messageReceiverVisible = $row['message_receiver_visible'];
+               $loadedMessage->messageSenderId = $row['message_sender_id'];
+               $loadedMessage->messageSenderVisible = $row['message_sender_visible'];
+               $ret[$loadedMessage->messageId] = $loadedMessage;
+           }
+       }
+       return $ret;
+   }
+   
+   
    static public function loadAllMessagesByReceiverId(mysqli $conn, $receiverId) {
        $receiverId = $conn->real_escape_string($receiverId);
        $ret = [];
@@ -190,6 +218,33 @@ class Message {
        return $ret;
    }
    
+   static public function loadAllCutMessagesByReceiverId(mysqli $conn, $receiverId) {
+       $receiverId = $conn->real_escape_string($receiverId);
+       $ret = [];
+       $sql = "SELECT substring(message_content,1,30) as message_content, message_creation_date,"
+               . "message_id, message_read, message_receiver_id, "
+               . "message_receiver_visible, message_sender_id, "
+               . "message_sender_visible FROM message WHERE message_receiver_id = $receiverId &&"
+               . "message_receiver_visible = 0";
+       $result = $conn->query($sql);
+       
+       if ($result != false && $result->num_rows != 0) {
+           foreach ($result as $row) {
+               $loadedMessage = new Message();
+               $loadedMessage->messageContent = $row['message_content'];
+               $loadedMessage->messageCreationDate = $row['message_creation_date'];
+               $loadedMessage->messageId = $row['message_id'];
+               $loadedMessage->messageRead = $row['message_read'];
+               $loadedMessage->messageReceiverId = $row['message_receiver_id'];
+               $loadedMessage->messageReceiverVisible = $row['message_receiver_visible'];
+               $loadedMessage->messageSenderId = $row['message_sender_id'];
+               $loadedMessage->messageSenderVisible = $row['message_sender_visible'];
+               $ret[$loadedMessage->messageId] = $loadedMessage;
+           }
+       }
+       return $ret;
+   }
+   
    public function saveToDb(mysqli $conn) {
        if ($this->messageId == -1) {
            $statement = $conn->prepare("INSERT INTO message(message_content, "
@@ -207,24 +262,8 @@ class Message {
            }
        }
    }  
-   
-   /* ta działa, ale ta na gorze lepiej
-   public function saveToDb(mysqli $conn) {
-       if ($this->messageId == -1) {
-           $sql = "INSERT INTO message(message_content, message_creation_date, "
-                   . "message_read, message_receiver_id, message_receiver_visible, "
-                   . "message_sender_id, message_sender_visible) VALUES ('$this->messageContent', '$this->messageCreationDate', '$this->messageRead', 
-           '$this->messageReceiverId', '$this->messageReceiverVisible', '$this->messageSenderId', 
-           '$this->messageSenderVisible')";
-           $result = $conn->query($sql);
-           if ($result == true) {
-               $this->messageId = $conn->insert_id;
-               return true;
-           } else {
-               return false;
-           }
-       }
-   }  */
+
+   // zrobić kasowanie poxniej
  
  
 }

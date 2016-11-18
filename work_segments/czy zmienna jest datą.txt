@@ -1,0 +1,7 @@
+ponizsze nie zdało egzaminu...
+
+http://stackoverflow.com/questions/19396735/how-can-i-check-if-a-variable-type-is-datetime
+
+http://php.net/manual/en/function.gettype.php
+
+
