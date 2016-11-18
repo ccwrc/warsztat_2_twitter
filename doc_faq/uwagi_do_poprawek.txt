@@ -2,6 +2,7 @@
 posty, komentarze
 - ew. zamiast <br> przetestować inny padding (lub margines)
 - zrobić tabelę słów niecenzuralnych + uruchomić filtr
+- licznik komentarzy: zrobic wyciaganie ilosci bezposrednio z mysql
 
 zabezpieczenia
 - wstawić bindowanie do wszytkich klas, pozbyć się zbędnych real_escape w html

@@ -39,7 +39,7 @@
       $messageForStranger = trim($_POST['messageforstranger']);
       $messageForStranger = htmlentities($messageForStranger, ENT_QUOTES, "UTF-8");
       
-      $newMessage = new Message();
+      $newMessage = new Message(); //bindowanie parametrow jest juz w klasie
       $newMessage->setMessageContent($messageForStranger);
       $newMessage->setMessageCreationDate($actualDate);
       $newMessage->setMessageReceiverId($receiverId);
@@ -154,7 +154,7 @@ Na tej stronie ma być też guzik, który umożliwi nam wysłanie wiadomości do
            foreach($result as $row){
              echo "<div class=\"tweet\">";   
              echo "Wpis o ID " . $row['tweet_id'] . ": ";
-             //wczytywanie ilosci komentarzy
+             //wczytywanie ilosci komentarzy (poxniej zrobic count bezp. w mysql)
              $commentsCount = 0;
              $comments = Comment::loadAllCommentsByTweetId($conn, $row['tweet_id']);
              foreach ($comments as $comment) {$commentsCount++;}

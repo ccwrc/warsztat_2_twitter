@@ -78,12 +78,13 @@ Wiadomości jeszcze nieprzeczytane powinny być jakoś oznaczone. -->
                 echo "<span class=\"warning\">NOWA </span>";
             }
             $senderId = $cutMessage->getMessageSenderId();
-            echo "Nadawca: <a href=\"showuser.php?strangeuser=$senderId\">" . User::loadUserById($conn, $cutMessage->getMessageSenderId())->getUsername() . " (odpowiedz)</a>";
+            echo "Nadawca: <a href=\"showuser.php?strangeuser=$senderId\">" . User::loadUserById($conn, $cutMessage->getMessageSenderId())->getUsername() . "</a>";
             echo "<br/> Data: " . $cutMessage->getMessageCreationdate() . " <br/>";
             echo "Nagłówek wiadomości: " . $cutMessage->getMessageContent() . "<br/>";
             $messageIdForGet = $cutMessage->getMessageId();
             echo "<a href=\"messageinfo.php?messageid=$messageIdForGet&reciv=true\">Przeczytaj całość</a> ";
-            echo "<a href=\"messageinfo.php?messageid=$messageIdForGet&recive=true&deletemessage=true\">Usuń wiadomość</a> ";
+        //    echo "<a href=\"messageinfo.php?messageid=$messageIdForGet&recive=true&deletemessage=true\">Usuń wiadomość</a> ";
+            echo " <a href=\"showuser.php?strangeuser=$senderId\">Odpowiedz</a>";
             echo "</div><br/>";
         }
         
@@ -100,15 +101,16 @@ Wiadomości jeszcze nieprzeczytane powinny być jakoś oznaczone. -->
         foreach ($messageOut as $cutMessage) {
             echo "<div class=\"tweet\">"; 
             $receiverId = $cutMessage->getMessageReceiverId();
-            echo "Odbiorca: <a href=\"showuser.php?strangeuser=$receiverId\">" . User::loadUserById($conn, $cutMessage->getMessageReceiverId())->getUsername() . " (wyślij następną)</a>";
+            echo "Odbiorca: <a href=\"showuser.php?strangeuser=$receiverId\">" . User::loadUserById($conn, $cutMessage->getMessageReceiverId())->getUsername() . "</a>";
             if ($cutMessage->getMessageRead() == 0) {
-                echo "<span class=\"warning\"> Jeszcze nieprzeczytana przez odbiorcę. </span>";
+                echo "<span class=\"warning\"> (jeszcze nieprzeczytana) </span>";
             }
             echo "<br/> Data: " . $cutMessage->getMessageCreationdate() . " <br/>";
             echo "Nagłówek wiadomości: " . $cutMessage->getMessageContent() . "<br/>";
             $messageIdForGet = $cutMessage->getMessageId();
-            echo "<a href=\"messageinfo.php?messageid=$messageIdForGet&send=true\">Przeczytaj całość</a> ";
-            echo "<a href=\"messageinfo.php?messageid=$messageIdForGet&send=true&deletemessage=true\">Usuń wiadomość</a> ";
+            echo "<a href=\"messageinfo.php?messageid=$messageIdForGet&send=true\">Przeczytaj całość</a> ";       
+       //     echo " <a href=\"messageinfo.php?messageid=$messageIdForGet&send=true&deletemessage=true\">Usuń wiadomość</a> ";
+            echo " <a href=\"showuser.php?strangeuser=$receiverId\">Wyślij kolejną</a>";
             echo "</div><br/>";
         }
         
