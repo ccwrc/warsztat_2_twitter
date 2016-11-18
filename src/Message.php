@@ -173,7 +173,7 @@ class Message {
                . "message_id, message_read, message_receiver_id, "
                . "message_receiver_visible, message_sender_id, "
                . "message_sender_visible FROM message WHERE message_sender_id = $senderId &&"
-               . "message_sender_visible = 0";
+               . "message_sender_visible = 0 ORDER BY message_creation_date DESC";
        $result = $conn->query($sql);
        
        if ($result != false && $result->num_rows != 0) {
@@ -225,7 +225,7 @@ class Message {
                . "message_id, message_read, message_receiver_id, "
                . "message_receiver_visible, message_sender_id, "
                . "message_sender_visible FROM message WHERE message_receiver_id = $receiverId &&"
-               . "message_receiver_visible = 0";
+               . "message_receiver_visible = 0 ORDER BY message_creation_date DESC";
        $result = $conn->query($sql);
        
        if ($result != false && $result->num_rows != 0) {
