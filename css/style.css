@@ -1,51 +1,51 @@
 html, body {
-  font-family: 'DejaVu Serif', 'Liberation Serif';  
-  margin:0;
-  padding:0;
-  height:100%;
-  background-image: url("../img/grey_sandbag.png");
-  /* Pattern grey_sandbag is downloaded from www.subtlepatterns.com */
-  }
-  
+    font-family: 'DejaVu Serif', 'Liberation Serif';  
+    margin:0;
+    padding:0;
+    height:100%;
+    background-image: url("../img/grey_sandbag.png");
+    /* Pattern grey_sandbag is downloaded from www.subtlepatterns.com */
+}
+
 div.container {
-  min-height:100%;
-  position:relative;
-  width: 989px; 
-  margin: 0 auto;
-  }
-  
+    min-height:100%;
+    position:relative;
+    width: 989px; 
+    margin: 0 auto;
+}
+
 div.logo { /* belka na górze z nazwą zalogowanego użytkownika */
-  background-image: url("../img/backlogo.jpg");
-  width: 989px; 
-  min-height:120px;
-  margin: 5px;
-  border-radius: 7px;
-  }
-  
+    background-image: url("../img/backlogo.jpg");
+    width: 989px; 
+    min-height:120px;
+    margin: 5px;
+    border-radius: 7px;
+}
+
 div.content {
-  width: 989px;   
-  }
-  
+    width: 989px;   
+}
+
 div.footer {
-/* przyklejona stopka z linkami */
-  clear: both;
-  position: fixed;
-  bottom: 0;
-  background-image: url("../img/backlogo.jpg");
-  width: 989px; 
-  min-height:80px;
-  margin: 5px;
-  border-radius: 7px;
-  text-align: center;
-  color: white; 
-  }
-  
+    /* przyklejona stopka z linkami */
+    clear: both;
+    position: fixed;
+    bottom: 0;
+    background-image: url("../img/backlogo.jpg");
+    width: 989px; 
+    min-height:80px;
+    margin: 5px;
+    border-radius: 7px;
+    text-align: center;
+    color: white; 
+}
+
 .logoimage { /* małe logo po lewej górnej stronie ekranu */
-  height: 90px;
-  width: 90px;
-  border-radius: 45px;
-  margin: 15px;
-  float: left;
+    height: 90px;
+    width: 90px;
+    border-radius: 45px;
+    margin: 15px;
+    float: left;
 }
 
 a {

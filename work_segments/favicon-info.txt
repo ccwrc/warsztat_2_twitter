@@ -1,7 +1,0 @@
-FAQ
-
-http://www.creamsoft.com/blog/jak-poprawnie-dodac-do-strony-wlasna-ikone-favicon-dla-przegladarek-oraz-systemow-ios-androida-i-windows-8.html
-
-generator:
-
-http://realfavicongenerator.net/

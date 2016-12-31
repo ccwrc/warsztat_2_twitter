@@ -7,7 +7,7 @@ http://www.publicdomainpictures.net/
  =======================================================
 
 logo.jpg
-- na każdej podstronie, lewy górny róg. (w planach)Przekierowanie z obrazu na github.
+- na każdej podstronie, lewy górny róg. 
 
 backlogo.jpg
 - na każdej podstronie jako belka na górze i przyklejona belka na dole z linkami

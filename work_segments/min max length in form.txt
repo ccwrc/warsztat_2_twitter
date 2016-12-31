@@ -1,2 +1,0 @@
-
-http://stackoverflow.com/questions/10281962/is-there-a-minlength-validation-attribute-in-html5
