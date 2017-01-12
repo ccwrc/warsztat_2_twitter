@@ -25,7 +25,7 @@
   
   $conn = getDbConnection();
   
-  if ($_SERVER['REQUEST_METHOD'] == 'POST') { //pisane w transie i dziala 
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
       if (isset($_POST['useremail']) && isset($_POST['userpassword'])
          && trim($_POST['useremail']) != '' && trim($_POST['userpassword']) != '') {
      

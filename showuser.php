@@ -154,7 +154,7 @@ Na tej stronie ma być też guzik, który umożliwi nam wysłanie wiadomości do
            foreach($result as $row){
              echo "<div class=\"tweet\">";   
              echo "Wpis o ID " . $row['tweet_id'] . ": ";
-             //wczytywanie ilosci komentarzy (poxniej zrobic count bezp. w mysql)
+             //wczytywanie ilosci komentarzy 
              $commentsCount = 0;
              $comments = Comment::loadAllCommentsByTweetId($conn, $row['tweet_id']);
              foreach ($comments as $comment) {$commentsCount++;}

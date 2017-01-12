@@ -106,34 +106,6 @@ Wszystkie informacje o wiadomości: nadawca, odbiorca, treść. -->
                  echo "Treść wiadomości: " . $showmessage->getMessageContent() . "<br/><br/>";
                  echo "</div><br/>";
              } 
-             
-             
-             
-              /* do przemyślenia, do poprawy
-             // gdy user wchodzi jako odbiorca z zamiarem usuniecia wiadomosci
-             if (isset($_GET['reciv']) && ($_GET['reciv'] == 'true') && isset($_GET['deletemessage'])) {
-                 $messageReceiverId = $_SESSION['user_id'];
-                 
-                 $showmessage = Message::loadMessageById($conn, $_GET['messageid']);
-                 if (($showmessage->getMessageReceiverId()) != $_SESSION['user_id']) {
-                     header("location: messages.php");
-                     exit;
-                 }
-                 $messageSenderId = $showmessage->getMessageSenderId();
-                 
-                 echo "<div class=\"tweet\">"; 
-                 echo "<br/>Nadawca: " . User::loadUserById($conn, $messageSenderId)->getUsername() . "<br/>";
-                 echo "Data i godzina wysłania wiadomości: " . $showmessage->getMessageCreationdate() . "<br/>";
-                 echo "---<br/>";
-                 echo "Treść wiadomości: " . $showmessage->getMessageContent() . "<br/><br/>";
-                 echo "</div><br/>";
-                 
-                 $messageIdForIsRead =$_GET['messageid'];
-                 $sql = "UPDATE message SET message_read = 1 WHERE message_id = $messageIdForIsRead";
-                 $result = $conn->query($sql);
-                 
-                 echo "<span class=\"warning\">Wiadomość usunięta</span>";
-             } */
                 
           }
 

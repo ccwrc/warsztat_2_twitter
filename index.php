@@ -3,7 +3,7 @@
   session_start(); //Strona glowna wyświetlająca wszystkie Tweety
   
 //  var_dump($_SESSION['logged']); - kosmetyka (komunikat) i check
-//  var_dump($_SESSION['user_email']); - moze sie przyda
+//  var_dump($_SESSION['user_email']); - to też siedzi w sesji
 //  var_dump($_SESSION['user_id']); - do identyfikacji tweeta itd.  
 
   if (!isset($_SESSION['logged'])) {
