@@ -21,3 +21,6 @@ to 60 znaków.
 Wiadomości: Każdy użytkownik może wysłać
 innemu użytkownikowi wiadomość.
 
+Roboczy zrzut ekranu:
+![Alt text](https://images86.fotosik.pl/19/7c3ea4171409a55a.png "sowy_i_dzięcioły")
+
