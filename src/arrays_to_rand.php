@@ -12,7 +12,7 @@ $searchIn = [
 $searchWords = [
     "korniki są smaczne", "dzięcioły terroryzują indonezję", "kuźnia dzięcioła",
     "szkolny dzięcioł", "dzięcioł reliktowy", "na co dybie w wielorybie czubek nosa eskimosa",
-    "lepszy dzięcioł w garści niż gruszki na wierzbie", 
+    "lepszy dzięcioł w garści niż gruszki na wierzbie",
     "Bądź wytrwały i bez przerwy potrząsaj drzewem, a zawsze z niego coś spadnie",
     "Lepiej mniej grzmotów w ustach i więcej piorunów w garści",
     "kto się bawi lasem, lepiej niedźwiedzia niż ludzi pamięta",
