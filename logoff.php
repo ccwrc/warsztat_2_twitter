@@ -8,15 +8,6 @@
   }
   
   session_unset();
-  
-  include_once 'src/arrays.php';
-  // ptasi los - link generowany losowo
-  $searchMax = count($searchIn);
-  $wordMax = count($searchWords);
-  $randSearch = rand(1, $searchMax) - 1;
-  $randWord = rand(1, $wordMax) - 1;
-  $linkSearch = $searchIn[$randSearch];
-  $linkWord = $searchWords[$randWord];
 
 ?>
 

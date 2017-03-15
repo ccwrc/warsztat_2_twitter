@@ -11,22 +11,9 @@
   include_once "src/Tweet.php";
   include_once "src/connect.php";
   include_once 'src/Comment.php';
-  include_once 'src/arrays.php';
   include_once 'src/Message.php';
-  // ptasi los - link generowany losowo
-  $searchMax = count($searchIn);
-  $wordMax = count($searchWords);
-  $randSearch = rand(1, $searchMax) - 1;
-  $randWord = rand(1, $wordMax) - 1;
-  $linkSearch = $searchIn[$randSearch];
-  $linkWord = $searchWords[$randWord];
 
   $conn = getDbConnection();
-
-
-
-
-  
   
   $conn->close();
   $conn = null;
