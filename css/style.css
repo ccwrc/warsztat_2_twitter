@@ -26,8 +26,7 @@ div.content {
     width: 989px;   
 }
 
-div.footer {
-    /* przyklejona stopka z linkami */
+div.footer { /* przyklejona stopka z linkami */
     clear: both;
     position: fixed;
     bottom: 0;
@@ -83,14 +82,6 @@ div.logged { /* wyświetlana nazwa zalogowanego użytkonika na górnej belce */
     text-align: right;
     color: white;
 }
-
-/* a.linklogged { tylko na potrzeby testów
-    border: dotted 1px;
-    border-radius: 4px;
-    border-color: green;
-    text-decoration: none;
-    background-color: greenyellow; 
-} */
 
 #footerlink8, #footerlink7, #footerlink6, #footerlink5, #footerlink4, #footerlink3, #footerlink2 {
     background-color: #c2c2a3; /* zabronione/nieaktywne linki na dolnej belce */
