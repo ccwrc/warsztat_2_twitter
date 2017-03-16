@@ -1,4 +1,4 @@
-# warsztat_2_twitter (aka dzięcioły.pl)
+# warsztat_2_twitter (aka dzięcioły.pl :bird: )
 
 Pełna i funkcjonalna aplikacja w stylu twittera. Wprowadzone funkcjonalności:    
 
@@ -31,7 +31,8 @@ Pełna i funkcjonalna aplikacja w stylu twittera. Wprowadzone funkcjonalności:
 
 #
 Technologie: PHP 5.4     
-Baza danych: MySQL #
+Baza danych: MySQL 
+#
 
 Roboczy zrzut ekranu:
 ![Alt text](https://images86.fotosik.pl/19/7c3ea4171409a55a.png "sowy_i_dzięcioły")
