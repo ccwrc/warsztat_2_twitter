@@ -17,10 +17,11 @@ $message = ""; //wiadomosc podawana po blednej probie zalogowania
 $conn = getDbConnection();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['useremail']) && isset($_POST['userpassword']) && trim($_POST['useremail']) != '' && trim($_POST['userpassword']) != '') {
+    if (isset($_POST['useremail']) && isset($_POST['userpassword']) 
+            && trim($_POST['useremail']) != '' && trim($_POST['userpassword']) != '') {
 
-        $userEmail = strtolower(trim($_POST['useremail'])); // na wyrost, dodatkowe zabez. jest w form.
-        $userPassword = trim($_POST['userpassword']); //ktore to zabezp. nie dziala przy spacjach :)
+        $userEmail = strtolower(trim($_POST['useremail']));
+        $userPassword = trim($_POST['userpassword']);
         $userEmail = $conn->real_escape_string($userEmail);
         $userPassword = $conn->real_escape_string($userPassword);
 
@@ -47,13 +48,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['user_email'] = $getUserEmail;
                 header("location: index.php");
             } else {
-                $message = "Błędny e-mail lub hasło, wprowadź ponownie:";
+                $message = "Błędny e-mail lub hasło, wprowadź ponownie";
             }
         } else {
             $message = "Adres mailowy nie ma własnej dziupli";
         }
     } else {
-        $message = "Błędny e-mail lub hasło, wprowadź ponownie:";
+        $message = "Błędny e-mail lub hasło, wprowadź ponownie";
     }
 }
 
@@ -88,11 +89,7 @@ $conn = null;
 
 
             <div class="content">
-                <!-- (dostępna bez zalogowania) strona logowania - logon.php
-          Strona ma przyjmować email użytkownika i jego hasło.
-          Jeżeli są poprawne, to użytkownik jest przekierowany do strony głównej, jeżeli nie –
-          do strony logowania, która ma wtedy wyświetlić komunikat o błędnym loginie lub haśle.
-          Strona logowania ma mieć też link do strony tworzenia użytkownika. -->
+
                 <br /> <center>
                     <h4 class="warning"><?= $message ?></h4>
                 </center>    
@@ -100,7 +97,8 @@ $conn = null;
                 <br />
                 <center>
                     <form method='POST' action=''>
-                        <label> <center>Podaj dane dostępu do dziupli: <br/><br/></center>
+                        <label> <center>Podaj dane dostępu do dziupli: <br/><br/>
+                            </center>
                             <input type="email" name="useremail" placeholder="Podaj e-mail"
                                    pattern=".{5,250}"   required title="Minimalna liczba znaków to 5, maksymalna 250"/>  
                             <input type="password" name="userpassword" placeholder="I wpisz hasło"
@@ -117,9 +115,9 @@ $conn = null;
 
             </div>
 
-<?php
-include 'src/bottom_menu_logoff.php';
-?>
+            <?php
+            include 'src/bottom_menu_logoff.php';
+            ?>
 
         </div>
     </body>

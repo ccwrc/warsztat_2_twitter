@@ -5,7 +5,9 @@ Pełna i funkcjonalna aplikacja w stylu twittera. Wprowadzone funkcjonalności:
 **Użytkownicy**    
         - dodawanie, modyfikacja niekluczowych informacji o sobie,   
         - usuwanie swojego konta,    
-        - oddzielna strona wyświetlania użytkownika ze wszystkimi wpisami i liczbą komentarzy do wpisu,   
+        - główna funkcjonalność strony dostępna po rejestracji/zalogowaniu,
+        - oddzielna strona wyświetlania użytkownika ze wszystkimi wpisami i liczbą komentarzy do wpisu,  
+        - prosty system captcha przy rejestracji, 
         - użytkownik identyfikowany po adresie e-mail.   
 
 
@@ -31,7 +33,7 @@ Pełna i funkcjonalna aplikacja w stylu twittera. Wprowadzone funkcjonalności:
 
 #
 Technologie: PHP 5.4     
-Baza danych: MySQL 
+Baza danych: MySQL(InnoDB)
 #
 
 Roboczy zrzut ekranu:
