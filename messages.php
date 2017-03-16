@@ -13,9 +13,6 @@ require_once 'src/Comment.php';
 require_once 'src/Message.php';
 
 $conn = getDbConnection();
-
-$conn->close();
-$conn = null;
 ?>
 
 <!DOCTYPE HTML>
@@ -44,72 +41,61 @@ $conn = null;
                 <div class="logged"> <?= $_SESSION['logged'] ?> jest w dziupli. </div>
             </div>
 
-
             <div class="content">
-                <!-- Strona z wiadomościami - messages.php
-          Użytkownik ma mieć możliwość wyświetlenia listy wiadomości, które otrzymał i wysłał.
-           Wiadomości wysłane mają wyświetlać odbiorcę, datę wysłania i początek wiadomości (pierwsze 30 znaków).
-           Wiadomości odebrane mają wyświetlać nadawcę, datę wysłania i początek wiadomości (pierwsze 30 znaków).
-          Wiadomości jeszcze nieprzeczytane powinny być jakoś oznaczone. -->
+
                 <p><strong>Wszystkie twoje odebrane wiadomości: </strong></p>
 
-<?php
-$conn = getDbConnection();
-$messageIn = Message::loadAllCutMessagesByReceiverId($conn, $_SESSION['user_id']);
+                <?php
+                $messageIn = Message::loadAllCutMessagesByReceiverId($conn, $_SESSION['user_id']);
 
-foreach ($messageIn as $cutMessage) {
-    echo "<div class=\"tweet\">";
-    if ($cutMessage->getMessageRead() == 0) {
-        echo "<span class=\"warning\">NOWA </span>";
-    }
-    $senderId = $cutMessage->getMessageSenderId();
-    echo "Nadawca: <a href=\"showuser.php?strangeuser=$senderId\">" . User::loadUserById($conn, $cutMessage->getMessageSenderId())->getUsername() . "</a>";
-    echo "<br/> Data: " . $cutMessage->getMessageCreationdate() . " <br/>";
-    echo "Nagłówek wiadomości: " . $cutMessage->getMessageContent() . "<br/>";
-    $messageIdForGet = $cutMessage->getMessageId();
-    echo "<a href=\"messageinfo.php?messageid=$messageIdForGet&reciv=true\">Przeczytaj całość</a> ";
-    echo " <a href=\"showuser.php?strangeuser=$senderId\">Odpowiedz</a>";
-    echo " <a href=\"messagedelete.php?messageid=$messageIdForGet&reciv=true\">USUŃ</a> ";
-    echo "</div><br/>";
-}
-
-$conn->close();
-$conn = null;
-?>
+                foreach ($messageIn as $cutMessage) {
+                    echo "<div class=\"tweet\">";
+                    if ($cutMessage->getMessageRead() == 0) {
+                        echo "<span class=\"warning\">NOWA </span>";
+                    }
+                    $senderId = $cutMessage->getMessageSenderId();
+                    echo "Nadawca: <a href=\"showuser.php?strangeuser=$senderId\">" . User::loadUserById($conn, $cutMessage->getMessageSenderId())->getUsername() . "</a>";
+                    echo "<br/> Data: " . $cutMessage->getMessageCreationdate() . " <br/>";
+                    echo "Nagłówek wiadomości: " . $cutMessage->getMessageContent() . "<br/>";
+                    $messageIdForGet = $cutMessage->getMessageId();
+                    echo "<a href=\"messageinfo.php?messageid=$messageIdForGet&reciv=true\">Przeczytaj całość</a> ";
+                    echo " <a href=\"showuser.php?strangeuser=$senderId\">Odpowiedz</a>";
+                    echo " <a href=\"messagedelete.php?messageid=$messageIdForGet&reciv=true\">USUŃ</a> ";
+                    echo "</div><br/>";
+                }
+                ?>
 
                 <p><strong>Wszystkie twoje wysłane wiadomości: </strong></p>
 
-<?php
-$conn = getDbConnection();
-$messageOut = Message::loadAllCutMessagesBySenderId($conn, $_SESSION['user_id']);
+                <?php
+                $messageOut = Message::loadAllCutMessagesBySenderId($conn, $_SESSION['user_id']);
 
-foreach ($messageOut as $cutMessage) {
-    echo "<div class=\"tweet\">";
-    $receiverId = $cutMessage->getMessageReceiverId();
-    echo "Odbiorca: <a href=\"showuser.php?strangeuser=$receiverId\">" . User::loadUserById($conn, $cutMessage->getMessageReceiverId())->getUsername() . "</a>";
-    if ($cutMessage->getMessageRead() == 0) {
-        echo "<span class=\"warning\"> (jeszcze nieprzeczytana) </span>";
-    }
-    echo "<br/> Data: " . $cutMessage->getMessageCreationdate() . " <br/>";
-    echo "Nagłówek wiadomości: " . $cutMessage->getMessageContent() . "<br/>";
-    $messageIdForGet = $cutMessage->getMessageId();
-    echo "<a href=\"messageinfo.php?messageid=$messageIdForGet&send=true\">Przeczytaj całość</a> ";
-    echo " <a href=\"showuser.php?strangeuser=$receiverId\">Wyślij kolejną</a>";
-    echo " <a href=\"messagedelete.php?messageid=$messageIdForGet&send=true\">USUŃ</a> ";
-    echo "</div><br/>";
-}
+                foreach ($messageOut as $cutMessage) {
+                    echo "<div class=\"tweet\">";
+                    $receiverId = $cutMessage->getMessageReceiverId();
+                    echo "Odbiorca: <a href=\"showuser.php?strangeuser=$receiverId\">" . User::loadUserById($conn, $cutMessage->getMessageReceiverId())->getUsername() . "</a>";
+                    if ($cutMessage->getMessageRead() == 0) {
+                        echo "<span class=\"warning\"> (jeszcze nieprzeczytana) </span>";
+                    }
+                    echo "<br/> Data: " . $cutMessage->getMessageCreationdate() . " <br/>";
+                    echo "Nagłówek wiadomości: " . $cutMessage->getMessageContent() . "<br/>";
+                    $messageIdForGet = $cutMessage->getMessageId();
+                    echo "<a href=\"messageinfo.php?messageid=$messageIdForGet&send=true\">Przeczytaj całość</a> ";
+                    echo " <a href=\"showuser.php?strangeuser=$receiverId\">Wyślij kolejną</a>";
+                    echo " <a href=\"messagedelete.php?messageid=$messageIdForGet&send=true\">USUŃ</a> ";
+                    echo "</div><br/>";
+                }
+                $conn->close();
+                $conn = null;
+                ?>
 
-$conn->close();
-$conn = null;
-?>
-
-
-            <br/><br/><br/><br/><br/> <!-- 5x br do odsloniecia tresci (przyklejony dolny panel)-->
+                <!-- 5x br do odsloniecia tresci (przyklejony dolny panel)-->
+                <br/><br/><br/><br/><br/> 
             </div>
 
-<?php
-include 'src/bottom_menu_logged.php';
-?>      
+            <?php
+            include 'src/bottom_menu_logged.php';
+            ?>      
 
         </div>
     </body>

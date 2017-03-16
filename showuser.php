@@ -169,7 +169,8 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
                 }
                 ?>
 
-                <br/><br/><br/><br/><br/> <!-- 5x br do odsloniecia tresci (przyklejony dolny panel)-->
+                <!-- 5x br do odsloniecia tresci (przyklejony dolny panel)-->
+                <br/><br/><br/><br/><br/> 
             </div>
 
             <?php
