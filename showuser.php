@@ -93,7 +93,7 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
 
                     $sql = "SELECT * FROM tweet WHERE tweet_user_id = $userid";
                     $result = $conn->query($sql);
-
+   
                     if ($result == true && $result->num_rows != 0) {
                         foreach ($result as $row) {
                             echo "<div class=\"tweet\">";

@@ -17,12 +17,12 @@ require_once 'src/Message.php';
 
 $conn = getDbConnection();
 
-// dodawanie nowego'tweeta' name="newtweet"
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user_id']) && isset($_POST['newtweet']) && trim($_POST['newtweet']) != '') {
+// dodawanie nowego'tweeta' 
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user_id']) 
+        && isset($_POST['newtweet']) && strlen(trim($_POST['newtweet'])) >= 3
+        && strlen(trim($_POST['newtweet'])) <= 140) {
     $userId = $_SESSION['user_id'];
-    $userTweet = trim($_POST['newtweet']);
-    $userTweet = htmlentities($userTweet, ENT_QUOTES, "UTF-8");
-    $userTweet = $conn->real_escape_string($userTweet);
+    $userTweet = trim($_POST['newtweet']); 
 
     $newTweet = new Tweet();
     $newTweet->setUserId($userId);
