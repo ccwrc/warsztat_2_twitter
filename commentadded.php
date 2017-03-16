@@ -1,4 +1,5 @@
 <?php
+// Strona potwierdzenia dodania komentarza
 session_start();
 
 if (!isset($_SESSION['logged']) || !isset($_SESSION['actualTweetId']) || !isset($_POST['newtweetcomment'])) {
@@ -12,7 +13,6 @@ require_once "src/connect.php";
 require_once 'src/Comment.php';
 require_once 'src/Message.php';
 
-// $actualDate = date("Y-m-d H:i:s");
 $message = "";
 ?>
 
@@ -44,7 +44,6 @@ $message = "";
 
 
             <div class="content">
-                <!-- Strona potwierdzenia dodania komentarza - commentadded.php -->
 
                 <br/><br/>
 
@@ -52,7 +51,7 @@ $message = "";
                 $conn = getDbConnection();
 
                 if ($_SERVER['REQUEST_METHOD'] == 'POST' 
-                        && strlen(trim($_POST['newtweetcomment'])) >= 3
+                        && strlen(trim($_POST['newtweetcomment'])) >= 3 
                         && strlen(trim($_POST['newtweetcomment'])) <= 60) {
                     $commentText = trim($_POST['newtweetcomment']);
 

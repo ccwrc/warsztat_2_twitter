@@ -118,7 +118,7 @@ class Comment {
                 $this->id = $statement->insert_id;
                 return true;
             }
-        } else { // opcja zbedna, niewykorzystana w aplikacji, ew. mozna wykasowac
+        } else { // ponizsza opcja zbedna, niewykorzystana w aplikacji, ew. mozna wykasowac
             $sql = "UPDATE comment SET comment_user_id = $this->userId, comment_tweet_id = "
                     . "$this->tweetId, comment_creation_date = $this->creationDate, comment_text"
                     . " = '$this->text' WHERE comment_id = $this->id";

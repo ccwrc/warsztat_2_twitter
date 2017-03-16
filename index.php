@@ -15,7 +15,6 @@ require_once "src/connect.php";
 require_once 'src/Comment.php';
 require_once 'src/Message.php';
 
-$actualDate = date("Y-m-d H:i:s");
 $conn = getDbConnection();
 
 // dodawanie nowego'tweeta' name="newtweet"
@@ -28,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user_id']) && isset
     $newTweet = new Tweet();
     $newTweet->setUserId($userId);
     $newTweet->setText($userTweet);
-    $newTweet->setCreationDate($actualDate);
+    $newTweet->setCreationDate(date("Y-m-d H:i:s"));
     $newTweet->saveToDb($conn);
     unset($_POST['newtweet']);
 }

@@ -18,7 +18,6 @@ require_once 'src/Comment.php';
 require_once 'src/Message.php';
 
 $message = ""; //wiadomość informacyjna (pomyślne wysłanie wiadomosci do uzytkownika)
-$actualDate = date("Y-m-d H:i:s");
 
 $conn = getDbConnection();
 
@@ -32,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $newMessage = new Message(); //bindowanie parametrow jest juz w klasie
         $newMessage->setMessageContent($messageForStranger);
-        $newMessage->setMessageCreationDate($actualDate);
+        $newMessage->setMessageCreationDate(date("Y-m-d H:i:s"));
         $newMessage->setMessageReceiverId($receiverId);
         $newMessage->setMessageSenderId($senderId);
         $newMessage->saveToDb($conn);

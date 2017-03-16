@@ -17,7 +17,6 @@ require_once "src/connect.php";
 require_once 'src/Comment.php';
 require_once 'src/Message.php';
 
-$actualDate = date("Y-m-d H:i:s");
 $_SESSION['actualTweetId'] = $_GET['tweetid'];
 ?>
 
@@ -197,7 +196,7 @@ if (isset($_GET['tweetid']) && isset($_GET['newtweetcomment'])) {
     $newComment = new Comment();
     $newComment->setUserId($_SESSION['user_id']);
     $newComment->setTweetId($id);
-    $newComment->setCreationDate($actualDate);
+    $newComment->setCreationDate(date("Y-m-d H:i:s"));
     $newComment->setText($_GET['newtweetcomment']);
     $newComment->saveToDb($conn);
 
