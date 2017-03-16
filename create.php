@@ -21,13 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['username']) && trim($_POST['username']) != '' && isset($_POST['captcha']) && ($_POST['captcha'] >= 10) && ($_POST['captcha'] <= 85) && is_numeric($_POST['captcha']) && isset($_POST['useremail']) && trim($_POST['useremail']) != '' && isset($_POST['userpassword1']) && trim($_POST['userpassword1']) != '' && isset($_POST['userpassword2']) && trim($_POST['userpassword2']) != '') {
         if (trim($_POST['userpassword1']) == trim($_POST['userpassword2'])) {
             $userEmail = strtolower(trim($_POST['useremail']));
-            $userPassword = trim($_POST['userpassword1']);
-            $userName = trim($_POST['username']);
-            $userName = htmlentities($userName, ENT_QUOTES, "UTF-8");
-
             $userEmail = $conn->real_escape_string($userEmail);
-            $userPassword = $conn->real_escape_string($userPassword);
-            $userName = $conn->real_escape_string($userName);
+            $userPassword = trim($_POST['userpassword1']);
+            $userName = trim($_POST['username']);           
 
             $sql = "SELECT * FROM users WHERE user_email = '$userEmail'";
             $result = $conn->query($sql);
