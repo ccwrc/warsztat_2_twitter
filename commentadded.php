@@ -12,7 +12,7 @@ require_once "src/connect.php";
 require_once 'src/Comment.php';
 require_once 'src/Message.php';
 
-$actualDate = date("Y-m-d H:i:s");
+// $actualDate = date("Y-m-d H:i:s");
 $message = "";
 ?>
 
@@ -51,14 +51,15 @@ $message = "";
                 <?php
                 $conn = getDbConnection();
 
-                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                    $commentText = $conn->real_escape_string(trim($_POST['newtweetcomment']));
-                    $commentText = htmlentities($commentText, ENT_QUOTES, "UTF-8");
-                    // dopisac warunek trim 3-60 znakow (przed 2018 w miare mozliwości)
+                if ($_SERVER['REQUEST_METHOD'] == 'POST' 
+                        && strlen(trim($_POST['newtweetcomment'])) >= 3
+                        && strlen(trim($_POST['newtweetcomment'])) <= 60) {
+                    $commentText = trim($_POST['newtweetcomment']);
+
                     $newComment = new Comment();
                     $newComment->setUserId($_SESSION['user_id']);
                     $newComment->setTweetId($_SESSION['actualTweetId']);
-                    $newComment->setCreationDate($actualDate);
+                    $newComment->setCreationDate(date("Y-m-d H:i:s"));
                     $newComment->setText($commentText);
                     $newComment->saveToDb($conn);
 
