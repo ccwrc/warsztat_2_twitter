@@ -1,26 +1,31 @@
-# warsztat_2_twitter (dzięcioły.pl)
+# warsztat_2_twitter (aka dzięcioły.pl)
 
-Celem warsztatów jest napisanie pełnej i funkcjonalnej aplikacji w stylu Twittera. Aplikacja ma
-implementować następujące funkcjonalności:
+Pełna i funkcjonalna aplikacja w stylu twittera. Wprowadzone funkcjonalności:    
 
-Użytkownicy: dodawanie, modyfikacja
-niekluczowych informacji o sobie, usuwanie
-swojego konta. Użytkownik ma być
-identyfikowany po emailu (nie może się
-powtarzać).
+Użytkownicy    
+    - dodawanie, modyfikacja niekluczowych informacji o sobie,   
+    - usuwanie swojego konta,    
+    - użytkownik identyfikowany po adresie e-mail.   
 
-Wpisy: Każdy użytkownik może stworzyć
-nieograniczoną liczbę wpisów. Maksymalna
-długość wpisu to 140 znaków.
+Wpisy   
+    - każdy użytkownik może stworzyć nieograniczoną liczbę wpisów,   
+    - maksymalna długość wpisu to 140 znaków,     
+    - każdy wpis można skomentować.   
 
-Komentarze: pod każdym wpisem inni
-użytkownicy mają mieć możliwość wpisywania
-komentarzy. Maksymalna długość komentarza
-to 60 znaków.
+Komentarze   
+    - maksymalna długość komentarza to 60 znaków,   
+    - każdy użytkownik może zostawić nieograniczoną liczbę komentarzy.   
+   
+Wiadomości   
+    - każdy użytkownik może wysłać innemu użytkownikowi wiadomość,   
+    - maksymalna długość wiadomości to 25000 znaków,     
+    - po zalogowaniu jest powiadomienie o nowych wiadomościach,   
+    - jest dostępna informacja, czy adresat przeczytał już wiadomość,    
+    - zablokowana jest możliwość wysyłania wiadomości do samego siebie.    
 
-Wiadomości: Każdy użytkownik może wysłać
-innemu użytkownikowi wiadomość.
-
+#
+Technologie: PHP 5.4     
+Baza danych: MySQL   
 #
 
 Roboczy zrzut ekranu:

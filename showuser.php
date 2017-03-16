@@ -17,19 +17,19 @@ require_once "src/connect.php";
 require_once 'src/Comment.php';
 require_once 'src/Message.php';
 
-$message = ""; //wiadomość informacyjna (pomyślne wysłanie wiadomosci do uzytkownika)
+$message = ""; //komunikat informacyjny (pomyślne wysłanie wiadomosci do uzytkownika)
 
 $conn = getDbConnection();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    if (isset($_POST['messageforstranger']) && (trim($_POST['messageforstranger']) != '')) {
+    if (isset($_POST['messageForStranger']) && (trim($_POST['messageForStranger']) != '') 
+            && strlen(trim($_POST['messageForStranger'])) <= 25000) {
         $receiverId = $_SESSION['strangeUserIdForMessage'];
         $senderId = $_SESSION['user_id'];
-        $messageForStranger = trim($_POST['messageforstranger']);
-        $messageForStranger = htmlentities($messageForStranger, ENT_QUOTES, "UTF-8");
+        $messageForStranger = trim($_POST['messageForStranger']);
 
-        $newMessage = new Message(); //bindowanie parametrow jest juz w klasie
+        $newMessage = new Message();
         $newMessage->setMessageContent($messageForStranger);
         $newMessage->setMessageCreationDate(date("Y-m-d H:i:s"));
         $newMessage->setMessageReceiverId($receiverId);
@@ -76,10 +76,6 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
 
 
             <div class="content">
-                <!-- Strona wyświetlania użytkownika - showuser.php
-          Strona ma pokazać wszystkie wpisy danego użytkownika (dodatkowo pod każdym liczbę komentarzy 
-                do danego wpisu).
-          Na tej stronie ma być też guzik, który umożliwi nam wysłanie wiadomości do tego użytkownika. -->
 
                 <br/> <span class="warning"><?= $message ?></span>
                 <?php
@@ -93,8 +89,8 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
 
                     $sql = "SELECT * FROM tweet WHERE tweet_user_id = $userid";
                     $result = $conn->query($sql);
-   
-                    if ($result == true && $result->num_rows != 0) {
+
+                    if ($result->num_rows > 0) {
                         foreach ($result as $row) {
                             echo "<div class=\"tweet\">";
                             echo "Wpis o ID " . $row['tweet_id'] . ": ";
@@ -127,6 +123,11 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
                     $conn = getDbConnection();
                     $userid = $_GET['strangeuser'];
 
+                    if (User::loadUserById($conn, $userid) == null) {
+                        header("location: index.php");
+                        exit;
+                    }
+
                     echo "<strong>";
                     echo "Jesteś na stronie dzięcioła o nicku: " . User::loadUserById($conn, $userid)->getUsername() . "<br/><br/>";
                     echo "</strong>";
@@ -134,7 +135,7 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
                     $_SESSION['strangeUserIdForMessage'] = $userid;
                     //formularz wysylania wiadomosci do uzytkownika
                     echo "<form method=\"POST\" action=\"\">";
-                    echo "<textarea name=\"messageforstranger\" cols=50 placeholder=\"Tu wpisz wiadomość "
+                    echo "<textarea name=\"messageForStranger\" cols=50 placeholder=\"Tu wpisz wiadomość "
                     . "do dzięcioła (maksymalnie 25000 znaków).\" maxlength=\"25000\"></textarea><br/>";
                     echo " <input type=\"submit\" value=\"Kliknij żeby wysłać\"/>";
                     echo "</form> <br/><br/>";
@@ -142,7 +143,7 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
                     $sql = "SELECT * FROM tweet WHERE tweet_user_id = $userid";
                     $result = $conn->query($sql);
 
-                    if ($result == true && $result->num_rows != 0) {
+                    if ($result->num_rows > 0) {
                         foreach ($result as $row) {
                             echo "<div class=\"tweet\">";
                             echo "Wpis o ID " . $row['tweet_id'] . ": ";

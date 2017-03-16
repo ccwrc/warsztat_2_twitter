@@ -55,6 +55,7 @@ class Message {
 
     public function setMessageContent($messageContent) {
         if (is_string($messageContent) && (strlen($messageContent) <= 25000)) {
+            $messageContent = htmlentities($messageContent, ENT_QUOTES, "UTF-8");
             $this->messageContent = $messageContent;
             return $this;
         } else {
