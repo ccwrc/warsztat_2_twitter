@@ -6,16 +6,16 @@ if (!isset($_SESSION['logged'])) {
     exit;
 }
 
+if ((!isset($_GET['messageid'])) || (!is_numeric($_GET['messageid']))) {
+    header("location: messages.php");
+    exit;
+}
+
 require_once "src/User.php";
 require_once "src/Tweet.php";
 require_once "src/connect.php";
 require_once 'src/Comment.php';
 require_once 'src/Message.php';
-
-if ((!isset($_GET['messageid'])) || (!is_numeric($_GET['messageid']))) {
-    header("location: messages.php");
-    exit;
-}
 ?>
 
 <!DOCTYPE HTML>
@@ -46,70 +46,77 @@ if ((!isset($_GET['messageid'])) || (!is_numeric($_GET['messageid']))) {
 
 
             <div class="content">
-                <!-- Stronę wiadomości - messageinfo.php
-          Wszystkie informacje o wiadomości: nadawca, odbiorca, treść. -->
                 <br/>
-<?php
-$conn = getDbConnection();
+                <?php
+                $conn = getDbConnection();
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    // gdy user wchodzi jako odbiorca 
-    if (isset($_GET['reciv']) && ($_GET['reciv'] == 'true')) {
-        $messageReceiverId = $_SESSION['user_id'];
+                if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                    // gdy user wchodzi jako odbiorca wiadomosci
+                    if (isset($_GET['reciv']) && ($_GET['reciv'] == 'true')) {
+                        $messageReceiverId = $_SESSION['user_id'];
 
-        $showmessage = Message::loadMessageById($conn, $_GET['messageid']);
-        if (($showmessage->getMessageReceiverId()) != $_SESSION['user_id']) {
-            header("location: messages.php");
-            exit;
-        }
-        $messageSenderId = $showmessage->getMessageSenderId();
+                        $showmessage = Message::loadMessageById($conn, $_GET['messageid']);
+                        if ($showmessage == null) {
+                            header("location: messages.php");
+                            exit;
+                        }
+                        if (($showmessage->getMessageReceiverId()) != $_SESSION['user_id']) {
+                            header("location: messages.php");
+                            exit;
+                        }
+                        $messageSenderId = $showmessage->getMessageSenderId();
 
-        echo "<div class=\"tweet\">";
-        echo "<br/>Nadawca: " . User::loadUserById($conn, $messageSenderId)->getUsername() . "<br/>";
-        echo "Odbiorca: " . User::loadUserById($conn, $messageReceiverId)->getUsername() . "<br/>";
-        echo "Data i godzina wysłania wiadomości: " . $showmessage->getMessageCreationdate() . "<br/>";
-        echo "---<br/>";
-        echo "Treść wiadomości: " . $showmessage->getMessageContent() . "<br/><br/>";
-        echo "</div><br/>";
+                        echo "<div class=\"tweet\">";
+                        echo "<br/>Nadawca: " . User::loadUserById($conn, $messageSenderId)->getUsername() . "<br/>";
+                        echo "Odbiorca: " . User::loadUserById($conn, $messageReceiverId)->getUsername() . "<br/>";
+                        echo "Data i godzina wysłania wiadomości: " . $showmessage->getMessageCreationdate() . "<br/>";
+                        echo "---<br/>";
+                        echo "Treść wiadomości: " . $showmessage->getMessageContent() . "<br/><br/>";
+                        echo "</div><br/>";
 
-        $messageIdForIsRead = $_GET['messageid'];
-        $sql = "UPDATE message SET message_read = 1 WHERE message_id = $messageIdForIsRead";
-        $result = $conn->query($sql);
-    }
+                        $messageIdForIsRead = $_GET['messageid'];
+                        $sql = "UPDATE message SET message_read = 1 WHERE message_id = $messageIdForIsRead";
+                        $result = $conn->query($sql);
+                    }
 
-    // gdy user wchodzi jako nadawca 
-    if (isset($_GET['send']) && ($_GET['send'] == 'true')) {
-        $messageSenderId = $_SESSION['user_id'];
+                    // gdy user wchodzi jako nadawca wiadomości
+                    if (isset($_GET['send']) && ($_GET['send'] == 'true')) {
+                        $messageSenderId = $_SESSION['user_id'];
 
-        $showmessage = Message::loadMessageById($conn, $_GET['messageid']);
-        if (($showmessage->getMessageSenderId()) != $_SESSION['user_id']) {
-            header("location: messages.php");
-            exit;
-        }
-        $messageReceiverId = $showmessage->getMessageReceiverId();
+                        $showmessage = Message::loadMessageById($conn, $_GET['messageid']);
+                        if ($showmessage == null) {
+                            header("location: messages.php");
+                            exit;
+                        }
+                        if (($showmessage->getMessageSenderId()) != $_SESSION['user_id']) {
+                            header("location: messages.php");
+                            exit;
+                        }
+                        $messageReceiverId = $showmessage->getMessageReceiverId();
 
-        echo "<div class=\"tweet\">";
-        echo "<br/>Nadawca: " . User::loadUserById($conn, $messageSenderId)->getUsername() . "<br/>";
-        echo "Odbiorca: " . User::loadUserById($conn, $messageReceiverId)->getUsername() . "<br/>";
-        echo "Data i godzina wysłania wiadomości: " . $showmessage->getMessageCreationdate() . "<br/>";
-        echo "---<br/>";
-        echo "Treść wiadomości: " . $showmessage->getMessageContent() . "<br/><br/>";
-        echo "</div><br/>";
-    }
-}
+                        echo "<div class=\"tweet\">";
+                        echo "<br/>Nadawca: " . User::loadUserById($conn, $messageSenderId)->getUsername() . "<br/>";
+                        echo "Odbiorca: " . User::loadUserById($conn, $messageReceiverId)->getUsername() . "<br/>";
+                        echo "Data i godzina wysłania wiadomości: " . $showmessage->getMessageCreationdate() . "<br/>";
+                        echo "---<br/>";
+                        echo "Treść wiadomości: " . $showmessage->getMessageContent() . "<br/><br/>";
+                        echo "</div><br/>";
+                    }
+                }
 
-$conn->close();
-$conn = null;
-?>
+                $conn->close();
+                $conn = null;
+                ?>
 
                 <a href="messages.php">Powrót do poprzedniej strony</a>
 
-            <br/><br/><br/><br/><br/> <!-- 5x br do odsloniecia tresci (przyklejony dolny panel)-->
+                <!-- 5x br do odsloniecia tresci (przyklejony dolny panel)-->
+                <br/><br/><br/><br/><br/> 
             </div>
 
-<?php
-include 'src/bottom_menu_logged.php';
-?>    
+            <?php
+            include 'src/bottom_menu_logged.php';
+            ?>    
 
         </div>
     </body>

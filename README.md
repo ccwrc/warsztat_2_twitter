@@ -2,23 +2,23 @@
 
 Pełna i funkcjonalna aplikacja w stylu twittera. Wprowadzone funkcjonalności:    
 
-Użytkownicy    
+**Użytkownicy**    
         - dodawanie, modyfikacja niekluczowych informacji o sobie,   
         - usuwanie swojego konta,    
         - oddzielna strona wyświetlania użytkownika ze wszystkimi wpisami i liczbą komentarzy do wpisu,   
         - użytkownik identyfikowany po adresie e-mail.   
 
 
-Wpisy   
+**Wpisy**   
         - każdy użytkownik może stworzyć nieograniczoną liczbę wpisów,   
         - maksymalna długość wpisu to 140 znaków,     
         - każdy wpis można skomentować.   
 
-Komentarze   
+**Komentarze**   
         - maksymalna długość komentarza to 60 znaków,   
         - każdy użytkownik może zostawić nieograniczoną liczbę komentarzy.   
    
-Wiadomości   
+**Wiadomości**   
         - każdy użytkownik może wysłać innemu użytkownikowi wiadomość, 
         - wyraźny podział na wysłane i otrzymane,  
         - wysłane/otrzymane maja datę i wyświetlonego nadawcę/odbiorcę,
@@ -31,8 +31,7 @@ Wiadomości
 
 #
 Technologie: PHP 5.4     
-Baza danych: MySQL
-#
+Baza danych: MySQL #
 
 Roboczy zrzut ekranu:
 ![Alt text](https://images86.fotosik.pl/19/7c3ea4171409a55a.png "sowy_i_dzięcioły")
