@@ -96,7 +96,7 @@ $_SESSION['actualTweetId'] = $_GET['tweetid'];
                     }
 
                     echo "<br/>";
-                    echo "&nbsp;" . "<a href='showuser.php'>Powrót do poprzedniej strony</a>";
+                    echo "&nbsp;" . "<a href='showuser.php'>Powrót - twoje wpisy</a>";
                     echo "<br/><br/>";
                 }
 
@@ -168,49 +168,10 @@ $_SESSION['actualTweetId'] = $_GET['tweetid'];
                     unset($_GET['fromindex']);
                 }
 
-
-                // wejscie ze strony biezacej, czyli dodanie nowego komentarza
-                if (isset($_GET['tweetid']) && isset($_GET['newtweetcomment'])) {
-                    $userId = $tweetDetail->getUserId();
-
-                    $newComment = new Comment();
-                    $newComment->setUserId($_SESSION['user_id']);
-                    $newComment->setTweetId($_GET['tweetid']);
-                    $newComment->setCreationDate(date("Y-m-d H:i:s"));
-                    $newComment->setText($_GET['newtweetcomment']);
-                    $newComment->saveToDb($conn);
-
-                    echo "<div class=\"tweetbold\">";
-                    echo "ID wpisu: " . $tweetDetail->getId() . "<br/>";
-                    echo "Treść wpisu: " . $tweetDetail->getText() . "<br/>";
-                    echo "ID dzięcioła: " . $tweetDetail->getUserId() . "<br/>";
-                    echo "Nazwa dzięcioła: " . User::loadUserById($conn, $userId)->getUsername() . "<br/>";
-                    echo "Data utworzenia wpisu: " . $tweetDetail->getCreationDate() . "<br/><br/>";
-                    echo "</div><br/>";
-
-                    $allComments = Comment::loadAllCommentsByTweetId($conn, $_GET['tweetid']);
-                    foreach ($allComments as $comment) {
-                        $commentUserId = $comment->getUserId();
-                        echo "<table class='tweet'>";
-                        echo "<tr><td> ";
-                        echo "Treść komentarza: " . $comment->getText();
-                        echo "</td></tr> <tr><td>";
-                        echo "Autor komentarza: <a href=\"showuser.php?strangeuser=$commentUserId\">" . User::loadUserById($conn, $commentUserId)->getUsername() . "</a> ";
-                        echo "Data publikacji: " . $comment->getCreationDate();
-                        echo "</td></tr>";
-                        echo "</table> <br/>";
-                    }
-
-                    echo "<br/>";
-                    echo "&nbsp;" . "<a href='index.php'>Komentarz dodany, wróć do strony głównej</a>";
-                    echo "<br/><br/>";
-
-                    unset($_GET['newtweetcomment']);
-                }
-
                 $conn->close();
                 $conn = null;
                 ?>
+                
                 <!-- 5x br do odsloniecia tresci (przyklejony dolny panel)-->
                 <br/><br/><br/><br/><br/> 
             </div>

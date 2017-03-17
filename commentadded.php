@@ -2,7 +2,8 @@
 // Strona potwierdzenia dodania komentarza
 session_start();
 
-if (!isset($_SESSION['logged']) || !isset($_SESSION['actualTweetId']) || !isset($_POST['newtweetcomment'])) {
+if (!isset($_SESSION['logged']) || !isset($_SESSION['actualTweetId']) 
+        || !isset($_POST['newtweetcomment'])) {
     header("location: logon.php");
     exit;
 }
@@ -42,16 +43,12 @@ $message = "";
                 <div class="logged"> <?= $_SESSION['logged'] ?> jest w dziupli. </div>
             </div>
 
-
             <div class="content">
-
                 <br/><br/>
-
                 <?php
                 $conn = getDbConnection();
 
-                if ($_SERVER['REQUEST_METHOD'] == 'POST' 
-                        && strlen(trim($_POST['newtweetcomment'])) >= 3 
+                if ($_SERVER['REQUEST_METHOD'] == 'POST' && strlen(trim($_POST['newtweetcomment'])) >= 3 
                         && strlen(trim($_POST['newtweetcomment'])) <= 60) {
                     $commentText = trim($_POST['newtweetcomment']);
 
@@ -61,7 +58,8 @@ $message = "";
                     $newComment->setCreationDate(date("Y-m-d H:i:s"));
                     $newComment->setText($commentText);
                     $newComment->saveToDb($conn);
-// dodac return to tweet
+
+                    $returnToTweetId = $_SESSION['actualTweetId'];
                     $message = "Komentarz dodany!";
                     unset($_SESSION['actualTweetId']);
                 } else {
@@ -73,7 +71,7 @@ $message = "";
                 $conn = null;
 
                 echo "<br/>";
-                echo "&nbsp;" . "<a href='index.php'>Powrót do strony głównej</a>";
+                echo "&nbsp;" . "<a href='detail.php?tweetid=" . $returnToTweetId . "'>Powrót do strony wpisu</a>";
                 echo "<br/><br/>";
                 ?>
 
@@ -83,9 +81,9 @@ $message = "";
 
             </div>
 
-            <?php
-            include 'src/bottom_menu_logged.php';
-            ?>   
+<?php
+include 'src/bottom_menu_logged.php';
+?>   
 
         </div>
     </body>
