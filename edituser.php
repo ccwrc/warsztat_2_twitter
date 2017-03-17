@@ -1,4 +1,5 @@
 <?php
+// zmiana nazwy, hasla i usuniecie konta
 session_start();
 
 if (!isset($_SESSION['logged']) || !isset($_SESSION['user_id'])) {
@@ -26,11 +27,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // zmiana nazwy usera
-    if (isset($_POST['newusername']) && isset($_POST['oldpassword']) && (strlen(trim($_POST['newusername']))) >= 3 && (strlen(trim($_POST['newusername']))) <= 65 && (password_verify($_POST['oldpassword'], $getHashedPassword))) {
+    if (isset($_POST['newusername']) && isset($_POST['oldpassword']) 
+            && (strlen(trim($_POST['newusername']))) >= 3 
+            && (strlen(trim($_POST['newusername']))) <= 65 
+            && (password_verify($_POST['oldpassword'], $getHashedPassword))) {
         $newUserName = trim($_POST['newusername']);
         $newUserName = $conn->real_escape_string($newUserName);
         $newUserName = htmlentities($newUserName, ENT_QUOTES, "UTF-8");
         $userId = $_SESSION['user_id'];
+        
         $sql = "UPDATE users SET user_name = '$newUserName' WHERE user_id = $userId";
         $result = $conn->query($sql);
         if ($result == true) {
@@ -43,12 +48,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // zmiana hasła usera
-    if (isset($_POST['newpassword1']) && isset($_POST['newpassword2']) && isset($_POST['oldpassword']) && (strlen(trim($_POST['newpassword1'])) >= 3) && (strlen(trim($_POST['newpassword1'])) <= 65) && ($_POST['newpassword1'] === $_POST['newpassword2']) && (password_verify($_POST['oldpassword'], $getHashedPassword))) {
+    if (isset($_POST['newpassword1']) && isset($_POST['newpassword2']) 
+            && isset($_POST['oldpassword']) && (strlen(trim($_POST['newpassword1'])) >= 3) 
+            && (strlen(trim($_POST['newpassword1'])) <= 65) 
+            && ($_POST['newpassword1'] === $_POST['newpassword2']) 
+            && (password_verify($_POST['oldpassword'], $getHashedPassword))) {
         $newHashedPassword = password_hash(trim($_POST['newpassword1']), PASSWORD_BCRYPT);
         $userId = $_SESSION['user_id'];
+        
         $sql = "UPDATE users SET hashed_password = '$newHashedPassword' WHERE user_id = $userId";
         $result = $conn->query($sql);
-        if ($result == true) {
+        if ($result) {
             $message = "Hasło zostało zmienione";
             unset($_POST['newpassword1']);
             unset($_POST['newpassword2']);
@@ -59,12 +69,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // usuniecie usera
-    if (isset($_POST['deleteuser']) && (password_verify($_POST['deleteuser'], $getHashedPassword))) {
+    if (isset($_POST['deleteuser']) 
+            && (password_verify($_POST['deleteuser'], $getHashedPassword))) {
         $userId = $_SESSION['user_id'];
+        
         $sql = "DELETE FROM users WHERE user_id = $userId";
         $result = $conn->query($sql);
-        if ($result == true) {
-            $message = "Dziupla usunięta...";
+        if ($result) {
+            unset($_POST);
             session_unset();
             header("location: logon.php");
             exit;
@@ -110,11 +122,7 @@ $conn = null;
                 <div class="logged"> <?= $_SESSION['logged'] ?> jest w dziupli. </div>
             </div>
 
-
             <div class="content">
-                <!-- Strona edycji użytkownika - edituser.php
-          Użytkownik ma mieć możliwość edycji informacji o sobie i zmiany hasła. Pamiętaj o tym,
-          że użytkownik może edytować tylko i wyłącznie swoje informacje. -->
                 <br/>
                 <center>
                     <p>Wybierz co chcesz zrobić:</p>
@@ -168,7 +176,7 @@ if (isset($_GET['changepassword'])) {
     unset($_GET['changpassword']);
 }
 
-// usuniecie uzytkownika
+// usuniecie usera
 if (isset($_GET['deleteuser'])) {
     if ($_GET['deleteuser'] !== 'true') {
         $_GET['deleteuser'] = false;
@@ -183,13 +191,13 @@ if (isset($_GET['deleteuser'])) {
     unset($_GET['deleteuser']);
 }
 ?>    
-
-            <br/><br/><br/><br/><br/> <!-- 5x br do odsloniecia tresci (przyklejony dolny panel)-->
+                <!-- 5x br do odsloniecia tresci (przyklejony dolny panel)-->
+                <br/><br/><br/><br/><br/> 
             </div>
 
-<?php
-include 'src/bottom_menu_logged.php';
-?>      
+                <?php
+                include 'src/bottom_menu_logged.php';
+                ?>      
 
         </div>
     </body>
