@@ -34,9 +34,7 @@ session_unset();
                 <img class="logoimage" id="logoimage" src="img/logo.jpg">  
             </div>
 
-
             <div class="content">
-                <!-- Strona wylogowania, dodatek - logoff.php -->
                 <br /><br />
                 <center>
                     <h3>Opuściłeś dziuplę, zostały tylko pióra.</h3>  
@@ -45,12 +43,11 @@ session_unset();
                 <center>
                     <h4><a href="logon.php">Kliknij tutaj żeby przejść do strony logowania.</a></h4>
                 </center>
-
             </div>
 
-<?php
-include 'src/bottom_menu_logged.php';
-?>      
+            <?php
+            include 'src/bottom_menu_logged.php';
+            ?>      
 
         </div>
     </body>
