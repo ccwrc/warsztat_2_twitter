@@ -108,7 +108,7 @@ class User {
                 return true;
             }
             return false;
-        } else {
+        } else { //TODO ponizsze do zbindowania
             $sql = "UPDATE users SET user_name='$this->username',
               user_email='$this->email',
               hashed_password='$this->hashedPassword'

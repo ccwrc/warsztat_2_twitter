@@ -1,5 +1,5 @@
 <?php
-session_start();  //strona dostepna bez zalogowania !
+session_start();  //strona rejestracji uzytkownika, dostepna bez zalogowania
 
 if (isset($_SESSION['logged'])) {
     header("location: index.php");
@@ -18,16 +18,20 @@ $message = ""; //wiadomosc podawana przy zajetym adresie mailowym i bledach hasl
 $conn = getDbConnection();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['username']) && trim($_POST['username']) != '' && isset($_POST['captcha']) && ($_POST['captcha'] >= 10) && ($_POST['captcha'] <= 85) && is_numeric($_POST['captcha']) && isset($_POST['useremail']) && trim($_POST['useremail']) != '' && isset($_POST['userpassword1']) && trim($_POST['userpassword1']) != '' && isset($_POST['userpassword2']) && trim($_POST['userpassword2']) != '') {
+    if (isset($_POST['username']) && trim($_POST['username']) != '' 
+            && isset($_POST['captcha']) && ($_POST['captcha'] >= 10) 
+            && ($_POST['captcha'] <= 85) && is_numeric($_POST['captcha']) 
+            && isset($_POST['useremail']) && trim($_POST['useremail']) != '' 
+            && isset($_POST['userpassword1']) && trim($_POST['userpassword1']) != '' 
+            && isset($_POST['userpassword2']) && trim($_POST['userpassword2']) != '') {
         if (trim($_POST['userpassword1']) == trim($_POST['userpassword2'])) {
             $userEmail = strtolower(trim($_POST['useremail']));
             $userEmail = $conn->real_escape_string($userEmail);
             $userPassword = trim($_POST['userpassword1']);
-            $userName = trim($_POST['username']);           
+            $userName = trim($_POST['username']);
 
             $sql = "SELECT * FROM users WHERE user_email = '$userEmail'";
             $result = $conn->query($sql);
-
             if ($result->num_rows > 0) {
                 $message = "Podany adres e-mail ma już dziuplę, wybierz inny";
             } else {
@@ -35,18 +39,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $user->setEmail($userEmail);
                 $user->setHashedPassword($userPassword);
                 $user->setUsername($userName);
-                $user->saveToDB($conn);
+                $user->saveToDB($conn); 
                 if ($user->saveToDB($conn) == true) {
                     $_SESSION['logged'] = $userName;
                     $_SESSION['user_email'] = $userEmail;
-
-                    $sql = "SELECT * FROM users WHERE user_email = '$userEmail'";
-                    $result = $conn->query($sql);
-                    foreach ($result as $row) {
-                        $userId = $row['user_id'];
-                    }
-                    $_SESSION['user_id'] = $userId;
-
+                    $_SESSION['user_id'] = $user->getId();
                     header("location: index.php");
                 } else {
                     $message = "Błąd połączenia z bazą, spróbuj za kilka minut";
@@ -91,12 +88,7 @@ $conn = null;
 
 
             <div class="content">
-                <!-- (dostepna bez zalogowania) Strona tworzenia użytkownika - create.php
-          Strona ma pobierać email i hasło.
-          Jeżeli takiego emaila nie ma jeszcze w systemie, to dodać go i zalogować (przekierować na stronę 
-            główną).
-          Jeżeli taki email jest, to przekierować znowu do strony tworzenia użytkownika i wyświetlić
-          komunikat o zajętym adresie email. -->
+
                 <br /> <center>
                     <h4 class="warning"><?= $message ?></h4>
                 </center>  
@@ -119,13 +111,13 @@ $conn = null;
                     </label>    
                 </form>
 
-
-                <br/><br/><br/><br/><br/> <!-- 5x br do odsloniecia tresci (przyklejony dolny panel)-->
+                <!-- 5x br do odsloniecia tresci (przyklejony dolny panel)-->
+                <br/><br/><br/><br/><br/> 
             </div>
 
-<?php
-include 'src/bottom_menu_logoff.php';
-?>   
+            <?php
+            include 'src/bottom_menu_logoff.php';
+            ?>   
 
         </div>
     </body>
