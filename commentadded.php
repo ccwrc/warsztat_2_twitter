@@ -61,7 +61,7 @@ $message = "";
                     $newComment->setCreationDate(date("Y-m-d H:i:s"));
                     $newComment->setText($commentText);
                     $newComment->saveToDb($conn);
-
+// dodac return to tweet
                     $message = "Komentarz dodany!";
                     unset($_SESSION['actualTweetId']);
                 } else {
