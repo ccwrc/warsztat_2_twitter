@@ -41,9 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-$conn->close();
-$conn = null;
-
 if (isset($_SESSION['strangeUserIdForMessage'])) {
     unset($_SESSION['strangeUserIdForMessage']);
 }
@@ -81,7 +78,6 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
                 <br/> <span class="warning"><?= $message ?></span>
                 <?php
                 if (!isset($_GET['strangeuser'])) {
-                    $conn = getDbConnection();
                     $userid = $_SESSION['user_id'];
 
                     echo "<strong>";
@@ -95,12 +91,7 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
                         foreach ($result as $row) {
                             echo "<div class=\"tweet\">";
                             echo "Wpis o ID " . $row['tweet_id'] . ": ";
-                            //wczytywanie ilosci komentarzy
                             $commentsCount = countComments($conn, $row['tweet_id']);
-//                            $comments = Comment::loadAllCommentsByTweetId($conn, $row['tweet_id']);
-//                            foreach ($comments as $comment) {
-//                                $commentsCount++;
-//                            }
                             echo $row['tweet_text'] . "<br/>";
                             echo "Data utworzenia wpisu: " . $row['tweet_date'] . " <b>Komentarze"
                             . ": " . $commentsCount . "</b> &nbsp;" . "<a href=\"detail.php?"
@@ -111,9 +102,6 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
                         echo "Nie podzieliłeś się z nikim wiadomością, może czas to zmienić? ";
                         echo "<a href='index.php'>Kliknij tutaj.</a> ";
                     }
-
-                    $conn->close();
-                    $conn = null;
                 }
 
 
@@ -121,7 +109,6 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
                     if (!is_numeric($_GET['strangeuser'])) {
                         $_GET['strangeuser'] = 1;
                     }
-                    $conn = getDbConnection();
                     $userid = $_GET['strangeuser'];
 
                     if (User::loadUserById($conn, $userid) == null) {
@@ -148,12 +135,7 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
                         foreach ($result as $row) {
                             echo "<div class=\"tweet\">";
                             echo "Wpis o ID " . $row['tweet_id'] . ": ";
-                            //wczytywanie ilosci komentarzy 
-                            $commentsCount = 0;
-                            $comments = Comment::loadAllCommentsByTweetId($conn, $row['tweet_id']);
-                            foreach ($comments as $comment) {
-                                $commentsCount++;
-                            }
+                            $commentsCount = countComments($conn, $row['tweet_id']);
                             echo $row['tweet_text'] . "<br/>";
                             echo "Data utworzenia wpisu: " . $row['tweet_date'] . " <b>Komentarze: " .
                             $commentsCount . "</b> &nbsp;" . "<a href=\"detail.php?tweetid="
@@ -164,19 +146,18 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
                     } else {
                         echo "Użytkownik nie zostawił w lesie żadnego wpisu.";
                     }
-
-                    $conn->close();
-                    $conn = null;
                 }
+                $conn->close();
+                $conn = null;
                 ?>
 
                 <!-- 5x br do odsloniecia tresci (przyklejony dolny panel)-->
                 <br/><br/><br/><br/><br/> 
             </div>
 
-            <?php
-            include 'src/bottom_menu_logged.php';
-            ?>
+<?php
+include 'src/bottom_menu_logged.php';
+?>
 
         </div>
     </body>

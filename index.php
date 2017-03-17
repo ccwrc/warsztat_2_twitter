@@ -11,15 +11,16 @@ require_once "src/Tweet.php";
 require_once "src/connect.php";
 require_once 'src/Comment.php';
 require_once 'src/Message.php';
+require_once 'src/functions.php';
 
 $conn = getDbConnection();
 
 // dodawanie nowego'tweeta' 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user_id']) 
-        && isset($_POST['newTweet']) && strlen(trim($_POST['newTweet'])) >= 3
+        && isset($_POST['newTweet']) && strlen(trim($_POST['newTweet'])) >= 3 
         && strlen(trim($_POST['newTweet'])) <= 140) {
     $userId = $_SESSION['user_id'];
-    $userTweet = trim($_POST['newTweet']); 
+    $userTweet = trim($_POST['newTweet']);
 
     $newTweet = new Tweet();
     $newTweet->setUserId($userId);
@@ -70,7 +71,7 @@ if (isset($_SESSION['newPrivateMessage'])) {
 <?= $messageInfo ?>
                 <center>
                     <form method="POST" action="#">
-                <?= $_SESSION['logged'] ?>, masz wiadomość z lasu? Wpisz ją poniżej i nie przekrocz 140 znaków, bo las zapłonie.<br/>
+<?= $_SESSION['logged'] ?>, masz wiadomość z lasu? Wpisz ją poniżej i nie przekrocz 140 znaków, bo las zapłonie.<br/>
                         <input type="text" size="100" name="newTweet"
                                pattern=".{1,140}" required title="Minimalna liczba znaków to 3, maksymalna 140"/> <br/>
                         <input type="submit" value="Opublikuj !"/>
@@ -83,12 +84,13 @@ $allTweets = Tweet::loadAllTweets($conn);
 foreach ($allTweets as $tweet) {
     $userId = $tweet->getUserId();
     $tweetId = $tweet->tweetId;
+    $commentsCount = countComments($conn, $tweetId);
 
     echo "<table class='tweet'>";
     echo "<tr><td> ";
     echo "Autor: <a href=\"showuser.php?strangeuser=$userId\">" . User::loadUserById($conn, $userId)->getUsername() . "</a> ";
     echo "Data publikacji: " . $tweet->getCreationDate() . " ";
-    echo "<a href=\"detail.php?tweetid=$tweetId&fromindex=true\">Skomentuj</a>";
+    echo "<a href=\"detail.php?tweetid=$tweetId&fromindex=true\">Skomentuj (" . $commentsCount . ")</a>";
     echo "</td></tr> <tr><td>";
     echo $tweet->getText();
     echo "</td></tr>";
@@ -98,13 +100,13 @@ foreach ($allTweets as $tweet) {
 $conn->close();
 $conn = null;
 ?>
-
-            <br/><br/><br/><br/><br/> <!-- 5x br do odsloniecia ostatniego tweeta (przyklejony dolny panel) -->
+                <!-- 5x br do odsloniecia ostatniego tweeta (przyklejony dolny panel) -->
+                <br/><br/><br/><br/><br/> 
             </div>
 
-                <?php
-                include 'src/bottom_menu_logged.php';
-                ?>   
+<?php
+include 'src/bottom_menu_logged.php';
+?>   
 
         </div>
     </body>
