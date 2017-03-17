@@ -31,11 +31,17 @@ Pełna i funkcjonalna aplikacja w stylu twittera. Wprowadzone funkcjonalności:
         - na liście widoczne jest pierwsze 30 znaków wiadomości, całość po rozwinięciu,      
         - zablokowana możliwość wysyłania wiadomości do samego siebie.       
 
+**Technologie: PHP 5.4**     
+**Baza danych: MySQL(InnoDB)**
 #
-Technologie: PHP 5.4     
-Baza danych: MySQL(InnoDB)
-#
+Działanie wersji początkowej - strona wpisów: 
+![Alt text](https://images86.fotosik.pl/56/21228442c231924b.png "dzięcioły_index")
 
-Roboczy zrzut ekranu:
-![Alt text](https://images86.fotosik.pl/19/7c3ea4171409a55a.png "sowy_i_dzięcioły")
+#
+Działanie wersji początkowej - rejestracja: 
+![Alt text](https://images85.fotosik.pl/55/a215ccf148c65ac5.png "stwórz_własną_dziuplę")
+
+#
+Działanie wersji początkowej - skrzynka wiadomości: 
+![Alt text](https://images85.fotosik.pl/55/fadd52b49170b5a6.png "poślij_leśniczego_z_listem")
 
