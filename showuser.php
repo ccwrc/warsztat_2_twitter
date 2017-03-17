@@ -16,6 +16,7 @@ require_once "src/Tweet.php";
 require_once "src/connect.php";
 require_once 'src/Comment.php';
 require_once 'src/Message.php';
+require_once 'src/functions.php';
 
 $message = ""; //komunikat informacyjny (pomyślne wysłanie wiadomosci do uzytkownika)
 
@@ -95,11 +96,11 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
                             echo "<div class=\"tweet\">";
                             echo "Wpis o ID " . $row['tweet_id'] . ": ";
                             //wczytywanie ilosci komentarzy
-                            $commentsCount = 0;
-                            $comments = Comment::loadAllCommentsByTweetId($conn, $row['tweet_id']);
-                            foreach ($comments as $comment) {
-                                $commentsCount++;
-                            }
+                            $commentsCount = countComments($conn, $row['tweet_id']);
+//                            $comments = Comment::loadAllCommentsByTweetId($conn, $row['tweet_id']);
+//                            foreach ($comments as $comment) {
+//                                $commentsCount++;
+//                            }
                             echo $row['tweet_text'] . "<br/>";
                             echo "Data utworzenia wpisu: " . $row['tweet_date'] . " <b>Komentarze"
                             . ": " . $commentsCount . "</b> &nbsp;" . "<a href=\"detail.php?"

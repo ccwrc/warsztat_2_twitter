@@ -1,8 +1,5 @@
 <?php
-session_start(); //Strona glowna wyświetlająca wszystkie Tweety
-//  var_dump($_SESSION['logged']); - kosmetyka (komunikat) i check
-//  var_dump($_SESSION['user_email']); - to też siedzi w sesji
-//  var_dump($_SESSION['user_id']); - do identyfikacji tweeta itd.  
+session_start(); //Strona glowna wyświetlająca wszystkie 'tweety'
 
 if (!isset($_SESSION['logged'])) {
     header("location: logon.php");
@@ -19,17 +16,17 @@ $conn = getDbConnection();
 
 // dodawanie nowego'tweeta' 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user_id']) 
-        && isset($_POST['newtweet']) && strlen(trim($_POST['newtweet'])) >= 3
-        && strlen(trim($_POST['newtweet'])) <= 140) {
+        && isset($_POST['newTweet']) && strlen(trim($_POST['newTweet'])) >= 3
+        && strlen(trim($_POST['newTweet'])) <= 140) {
     $userId = $_SESSION['user_id'];
-    $userTweet = trim($_POST['newtweet']); 
+    $userTweet = trim($_POST['newTweet']); 
 
     $newTweet = new Tweet();
     $newTweet->setUserId($userId);
     $newTweet->setText($userTweet);
     $newTweet->setCreationDate(date("Y-m-d H:i:s"));
     $newTweet->saveToDb($conn);
-    unset($_POST['newtweet']);
+    unset($_POST['newTweet']);
 }
 
 //info o nowych wiadomosciach po zalogowaniu
@@ -39,8 +36,6 @@ if (isset($_SESSION['newPrivateMessage'])) {
             . ">skrzynki odbiorczej</a>, coś tam na ciebie czeka</p>";
     unset($_SESSION['newPrivateMessage']);
 }
-$conn->close();
-$conn = null;
 ?>
 
 <!DOCTYPE HTML>
@@ -71,22 +66,18 @@ $conn = null;
 
 
             <div class="content">
-                <!-- strona główna - index.php
-                Strona wyświetlająca wszystkie Tweety jakie znajdują się w systemie (od najnowszego do
-                najstarszego). Nad nimi ma być widoczny formularz do stworzenia nowego wpisu. -->
                 <br/>
 <?= $messageInfo ?>
                 <center>
                     <form method="POST" action="#">
                 <?= $_SESSION['logged'] ?>, masz wiadomość z lasu? Wpisz ją poniżej i nie przekrocz 140 znaków, bo las zapłonie.<br/>
-                        <input type="text" size="100" name="newtweet"
-                               pattern=".{1,140}" required title="Minimalna liczba znaków to 1, maksymalna 140"/> <br/>
+                        <input type="text" size="100" name="newTweet"
+                               pattern=".{1,140}" required title="Minimalna liczba znaków to 3, maksymalna 140"/> <br/>
                         <input type="submit" value="Opublikuj !"/>
                     </form>
                 </center> <br/>
 
 <?php
-$conn = getDbConnection();
 $allTweets = Tweet::loadAllTweets($conn);
 
 foreach ($allTweets as $tweet) {
