@@ -11,7 +11,6 @@ require_once "src/Tweet.php";
 require_once "src/connect.php";
 require_once 'src/Comment.php';
 require_once 'src/Message.php';
-require_once 'src/functions.php';
 
 $conn = getDbConnection();
 
@@ -84,9 +83,8 @@ $allTweets = Tweet::loadAllTweets($conn);
 foreach ($allTweets as $tweet) {
     $userId = $tweet->getUserId();
     $tweetId = $tweet->tweetId;
-    $commentsCount = countComments($conn, $tweetId);
-$com = Comment::countAllCommentsByTweetId($conn, $tweetId);
-    var_dump($com);
+    $commentsCount = Comment::countAllCommentsByTweetId($conn, $tweetId);
+
     echo "<table class='tweet'>";
     echo "<tr><td> ";
     echo "Autor: <a href=\"showuser.php?strangeuser=$userId\">" . User::loadUserById($conn, $userId)->getUsername() . "</a> ";

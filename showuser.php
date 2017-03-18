@@ -16,7 +16,6 @@ require_once "src/Tweet.php";
 require_once "src/connect.php";
 require_once 'src/Comment.php';
 require_once 'src/Message.php';
-require_once 'src/functions.php';
 
 $message = ""; //komunikat informacyjny (pomyślne wysłanie wiadomosci do uzytkownika)
 
@@ -77,6 +76,7 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
 
                 <br/> <span class="warning"><?= $message ?></span>
                 <?php
+                // widok strony, gdy user wchodzi ogladac swoj profil
                 if (!isset($_GET['strangeuser'])) {
                     $userid = $_SESSION['user_id'];
 
@@ -91,7 +91,7 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
                         foreach ($result as $row) {
                             echo "<div class=\"tweet\">";
                             echo "Wpis o ID " . $row['tweet_id'] . ": ";
-                            $commentsCount = countComments($conn, $row['tweet_id']);
+                            $commentsCount = Comment::countAllCommentsByTweetId($conn, $row['tweet_id']);
                             echo $row['tweet_text'] . "<br/>";
                             echo "Data utworzenia wpisu: " . $row['tweet_date'] . " <b>Komentarze"
                             . ": " . $commentsCount . "</b> &nbsp;" . "<a href=\"detail.php?"
@@ -104,14 +104,19 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
                     }
                 }
 
-
+                // widok strony, gdy user wchodzi ogladac cudzy profil
                 if (isset($_GET['strangeuser'])) {
                     if (!is_numeric($_GET['strangeuser'])) {
-                        $_GET['strangeuser'] = 1;
+                        $conn->close();
+                        $conn = null;
+                        header("location: index.php");
+                        exit;
                     }
                     $userid = $_GET['strangeuser'];
 
                     if (User::loadUserById($conn, $userid) == null) {
+                        $conn->close();
+                        $conn = null;
                         header("location: index.php");
                         exit;
                     }
@@ -135,7 +140,7 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
                         foreach ($result as $row) {
                             echo "<div class=\"tweet\">";
                             echo "Wpis o ID " . $row['tweet_id'] . ": ";
-                            $commentsCount = countComments($conn, $row['tweet_id']);
+                            $commentsCount = Comment::countAllCommentsByTweetId($conn, $row['tweet_id']);
                             echo $row['tweet_text'] . "<br/>";
                             echo "Data utworzenia wpisu: " . $row['tweet_date'] . " <b>Komentarze: " .
                             $commentsCount . "</b> &nbsp;" . "<a href=\"detail.php?tweetid="
@@ -155,9 +160,9 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
                 <br/><br/><br/><br/><br/> 
             </div>
 
-<?php
-include 'src/bottom_menu_logged.php';
-?>
+            <?php
+            include 'src/bottom_menu_logged.php';
+            ?>
 
         </div>
     </body>
