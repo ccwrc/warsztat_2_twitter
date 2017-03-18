@@ -23,6 +23,7 @@ Pełna i funkcjonalna aplikacja w stylu twittera. Wprowadzone funkcjonalności:
 **Wiadomości**   
         - każdy użytkownik może wysłać innemu użytkownikowi wiadomość,    
         - wyraźny podział na wysłane i otrzymane,     
+        - licznik nieprzeczytanych wiadomości na pasku menu,        
         - wysłane/otrzymane maja datę i wyświetlonego nadawcę/odbiorcę,      
         - maksymalna długość wiadomości to 25000 znaków,       
         - potwierdzenie każdej udanej wysyłki wiadomości,        
