@@ -85,7 +85,8 @@ foreach ($allTweets as $tweet) {
     $userId = $tweet->getUserId();
     $tweetId = $tweet->tweetId;
     $commentsCount = countComments($conn, $tweetId);
-
+$com = Comment::countAllCommentsByTweetId($conn, $tweetId);
+    var_dump($com);
     echo "<table class='tweet'>";
     echo "<tr><td> ";
     echo "Autor: <a href=\"showuser.php?strangeuser=$userId\">" . User::loadUserById($conn, $userId)->getUsername() . "</a> ";

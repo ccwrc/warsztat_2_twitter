@@ -108,6 +108,21 @@ class Comment {
         }
         return $ret;
     }
+    
+    static public function countAllCommentsByTweetId(mysqli $conn, $commentTweetId) {
+        $commentTweetId = $conn->real_escape_string($commentTweetId);
+        $sql = "SELECT COUNT(comment_tweet_id) AS count_comments FROM comment WHERE "
+                . "comment_tweet_id = $commentTweetId";
+        
+        $ret = null;
+        $result = $conn->query($sql);
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            $ret = $row['count_comments'];
+        }
+
+        return $ret;
+    }
 
     public function saveToDb(mysqli $conn) {
         if ($this->id == -1) {
