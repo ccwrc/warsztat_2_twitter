@@ -241,6 +241,21 @@ class Message {
         }
         return $ret;
     }
+    
+    static public function countAllNewMessagesByUserId(mysqli $conn, $userId) {
+        $userId = $conn->real_escape_string($userId);
+        $sql = "SELECT COUNT(message_id) AS new_messages FROM message WHERE message_receiver_id ="
+                . " $userId && message_read = 0 && message_receiver_visible = 0";
+
+        $ret = null;
+        $result = $conn->query($sql);
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            $ret = $row['new_messages'];
+        }
+
+        return $ret;
+    }
 
     public function saveToDb(mysqli $conn) {
         if ($this->messageId == -1) {
