@@ -22,6 +22,8 @@ $conn = getDbConnection();
 $tweetDetail = Tweet::loadTweetById($conn, $_GET['tweetid']);
 
 if ($tweetDetail == null) {
+    $conn->close();
+    $conn = null;
     header("location: index.php");
     exit;
 }
@@ -73,23 +75,24 @@ $_SESSION['actualTweetId'] = $_GET['tweetid'];
                 // wejscie ze strony usera (na swoje konto)  
                 if (isset($_GET['tweetid']) && !isset($_GET['strangeuser']) && !isset($_GET['fromindex'])) {
                     $userId = $tweetDetail->getUserId();
-
+                    $userName = User::loadUserById($conn, $userId)->getUsername();
                     echo "<div class=\"tweetbold\">";
                     echo "ID wpisu: " . $tweetDetail->getId() . "<br/>";
                     echo "Treść wpisu: " . $tweetDetail->getText() . "<br/>";
                     echo "ID dzięcioła: " . $tweetDetail->getUserId() . "<br/>";
-                    echo "Nazwa dzięcioła: " . User::loadUserById($conn, $userId)->getUsername() . "<br/>";
+                    echo "Nazwa dzięcioła: " . $userName . "<br/>";
                     echo "Data utworzenia wpisu: " . $tweetDetail->getCreationDate() . "<br/><br/>";
                     echo "</div><br/>";
 
                     $allComments = Comment::loadAllCommentsByTweetId($conn, $_GET['tweetid']);
                     foreach ($allComments as $comment) {
                         $commentUserId = $comment->getUserId();
+                        $commentUserName = User::loadUserById($conn, $commentUserId)->getUsername();
                         echo "<table class='tweet'>";
                         echo "<tr><td> ";
                         echo "Treść komentarza: " . $comment->getText();
                         echo "</td></tr> <tr><td>";
-                        echo "Autor komentarza: <a href=\"showuser.php?strangeuser=$commentUserId\">" . User::loadUserById($conn, $commentUserId)->getUsername() . "</a> ";
+                        echo "Autor komentarza: <a href=\"showuser.php?strangeuser=$commentUserId\">" . $commentUserName . "</a> ";
                         echo "Data publikacji: " . $comment->getCreationDate();
                         echo "</td></tr>";
                         echo "</table> <br/>";
@@ -103,27 +106,30 @@ $_SESSION['actualTweetId'] = $_GET['tweetid'];
                 // wejscie ze strony usera obcego
                 if (isset($_GET['tweetid']) && isset($_GET['strangeuser'])) {
                     if (!is_numeric($_GET['strangeuser'])) {
+                        $conn->close();
+                        $conn = null;
                         header("location: index.php");
                         exit;
                     }
                     $userId = $tweetDetail->getUserId();
-
+                    $userName = User::loadUserById($conn, $userId)->getUsername();
                     echo "<div class=\"tweetbold\">";
                     echo "ID wpisu: " . $tweetDetail->getId() . "<br/>";
                     echo "Treść wpisu: " . $tweetDetail->getText() . "<br/>";
                     echo "ID dzięcioła: " . $tweetDetail->getUserId() . "<br/>";
-                    echo "Nazwa dzięcioła: " . User::loadUserById($conn, $userId)->getUsername() . "<br/>";
+                    echo "Nazwa dzięcioła: " . $userName . "<br/>";
                     echo "Data utworzenia wpisu: " . $tweetDetail->getCreationDate() . "<br/><br/>";
                     echo "</div><br/>";
 
                     $allComments = Comment::loadAllCommentsByTweetId($conn, $_GET['tweetid']);
                     foreach ($allComments as $comment) {
                         $commentUserId = $comment->getUserId();
+                        $commentUserName = User::loadUserById($conn, $commentUserId)->getUsername();
                         echo "<table class='tweet'>";
                         echo "<tr><td> ";
                         echo "Treść komentarza: " . $comment->getText();
                         echo "</td></tr> <tr><td>";
-                        echo "Autor komentarza: <a href=\"showuser.php?strangeuser=$commentUserId\">" . User::loadUserById($conn, $commentUserId)->getUsername() . "</a> ";
+                        echo "Autor komentarza: <a href=\"showuser.php?strangeuser=$commentUserId\">" . $commentUserName . "</a> ";
                         echo "Data publikacji: " . $comment->getCreationDate();
                         echo "</td></tr>";
                         echo "</table> <br/>";
@@ -139,23 +145,24 @@ $_SESSION['actualTweetId'] = $_GET['tweetid'];
                 // wejscie ze strony glownej
                 if (isset($_GET['tweetid']) && isset($_GET['fromindex'])) {
                     $userId = $tweetDetail->getUserId();
-
+                    $userName = User::loadUserById($conn, $userId)->getUsername();
                     echo "<div class=\"tweetbold\">";
                     echo "ID wpisu: " . $tweetDetail->getId() . "<br/>";
                     echo "Treść wpisu: " . $tweetDetail->getText() . "<br/>";
                     echo "ID dzięcioła: " . $tweetDetail->getUserId() . "<br/>";
-                    echo "Nazwa dzięcioła: " . User::loadUserById($conn, $userId)->getUsername() . "<br/>";
+                    echo "Nazwa dzięcioła: " . $userName . "<br/>";
                     echo "Data utworzenia wpisu: " . $tweetDetail->getCreationDate() . "<br/><br/>";
                     echo "</div><br/>";
 
                     $allComments = Comment::loadAllCommentsByTweetId($conn, $_GET['tweetid']);
                     foreach ($allComments as $comment) {
                         $commentUserId = $comment->getUserId();
+                        $commentUserName = User::loadUserById($conn, $commentUserId)->getUsername();
                         echo "<table class='tweet'>";
                         echo "<tr><td> ";
                         echo "Treść komentarza: " . $comment->getText();
                         echo "</td></tr> <tr><td>";
-                        echo "Autor komentarza: <a href=\"showuser.php?strangeuser=$commentUserId\">" . User::loadUserById($conn, $commentUserId)->getUsername() . "</a> ";
+                        echo "Autor komentarza: <a href=\"showuser.php?strangeuser=$commentUserId\">" . $commentUserName . "</a> ";
                         echo "Data publikacji: " . $comment->getCreationDate();
                         echo "</td></tr>";
                         echo "</table> <br/>";

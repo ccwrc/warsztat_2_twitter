@@ -42,7 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $user->saveToDB($conn); 
                 if ($user->saveToDB($conn) == true) {
                     $_SESSION['logged'] = $userName;
-                    $_SESSION['user_email'] = $userEmail;
                     $_SESSION['user_id'] = $user->getId();
                     header("location: index.php");
                 } else {

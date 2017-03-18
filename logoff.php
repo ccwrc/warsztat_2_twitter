@@ -46,7 +46,7 @@ session_unset();
             </div>
 
             <?php
-            include 'src/bottom_menu_logged.php';
+            include 'src/bottom_menu_logoff.php';
             ?>      
 
         </div>

@@ -1,5 +1,5 @@
 <?php
-session_start();   // strona dostepna bez zalogowania !
+session_start();   // strona dostepna bez zalogowania, ale wydaje sie to logiczne...
 
 if (isset($_SESSION['logged'])) {
     header("location: index.php");
@@ -32,7 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             foreach ($result as $row) {
                 $getUserId = $row['user_id'];
                 $getHashedPassword = $row['hashed_password'];
-                $getUserEmail = $row['user_email'];
                 $getName = $row['user_name'];
             }
             if (password_verify($userPassword, $getHashedPassword)) {
@@ -45,16 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($resultMessage->num_rows >= 1) {
                     $_SESSION['newPrivateMessage'] = "set";
                 }
-                $_SESSION['user_email'] = $getUserEmail;
                 header("location: index.php");
             } else {
-                $message = "Błędny e-mail lub hasło, wprowadź ponownie";
+                $message = "Błędne hasło, albo adres mailowy nie ma własnej dziupli";
             }
         } else {
-            $message = "Adres mailowy nie ma własnej dziupli";
+            $message = "Błędne hasło, albo adres mailowy nie ma własnej dziupli";
         }
-    } else {
-        $message = "Błędny e-mail lub hasło, wprowadź ponownie";
     }
 }
 

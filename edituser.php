@@ -17,9 +17,10 @@ $message = ""; // wiadomosc informacyjna
 $conn = getDbConnection();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $userEmail = $_SESSION['user_email'];
-    $sql = "SELECT * FROM users WHERE user_email = '$userEmail'";
+    $userId = $_SESSION['user_id'];
+    $sql = "SELECT * FROM users WHERE user_id = '$userId'";
     $result = $conn->query($sql);
+    
     if ($result->num_rows == 1) {
         foreach ($result as $row) {
             $getHashedPassword = $row['hashed_password'];
@@ -34,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $newUserName = trim($_POST['newusername']);
         $newUserName = $conn->real_escape_string($newUserName);
         $newUserName = htmlentities($newUserName, ENT_QUOTES, "UTF-8");
-        $userId = $_SESSION['user_id'];
         
         $sql = "UPDATE users SET user_name = '$newUserName' WHERE user_id = $userId";
         $result = $conn->query($sql);
@@ -54,7 +54,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             && ($_POST['newpassword1'] === $_POST['newpassword2']) 
             && (password_verify($_POST['oldpassword'], $getHashedPassword))) {
         $newHashedPassword = password_hash(trim($_POST['newpassword1']), PASSWORD_BCRYPT);
-        $userId = $_SESSION['user_id'];
         
         $sql = "UPDATE users SET hashed_password = '$newHashedPassword' WHERE user_id = $userId";
         $result = $conn->query($sql);
@@ -71,12 +70,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // usuniecie usera
     if (isset($_POST['deleteuser']) 
             && (password_verify($_POST['deleteuser'], $getHashedPassword))) {
-        $userId = $_SESSION['user_id'];
         
         $sql = "DELETE FROM users WHERE user_id = $userId";
         $result = $conn->query($sql);
         if ($result) {
             unset($_POST);
+            $conn->close();
+            $conn = null;
             session_unset();
             header("location: logon.php");
             exit;
@@ -173,7 +173,7 @@ if (isset($_GET['changepassword'])) {
     echo "</label>";
     echo "</form>";
 
-    unset($_GET['changpassword']);
+    unset($_GET['changepassword']);
 }
 
 // usuniecie usera

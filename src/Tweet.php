@@ -93,7 +93,7 @@ class Tweet {
         return $ret;
     }
 
-    static public function loadAllTweets(mysqli $conn) {
+    static public function loadAllTweetsLimit300(mysqli $conn) {
         $sql = "SELECT * FROM tweet ORDER BY tweet_date DESC LIMIT 300";
         $result = $conn->query($sql);
         $ret = [];

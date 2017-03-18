@@ -78,20 +78,23 @@ if (isset($_SESSION['newPrivateMessage'])) {
                 </center> <br/>
 
 <?php
-$allTweets = Tweet::loadAllTweets($conn);
+$allTweets = Tweet::loadAllTweetsLimit300($conn);
 
 foreach ($allTweets as $tweet) {
     $userId = $tweet->getUserId();
+    $userName = User::loadUserById($conn, $userId)->getUsername();
     $tweetId = $tweet->tweetId;
+    $tweetDate = $tweet->getCreationDate();
+    $tweetText = $tweet->getText();
     $commentsCount = Comment::countAllCommentsByTweetId($conn, $tweetId);
 
     echo "<table class='tweet'>";
     echo "<tr><td> ";
-    echo "Autor: <a href=\"showuser.php?strangeuser=$userId\">" . User::loadUserById($conn, $userId)->getUsername() . "</a> ";
-    echo "Data publikacji: " . $tweet->getCreationDate() . " ";
+    echo "Autor: <a href=\"showuser.php?strangeuser=$userId\">" . $userName . "</a> ";
+    echo "Data publikacji: " . $tweetDate . " ";
     echo "<a href=\"detail.php?tweetid=$tweetId&fromindex=true\">Skomentuj (" . $commentsCount . ")</a>";
     echo "</td></tr> <tr><td>";
-    echo $tweet->getText();
+    echo $tweetText;
     echo "</td></tr>";
     echo "</table> <br/>";
 }

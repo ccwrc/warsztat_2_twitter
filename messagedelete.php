@@ -92,10 +92,14 @@ require_once 'src/Message.php';
 
                         $showmessage = Message::loadMessageById($conn, $_GET['messageid']);
                         if ($showmessage == null) {
+                            $conn->close();
+                            $conn = null;
                             header("location: messages.php");
                             exit;
                         }
                         if (($showmessage->getMessageSenderId()) != $_SESSION['user_id']) {
+                            $conn->close();
+                            $conn = null;
                             header("location: messages.php");
                             exit;
                         }
