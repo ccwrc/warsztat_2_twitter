@@ -167,7 +167,7 @@ class Message {
     static public function loadAllCutMessagesBySenderId(mysqli $conn, $senderId) {
         $senderId = $conn->real_escape_string($senderId);
         $ret = [];
-        $sql = "SELECT substring(message_content,1,30) as message_content, message_creation_date,"
+        $sql = "SELECT substring(message_content,1,60) as message_content, message_creation_date,"
                 . "message_id, message_read, message_receiver_id, "
                 . "message_receiver_visible, message_sender_id, "
                 . "message_sender_visible FROM message WHERE message_sender_id = $senderId &&"
@@ -218,7 +218,7 @@ class Message {
     static public function loadAllCutMessagesByReceiverId(mysqli $conn, $receiverId) {
         $receiverId = $conn->real_escape_string($receiverId);
         $ret = [];
-        $sql = "SELECT substring(message_content,1,30) as message_content, message_creation_date,"
+        $sql = "SELECT substring(message_content,1,60) as message_content, message_creation_date,"
                 . "message_id, message_read, message_receiver_id, "
                 . "message_receiver_visible, message_sender_id, "
                 . "message_sender_visible FROM message WHERE message_receiver_id = $receiverId &&"

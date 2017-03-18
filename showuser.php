@@ -89,9 +89,9 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
 
                     if ($result->num_rows > 0) {
                         foreach ($result as $row) {
+                            $commentsCount = Comment::countAllCommentsByTweetId($conn, $row['tweet_id']);
                             echo "<div class=\"tweet\">";
                             echo "Wpis o ID " . $row['tweet_id'] . ": ";
-                            $commentsCount = Comment::countAllCommentsByTweetId($conn, $row['tweet_id']);
                             echo $row['tweet_text'] . "<br/>";
                             echo "Data utworzenia wpisu: " . $row['tweet_date'] . " <b>Komentarze"
                             . ": " . $commentsCount . "</b> &nbsp;" . "<a href=\"detail.php?"
@@ -138,9 +138,9 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
 
                     if ($result->num_rows > 0) {
                         foreach ($result as $row) {
+                            $commentsCount = Comment::countAllCommentsByTweetId($conn, $row['tweet_id']);
                             echo "<div class=\"tweet\">";
                             echo "Wpis o ID " . $row['tweet_id'] . ": ";
-                            $commentsCount = Comment::countAllCommentsByTweetId($conn, $row['tweet_id']);
                             echo $row['tweet_text'] . "<br/>";
                             echo "Data utworzenia wpisu: " . $row['tweet_date'] . " <b>Komentarze: " .
                             $commentsCount . "</b> &nbsp;" . "<a href=\"detail.php?tweetid="

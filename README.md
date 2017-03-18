@@ -28,7 +28,7 @@ Pełna i funkcjonalna aplikacja w stylu twittera. Wprowadzone funkcjonalności:
         - potwierdzenie każdej udanej wysyłki wiadomości,        
         - po zalogowaniu powiadomienie o nowej poczcie,       
         - dostępna informacja, czy adresat przeczytał już wiadomość,            
-        - na liście widoczne jest pierwsze 30 znaków wiadomości, całość po rozwinięciu,      
+        - na liście widoczne jest pierwsze 60 znaków wiadomości, całość po rozwinięciu,      
         - zablokowana możliwość wysyłania wiadomości do samego siebie.       
 
 **Technologie: PHP 5.4**     

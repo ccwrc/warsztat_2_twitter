@@ -2,7 +2,7 @@
 
 require_once 'Comment.php';
 
-//funkcja zbedna i nieuzywana, zastapiona funkcja countAllCommentsByTweetId
+//funkcja zbedna, nieefektywna i nieuzywana, zastapiona funkcja countAllCommentsByTweetId
 // w encji Comment
 //function countComments(mysqli $conn, $tweetId) {
 //    $commentsCount = 0;
