@@ -12,11 +12,10 @@ if (!isset($_GET['tweetid']) || !is_numeric($_GET['tweetid'])) {
     exit;
 }
 
-require_once "src/User.php";
-require_once "src/Tweet.php";
+function __autoload($className) {
+    require_once "src/" . $className . ".php";
+}
 require_once "src/connect.php";
-require_once 'src/Comment.php';
-require_once 'src/Message.php';
 
 $conn = getDbConnection();
 $tweetDetail = Tweet::loadTweetById($conn, $_GET['tweetid']);

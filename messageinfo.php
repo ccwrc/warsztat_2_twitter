@@ -11,11 +11,10 @@ if ((!isset($_GET['messageid'])) || (!is_numeric($_GET['messageid']))) {
     exit;
 }
 
-require_once "src/User.php";
-require_once "src/Tweet.php";
+function __autoload($className) {
+    require_once "src/" . $className . ".php";
+}
 require_once "src/connect.php";
-require_once 'src/Comment.php';
-require_once 'src/Message.php';
 ?>
 
 <!DOCTYPE HTML>

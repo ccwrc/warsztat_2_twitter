@@ -11,11 +11,10 @@ if (isset($_GET['strangeuser']) && (($_GET['strangeuser']) == ($_SESSION['user_i
     unset($_GET['strangeuser']);
 }
 
-require_once "src/User.php";
-require_once "src/Tweet.php";
+function __autoload($className) {
+    require_once "src/" . $className . ".php";
+}
 require_once "src/connect.php";
-require_once 'src/Comment.php';
-require_once 'src/Message.php';
 
 $message = ""; //komunikat informacyjny (pomyślne wysłanie wiadomosci do uzytkownika)
 

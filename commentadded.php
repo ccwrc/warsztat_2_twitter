@@ -8,11 +8,10 @@ if (!isset($_SESSION['logged']) || !isset($_SESSION['actualTweetId'])
     exit;
 }
 
-require_once "src/User.php";
-require_once "src/Tweet.php";
+function __autoload($className) {
+    require_once "src/" . $className . ".php";
+}
 require_once "src/connect.php";
-require_once 'src/Comment.php';
-require_once 'src/Message.php';
 
 $message = "";
 ?>
