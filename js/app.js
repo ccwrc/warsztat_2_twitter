@@ -35,7 +35,6 @@ $(document).ready(function () {
 
         textArea.on("keyup", function () {
             count = $(this)[0].value.length;
-            console.log($(this));
 
             if (count > max) {
                 $(this)[0].value = $(this)[0].value.substr(0, max);
