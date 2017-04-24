@@ -60,11 +60,20 @@ $(document).ready(function () {
     counterInNewSpan($("#userPassword1CreateUser").data("max_char_input"), $("#userPassword1CreateUser"));
     counterInNewSpan($("#userPassword2CreateUser").data("max_char_input"), $("#userPassword2CreateUser"));
     counterInNewSpan($("#newCommentToTweetOnDetail").data("max_char_input"), $("#newCommentToTweetOnDetail"));
+    counterInNewSpan($("#newUsernameOnEditUser").data("max_char_input"), $("#newUsernameOnEditUser"));
+    counterInNewSpan($("#oldPasswordOnEditUser").data("max_char_input"), $("#oldPasswordOnEditUser"));
+    counterInNewSpan($("#oldPassword2onEditUser").data("max_char_input"), $("#oldPassword2onEditUser"));
+    counterInNewSpan($("#newPassword1onEditUser").data("max_char_input"), $("#newPassword1onEditUser"));
+    counterInNewSpan($("#newPassword2onEditUser").data("max_char_input"), $("#newPassword2onEditUser"));
+    counterInNewSpan($("#oldPassword3onEditUser").data("max_char_input"), $("#oldPassword3onEditUser"));
     
-//    var idForCounterArray = [
-//        "newTweetOnIndex", "usernameCreateUser", "userEmailCreateUser", "userPassword1CreateUser",
-//        "userPassword2CreateUser"
-//    ];
+    
+    var idsForCounterArray = [
+        "newTweetOnIndex", "usernameCreateUser", "userEmailCreateUser", "userPassword1CreateUser",
+        "userPassword2CreateUser", "newCommentToTweetOnDetail", "newUsernameOnEditUser",
+        "oldPasswordOnEditUser", "oldPassword2onEditUser", "newPassword1onEditUser",
+        "newPassword2onEditUser", "oldPassword3onEditUser"
+    ];
 //
 //    for (var i = 0; i < idForCounterArray.length; i++) {
 //        var data1 = "\"#" + idForCounterArray[i] + "\""; console.log(data1);

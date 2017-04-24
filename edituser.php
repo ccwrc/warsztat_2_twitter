@@ -150,8 +150,10 @@ if (isset($_GET['changename'])) {
     }
     echo "<form method=\"POST\" action=\"edituser.php\">";
     echo "<label> Podaj nową nazwę dzięcioła i hasło: <br/>";
-    echo "<input type=\"text\" name=\"newusername\" placeholder=\"Tu wpisz nową nazwę (3-65 znaków)\" size=\"50\"/> <br/>";
-    echo "<input type=\"password\" name=\"oldpassword\" placeholder=\"Tu wpisz swoje hasło\" size=\"50\"/> <br/>";
+    echo "<input type=\"text\" name=\"newusername\" placeholder=\"Tu wpisz nową nazwę (3-65 znaków"
+    . ")\" size=\"50\" id=\"newUsernameOnEditUser\" data-max_char_input=\"65\"/> <br/>";
+    echo "<input type=\"password\" name=\"oldpassword\" placeholder=\"Tu wpisz swoje hasło\" siz"
+    . "e=\"50\" id=\"oldPasswordOnEditUser\" data-max_char_input=\"65\"/> <br/>";
     echo "<input type=\"submit\" value=\"Zatwierdź\"/>";
     echo "</label>";
     echo "</form>";
@@ -165,9 +167,12 @@ if (isset($_GET['changepassword'])) {
     }
     echo "<form method=\"POST\" action=\"edituser.php\">";
     echo "<label> Podaj stare i nowe hasło: <br/>";
-    echo "<input type=\"password\" name=\"oldpassword\" placeholder=\"Tu wpisz swoje stare hasło\" size=\"50\"/> <br/>";
-    echo "<input type=\"password\" name=\"newpassword1\" placeholder=\"Tu wpisz swoje nowe hasło (3-65 znaków)\" size=\"50\"/> <br/>";
-    echo "<input type=\"password\" name=\"newpassword2\" placeholder=\"Dla pewności powtórz nowe hasło\" size=\"50\"/> <br/>";
+    echo "<input type=\"password\" name=\"oldpassword\" placeholder=\"Tu wpisz swoje stare "
+    . "hasło\" size=\"50\" id=\"oldPassword2onEditUser\" data-max_char_input=\"65\"/> <br/>";
+    echo "<input type=\"password\" name=\"newpassword1\" placeholder=\"Tu wpisz swoje nowe "
+    . "hasło (3-65 znaków)\" size=\"50\" id=\"newPassword1onEditUser\" data-max_char_input=\"65\"/> <br/>";
+    echo "<input type=\"password\" name=\"newpassword2\" placeholder=\"Dla pewności powtórz nowe "
+    . "hasło\" size=\"50\" id=\"newPassword2onEditUser\" data-max_char_input=\"65\"/> <br/>";
     echo "<input type=\"submit\" value=\"Zatwierdź\"/>";
     echo "</label>";
     echo "</form>";
@@ -182,7 +187,8 @@ if (isset($_GET['deleteuser'])) {
     }
     echo "<form method=\"POST\" action=\"edituser.php\">";
     echo "<label class=\"warning\"> Usunięcie dziupli jest bezpowrotne! <br/>";
-    echo "<input type=\"password\" name=\"deleteuser\" placeholder=\"Dla potwierdzenia podaj hasło\" size=\"50\"/> <br/>";
+    echo "<input type=\"password\" name=\"deleteuser\" placeholder=\"Dla potwierdzenia podaj "
+    . "hasło\" size=\"50\" id=\"oldPassword3onEditUser\" data-max_char_input=\"65\"/> <br/>";
     echo "<input type=\"submit\" value=\"Usuń dziuplę!\"/>";
     echo "</label>";
     echo "</form>";
