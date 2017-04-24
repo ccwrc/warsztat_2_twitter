@@ -59,6 +59,7 @@ $(document).ready(function () {
     counterInNewSpan($("#userEmailCreateUser").data("max_char_input"), $("#userEmailCreateUser"));
     counterInNewSpan($("#userPassword1CreateUser").data("max_char_input"), $("#userPassword1CreateUser"));
     counterInNewSpan($("#userPassword2CreateUser").data("max_char_input"), $("#userPassword2CreateUser"));
+    counterInNewSpan($("#newCommentToTweetOnDetail").data("max_char_input"), $("#newCommentToTweetOnDetail"));
     
 //    var idForCounterArray = [
 //        "newTweetOnIndex", "usernameCreateUser", "userEmailCreateUser", "userPassword1CreateUser",
