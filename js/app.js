@@ -27,6 +27,34 @@ $(document).ready(function () {
         logoSound.currentTime = 0;
     });
 
+    // zwykly licznik dla pol tekstowych
+    var counterInNewSpan = function (max, textArea) {
+        var count = 0;
+        var newSpan = $("<span>");
+        textArea.after(newSpan);
+
+        textArea.on("keyup", function () {
+            count = $(this)[0].value.length;
+            console.log($(this));
+
+            if (count > max) {
+                $(this)[0].value = $(this)[0].value.substr(0, max);
+                count = max;
+            }
+            $("span")[0].innerText = count + "/" + max;
+
+            if (count < 3) {
+                $("span").css("color", "greenyellow");
+            } else if (count < (max * 0.95)) {
+                $("span").css("color", "green");
+            } else {
+                $("span").css("color", "red");
+            }
+        });
+    };
+
+    // podpinanie licznika do pol tekstowych
+    counterInNewSpan($("#newTweetOnIndex").data("max_char_input"), $("#newTweetOnIndex"));
 
 });
 
