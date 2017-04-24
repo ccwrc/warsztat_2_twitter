@@ -55,6 +55,20 @@ $(document).ready(function () {
 
     // podpinanie licznika do pol tekstowych
     counterInNewSpan($("#newTweetOnIndex").data("max_char_input"), $("#newTweetOnIndex"));
+    counterInNewSpan($("#usernameCreateUser").data("max_char_input"), $("#usernameCreateUser"));
+    counterInNewSpan($("#userEmailCreateUser").data("max_char_input"), $("#userEmailCreateUser"));
+    counterInNewSpan($("#userPassword1CreateUser").data("max_char_input"), $("#userPassword1CreateUser"));
+    counterInNewSpan($("#userPassword2CreateUser").data("max_char_input"), $("#userPassword2CreateUser"));
+    
+//    var idForCounterArray = [
+//        "newTweetOnIndex", "usernameCreateUser", "userEmailCreateUser", "userPassword1CreateUser",
+//        "userPassword2CreateUser"
+//    ];
+//
+//    for (var i = 0; i < idForCounterArray.length; i++) {
+//        var data1 = "\"#" + idForCounterArray[i] + "\""; console.log(data1);
+//        counterInNewSpan($(data1).data("max_char_input"), $(data1));
+//    }
 
 });
 

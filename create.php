@@ -93,13 +93,17 @@ $conn = null;
 
                 <form method="POST" action="">
                     <label> Aby mieć dziuplę w lesie wypełnij wszystkie pola: <br/><br/>
-                        <input type="text" name="username" placeholder="Podaj nazwę dzięcioła" size="50"
+                        <input type="text" name="username" placeholder="Podaj nazwę dzięcioła" size="50" 
+                               id="usernameCreateUser" data-max_char_input="65"
                                pattern=".{3,65}"   required title="Minimalna liczba znaków to 3, maksymalna 65"/>  <br/> 
-                        <input type="email" name="useremail" placeholder="Tu wpisz e-mail" size="50"
+                        <input type="email" name="useremail" placeholder="Tu wpisz e-mail" size="50" 
+                               id="userEmailCreateUser" data-max_char_input="250"
                                pattern=".{5,250}"   required title="Minimalna liczba znaków to 5, maksymalna 250"/>  <br/>
-                        <input type="password" name="userpassword1" placeholder="I ustal hasło" size="50"
+                        <input type="password" name="userpassword1" placeholder="I ustal hasło" size="50" 
+                               id="userPassword1CreateUser" data-max_char_input="65"
                                pattern=".{3,65}"   required title="Minimalna liczba znaków to 3, maksymalna 65"/> <br/>
-                        <input type="password" name="userpassword2" placeholder="Dla pewności wpisz hasło ponownie" size="50"
+                        <input type="password" name="userpassword2" placeholder="Dla pewności wpisz hasło ponownie" size="50" 
+                               id="userPassword2CreateUser" data-max_char_input="65"
                                pattern=".{3,65}"   required title="Minimalna liczba znaków to 3, maksymalna 65"/> <br/><br/>
                         Potwierdź, że nie jesteś borsukiem i przepisz drugi i 3 znak: <br/>
                         <img src="img/<?= $randCaptcha ?>.png"/><br/>
