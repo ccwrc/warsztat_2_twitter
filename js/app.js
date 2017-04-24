@@ -53,34 +53,18 @@ $(document).ready(function () {
         });
     };
 
-    // podpinanie licznika do pol tekstowych
-    counterInNewSpan($("#newTweetOnIndex").data("max_char_input"), $("#newTweetOnIndex"));
-    counterInNewSpan($("#usernameCreateUser").data("max_char_input"), $("#usernameCreateUser"));
-    counterInNewSpan($("#userEmailCreateUser").data("max_char_input"), $("#userEmailCreateUser"));
-    counterInNewSpan($("#userPassword1CreateUser").data("max_char_input"), $("#userPassword1CreateUser"));
-    counterInNewSpan($("#userPassword2CreateUser").data("max_char_input"), $("#userPassword2CreateUser"));
-    counterInNewSpan($("#newCommentToTweetOnDetail").data("max_char_input"), $("#newCommentToTweetOnDetail"));
-    counterInNewSpan($("#newUsernameOnEditUser").data("max_char_input"), $("#newUsernameOnEditUser"));
-    counterInNewSpan($("#oldPasswordOnEditUser").data("max_char_input"), $("#oldPasswordOnEditUser"));
-    counterInNewSpan($("#oldPassword2onEditUser").data("max_char_input"), $("#oldPassword2onEditUser"));
-    counterInNewSpan($("#newPassword1onEditUser").data("max_char_input"), $("#newPassword1onEditUser"));
-    counterInNewSpan($("#newPassword2onEditUser").data("max_char_input"), $("#newPassword2onEditUser"));
-    counterInNewSpan($("#oldPassword3onEditUser").data("max_char_input"), $("#oldPassword3onEditUser"));
-    counterInNewSpan($("#userEmailOnLogon").data("max_char_input"), $("#userEmailOnLogon"));
-    counterInNewSpan($("#userPasswordOnLogon").data("max_char_input"), $("#userPasswordOnLogon"));
-    
+    // podpinanie licznika do pol tekstowych - tablica id
     var idsForCounterArray = [
-        "newTweetOnIndex", "usernameCreateUser", "userEmailCreateUser", "userPassword1CreateUser",
-        "userPassword2CreateUser", "newCommentToTweetOnDetail", "newUsernameOnEditUser",
-        "oldPasswordOnEditUser", "oldPassword2onEditUser", "newPassword1onEditUser",
-        "newPassword2onEditUser", "oldPassword3onEditUser", "userEmailOnLogon", 
-        "userPasswordOnLogon"
+        "#newTweetOnIndex", "#usernameCreateUser", "#userEmailCreateUser",
+        "#userPassword1CreateUser", "#userPassword2CreateUser", "#newCommentToTweetOnDetail",
+        "#newUsernameOnEditUser", "#oldPasswordOnEditUser", "#oldPassword2onEditUser",
+        "#newPassword1onEditUser", "#newPassword2onEditUser", "#oldPassword3onEditUser",
+        "#userEmailOnLogon", "#userPasswordOnLogon", "#newMessageOnShowUser"
     ];
-//
-//    for (var i = 0; i < idForCounterArray.length; i++) {
-//        var data1 = "\"#" + idForCounterArray[i] + "\""; console.log(data1);
-//        counterInNewSpan($(data1).data("max_char_input"), $(data1));
-//    }
+    // podpinanie licznika do pol tekstowych
+    for (var i = 0; i < idsForCounterArray.length; i++) {
+        counterInNewSpan($(idsForCounterArray[i]).data("max_char_input"), $(idsForCounterArray[i]));
+    }
 
 });
 

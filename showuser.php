@@ -128,7 +128,8 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
                     //formularz wysylania wiadomosci do uzytkownika
                     echo "<form method=\"POST\" action=\"\">";
                     echo "<textarea name=\"messageForStranger\" cols=50 placeholder=\"Tu wpisz wiadomość "
-                    . "do dzięcioła (maksymalnie 25000 znaków).\" maxlength=\"25000\"></textarea><br/>";
+                    . "do dzięcioła (maksymalnie 25000 znaków).\" maxlength=\"25000\" id=\"newMessageOnShowUser"
+                            . "\" data-max_char_input=\"25000\"></textarea><br/>";
                     echo " <input type=\"submit\" value=\"Kliknij żeby wysłać\"/>";
                     echo "</form> <br/><br/>";
 
