@@ -14,10 +14,12 @@ Pełna i funkcjonalna aplikacja w stylu twittera. Wprowadzone funkcjonalności:
 **Wpisy**   
         - każdy użytkownik może stworzyć nieograniczoną liczbę wpisów,     
         - maksymalna długość wpisu to 140 znaków,       
+        - licznik znaków dla pól tekstowych,         
         - każdy wpis można skomentować.      
 
 **Komentarze**   
         - maksymalna długość komentarza to 60 znaków,     
+        - licznik znaków dla pól tekstowych,         
         - każdy użytkownik może zostawić nieograniczoną liczbę komentarzy.     
    
 **Wiadomości**   
@@ -25,7 +27,8 @@ Pełna i funkcjonalna aplikacja w stylu twittera. Wprowadzone funkcjonalności:
         - wyraźny podział na wysłane i otrzymane,     
         - licznik nieprzeczytanych wiadomości na pasku menu,        
         - wysłane/otrzymane maja datę i wyświetlonego nadawcę/odbiorcę,      
-        - maksymalna długość wiadomości to 25000 znaków,       
+        - maksymalna długość wiadomości to 25000 znaków,    
+        - licznik znaków dla pól tekstowych,            
         - potwierdzenie każdej udanej wysyłki wiadomości,        
         - po zalogowaniu powiadomienie o nowej poczcie,       
         - dostępna informacja, czy adresat przeczytał już wiadomość,            
