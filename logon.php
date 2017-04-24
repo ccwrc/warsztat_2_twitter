@@ -94,9 +94,11 @@ $conn = null;
                     <form method='POST' action=''>
                         <label> <center>Podaj dane dostępu do dziupli: <br/><br/>
                             </center>
-                            <input type="email" name="useremail" placeholder="Podaj e-mail"
+                            <input type="email" name="useremail" placeholder="Podaj e-mail" 
+                                   id="userEmailOnLogon" data-max_char_input="250"
                                    pattern=".{5,250}"   required title="Minimalna liczba znaków to 5, maksymalna 250"/>  
-                            <input type="password" name="userpassword" placeholder="I wpisz hasło"
+                            <input type="password" name="userpassword" placeholder="I wpisz hasło" 
+                                   id="userPasswordOnLogon" data-max_char_input="65"
                                    pattern=".{3,65}"   required title="Minimalna liczba znaków to 3, maksymalna 65"/>
                             <input type="submit" value="Wejdź do dziupli"/>
                         </label>

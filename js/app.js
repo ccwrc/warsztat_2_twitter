@@ -66,13 +66,15 @@ $(document).ready(function () {
     counterInNewSpan($("#newPassword1onEditUser").data("max_char_input"), $("#newPassword1onEditUser"));
     counterInNewSpan($("#newPassword2onEditUser").data("max_char_input"), $("#newPassword2onEditUser"));
     counterInNewSpan($("#oldPassword3onEditUser").data("max_char_input"), $("#oldPassword3onEditUser"));
-    
+    counterInNewSpan($("#userEmailOnLogon").data("max_char_input"), $("#userEmailOnLogon"));
+    counterInNewSpan($("#userPasswordOnLogon").data("max_char_input"), $("#userPasswordOnLogon"));
     
     var idsForCounterArray = [
         "newTweetOnIndex", "usernameCreateUser", "userEmailCreateUser", "userPassword1CreateUser",
         "userPassword2CreateUser", "newCommentToTweetOnDetail", "newUsernameOnEditUser",
         "oldPasswordOnEditUser", "oldPassword2onEditUser", "newPassword1onEditUser",
-        "newPassword2onEditUser", "oldPassword3onEditUser"
+        "newPassword2onEditUser", "oldPassword3onEditUser", "userEmailOnLogon", 
+        "userPasswordOnLogon"
     ];
 //
 //    for (var i = 0; i < idForCounterArray.length; i++) {
