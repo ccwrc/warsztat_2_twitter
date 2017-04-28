@@ -63,6 +63,7 @@ $message = "";
                     unset($_SESSION['actualTweetId']);
                 } else {
                     $message = "Dodanie komentarza nie było możliwe.";
+                    $returnToTweetId = $_SESSION['actualTweetId'];
                     unset($_SESSION['actualTweetId']);
                 }
 
