@@ -1,14 +1,12 @@
 <?php
 
-require_once 'Comment.php';
-
-//funkcja zbedna, nieefektywna i nieuzywana, zastapiona funkcja countAllCommentsByTweetId
-// w encji Comment
-//function countComments(mysqli $conn, $tweetId) {
-//    $commentsCount = 0;
-//    $comments = Comment::loadAllCommentsByTweetId($conn, $tweetId);
-//    foreach ($comments as $comment) {
-//        $commentsCount++;
-//    }
-//    return $commentsCount;
-//}
+// testowo uzyta w logon.php i messages.php
+function checkNewMessages($userId, mysqli $conn) {
+    $sqlMessage = "SELECT * FROM message WHERE message_receiver_id ="
+            . " $userId && message_read = 0 && message_receiver_visible = 0";
+    $resultMessage = $conn->query($sqlMessage);
+    if ($resultMessage->num_rows >= 1) {
+        return $resultMessage->num_rows;
+    }
+    return 0;
+}

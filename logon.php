@@ -10,6 +10,7 @@ function __autoload($className) {
     require_once "src/" . $className . ".php";
 }
 require_once "src/connect.php";
+require_once 'src/functions.php';
 
 $message = ""; //wiadomosc podawana po blednej probie zalogowania
 
@@ -37,10 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['logged'] = $getName;
                 $_SESSION['user_id'] = $getUserId;
                 //sprawdzanie nowych wiadomosci
-                $sqlMessage = "SELECT * FROM message WHERE message_receiver_id ="
-                        . " $getUserId && message_read = 0 && message_receiver_visible = 0";
-                $resultMessage = $conn->query($sqlMessage);
-                if ($resultMessage->num_rows >= 1) {
+                if (checkNewMessages($getUserId, $conn) >= 1) {
                     $_SESSION['newPrivateMessage'] = "set";
                 }
                 header("location: index.php");

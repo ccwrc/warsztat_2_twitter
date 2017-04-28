@@ -10,8 +10,16 @@ function __autoload($className) {
     require_once "src/" . $className . ".php";
 }
 require_once "src/connect.php";
+require_once 'src/functions.php';
 
 $conn = getDbConnection();
+
+$titleMessage = "Dzięcioły - wiadomości";
+if (checkNewMessages($_SESSION['user_id'], $conn) == 1) {
+    $titleMessage = "Jedna nowa wiadomość";
+} else if (checkNewMessages($_SESSION['user_id'], $conn) > 1) {
+    $titleMessage = "Nowe wiadomości: " . checkNewMessages($_SESSION['user_id'], $conn);
+}
 ?>
 
 <!DOCTYPE HTML>
@@ -20,7 +28,7 @@ $conn = getDbConnection();
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <title>Dzięcioły - wiadomości </title>
+        <title><?=$titleMessage?> </title>
 
         <meta name="description" content="Prawie jak Twitter" />
         <meta name="keywords" content="dzięcioły, twitter" />
