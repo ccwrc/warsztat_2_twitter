@@ -28,7 +28,7 @@ if (checkNewMessages($_SESSION['user_id'], $conn) == 1) {
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <title><?=$titleMessage?> </title>
+        <title><?=$titleMessage?></title>
 
         <meta name="description" content="Prawie jak Twitter" />
         <meta name="keywords" content="dzięcioły, twitter" />
