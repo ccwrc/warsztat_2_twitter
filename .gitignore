@@ -1,6 +1,8 @@
-/nbproject/
+nbproject/
 
-/tylkorobocze/
+tylkorobocze/
 
 twtest.php
+
+vendor/
 
