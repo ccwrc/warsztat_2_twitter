@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataset>
+    
+    <message 
+        message_id="1" 
+        message_read="1" 
+        message_sender_id="1"
+        message_receiver_id="2"
+        message_content="message 1 for user 2"
+        message_creation_date="2016-11-07 13:23:00"
+        message_sender_visible="1"
+        message_receiver_visible="1"        />
+    
+    <message 
+        message_id="2" 
+        message_read="0" 
+        message_sender_id="2"
+        message_receiver_id="3"
+        message_content="message 2 for user 3"
+        message_creation_date="2016-11-06 13:43:00"
+        message_sender_visible="1"
+        message_receiver_visible="0"        />
+    
+    <message 
+        message_id="3" 
+        message_read="1" 
+        message_sender_id="3"
+        message_receiver_id="5"
+        message_content="message 3 for user 5"
+        message_creation_date="2016-11-07 11:33:00"
+        message_sender_visible="0"
+        message_receiver_visible="1"        />
+    
+    <message 
+        message_id="4" 
+        message_read="0" 
+        message_sender_id="3"
+        message_receiver_id="4"
+        message_content="message 4 for user 4"
+        message_creation_date="2016-11-05 13:33:00"
+        message_sender_visible="1"
+        message_receiver_visible="1"        />
+    
+    <message 
+        message_id="5" 
+        message_read="1" 
+        message_sender_id="5"
+        message_receiver_id="1"
+        message_content="message 5 for user 1"
+        message_creation_date="2016-10-07 13:33:00"
+        message_sender_visible="0"
+        message_receiver_visible="0"        />   
+
+</dataset>
+
+<!-- message_id message_read message_sender_id 	message_receiver_id message_content 
+message_creation_date message_sender_visible 	message_receiver_visible  -->
+
+
+
