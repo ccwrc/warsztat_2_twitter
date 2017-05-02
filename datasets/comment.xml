@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataset>
+    
+    <comment 
+        comment_id="1" 
+        comment_user_id="1" 
+        comment_tweet_id="1"
+        comment_text="comment 1"
+        comment_creation_date="2016-11-07 13:33:00"  />
+    
+    <comment 
+        comment_id="2" 
+        comment_user_id="2" 
+        comment_tweet_id="1"
+        comment_text="comment 2"
+        comment_creation_date="2016-10-07 13:33:00"  />
+    
+    <comment 
+        comment_id="3" 
+        comment_user_id="2" 
+        comment_tweet_id="2"
+        comment_text="comment 3"
+        comment_creation_date="2016-11-01 13:33:00"  />
+    
+    <comment 
+        comment_id="4" 
+        comment_user_id="5" 
+        comment_tweet_id="4"
+        comment_text="comment 4"
+        comment_creation_date="2015-11-07 13:33:00"  />
+    
+    <comment 
+        comment_id="5" 
+        comment_user_id="3" 
+        comment_tweet_id="2"
+        comment_text="comment 5"
+        comment_creation_date="2016-11-07 13:33:50"  />    
+
+</dataset>
+
+<!-- comment_id comment_user_id comment_tweet_id comment_creation_date 	comment_text -->
+
+
