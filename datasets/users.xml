@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataset>
+    
+    <!-- haslo bez #: haslo1 -->
+    <users 
+        user_id="1" 
+        user_name="user1" 
+        hashed_password="$2y$10$dmGz85QUrwuC8FW0iLYhmO/W1o9d1WPu/cfE5viZx5BoO9V7dEh5K"
+        user_email="user1@mail.bom"  />
+    
+    <!-- haslo bez #: haslo2 -->
+    <users 
+        user_id="2" 
+        user_name="user2" 
+        hashed_password="$2y$10$NPTEppLAWgYspPxLXchie.0tJRbwzo6BQLdjZnzjdNerby53ZnXwW"
+        user_email="user2@mail.bom"  />
+    
+    <!-- haslo bez #: haslo3 -->
+    <users 
+        user_id="3" 
+        user_name="user3" 
+        hashed_password="$2y$10$KVrKkIDXn10V3RZj7TiBueRj8aiN4OwVd0cbdX/Zh7S11DkrBKYhu"
+        user_email="user3@mail.bom"  />
+    
+    <!-- haslo bez #: haslo4 -->
+    <users 
+        user_id="4" 
+        user_name="user4" 
+        hashed_password="$2y$10$PbUoVy94Tq5S3fbCRRWxdOOP1BKdq1JKsHOHEXuBPmXH1lrIibE.e"
+        user_email="user4@mail.bom"  />
+    
+    <!-- haslo bez #: haslo5 -->
+    <users 
+        user_id="5" 
+        user_name="user5" 
+        hashed_password="$2y$10$Emhfzp6nfAtQmtTftOU99ulHZVK92twvsT6IJtAPWlz0Qdp3dTjg."
+        user_email="user5@mail.bom"  />        
+
+</dataset>
+
+<!-- 	user_id user_name hashed_password user_email  -->
