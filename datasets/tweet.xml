@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataset>
+    
+    <tweet 
+        tweet_id="1" 
+        tweet_user_id="1" 
+        tweet_text="tweet 1 text tweet"
+        tweet_date="2016-11-07 13:49:21"  />
+    
+    <tweet 
+        tweet_id="2" 
+        tweet_user_id="2" 
+        tweet_text="tweet 2 text tweet"
+        tweet_date="2016-11-07 13:49:11"  />
+    
+    <tweet 
+        tweet_id="3" 
+        tweet_user_id="3" 
+        tweet_text="tweet 3 text tweet"
+        tweet_date="2016-11-07 12:49:21"  />
+    
+    <tweet 
+        tweet_id="4" 
+        tweet_user_id="4" 
+        tweet_text="tweet 4 text tweet"
+        tweet_date="2016-12-07 13:49:21"  />
+    
+    <tweet 
+        tweet_id="5" 
+        tweet_user_id="4" 
+        tweet_text="tweet 5 text tweet"
+        tweet_date="2017-11-07 13:49:21"  />     
+
+</dataset>
+
+<!-- tweet_id tweet_user_id 	tweet_text 	tweet_date   -->
+
