@@ -118,13 +118,11 @@ class User {
                 return true;
             }
             return false;
-        } else { //TODO ponizsze do zbindowania
-            $sql = "UPDATE users SET user_name='$this->username',
-              user_email='$this->email',
-              hashed_password='$this->hashedPassword'
-              WHERE user_id=$this->id";
-            $result = $conn->query($sql);
-            if ($result == true) {
+        } else {
+            $statement = $conn->prepare("UPDATE users SET user_name=?, user_email=?,
+             hashed_password=? WHERE user_id=?");
+            $statement->bind_param('sssi', $this->username, $this->email, $this->hashedPassword, $this->id);
+            if ($statement->execute()) {
                 return true;
             }
             return false;
