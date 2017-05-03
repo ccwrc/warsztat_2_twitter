@@ -65,8 +65,48 @@ class UserTest extends PHPUnit_Extensions_Database_TestCase {
         $this->assertSame("true@mail.pl", $user->getEmail());
     }
     
+    public function testSetHashedPassword() {
+        $user = new User();
+        $user->setHashedPassword("pass");
+        $this->assertTrue(strlen($user->getHashedPassword()) == 60);
+        $this->assertTrue(password_verify("pass", $user->getHashedPassword()));
+    }
+    
+    public function testLoadUserById() {
+        $this->assertNull(User::loadUserById(self::$myConn, 333));
+        $this->assertNull(User::loadUserById(self::$myConn, "abc"));
+        $this->assertInstanceOf("User", User::loadUserById(self::$myConn, 3));
+    }
+    
+    public function testLoadAllUsers() {
+        $this->assertInternalType("array", User::loadAllUsers(self::$myConn));
+        $users = User::loadAllUsers(self::$myConn);
+        $this->assertInstanceOf("User", $users[1]);
+    }
+    
+    public function testLoadAllUsersByUserName() {
+        $users = User::loadAllUsersByUserName(self::$myConn, "user");
+        $this->assertInternalType("array", $users);
+        $this->assertInstanceOf("User", $users[2]);
+        $this->assertEmpty(User::loadAllUsersByUserName(self::$myConn, "us88er"));
+    }
+    
+    public function testSaveToDb() {
+        $user = new User();
+        $user->setEmail("mail@pp.pp")->setHashedPassword("pass")->setUsername("newfuser");
+        $this->assertTrue($user->saveToDB(self::$myConn));
+        $loadedUser = User::loadUserById(self::$myConn, 1);
+        $this->assertTrue($loadedUser->saveToDB(self::$myConn));
+    }
     
     
+    public function testDeleteUser() {
+        $user = new User();
+        $this->assertFalse($user->deleteById(self::$myConn));
+        $user->setEmail("mail@pp.pp")->setHashedPassword("pass")->setUsername("newfuser")
+                ->saveToDB(self::$myConn);
+        $this->assertTrue($user->deleteById(self::$myConn));
+    }
     
     
     

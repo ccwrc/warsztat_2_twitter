@@ -24,6 +24,10 @@ class User {
     public function getEmail() {
         return $this->email;
     }
+    
+    public function getHashedPassword() {
+        return $this->hashedPassword;
+    }
 
     public function setUsername($userName) {
         if (is_string($userName) && strlen($userName) <= 65) {
@@ -40,9 +44,12 @@ class User {
         }
     }
 
-    public function setHashedPassword($hashedPassword) {
-        $newHashedPassword = password_hash($hashedPassword, PASSWORD_BCRYPT);
-        $this->hashedPassword = $newHashedPassword;
+    public function setHashedPassword($password) {
+        if (strlen($password) <= 65) {
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+            $this->hashedPassword = $hashedPassword;
+            return $this;
+        }
     }
 
     static public function loadUserById(mysqli $conn, $id) {
@@ -62,7 +69,7 @@ class User {
         return null;
     }
 
-    // ponizsza funkcja nie jest wykorzystana
+    // ponizsza funkcja nie jest jeszcze wykorzystana
     static public function loadAllUsers(mysqli $conn) {
         $sql = "SELECT * FROM users";
         $ret = [];
@@ -81,7 +88,7 @@ class User {
         return $ret;
     }
 
-    // ponizsza funkcja nie jest wykorzystana
+    // ponizsza funkcja nie jest jeszcze wykorzystana
     static public function loadAllUsersByUserName(mysqli $conn, $userName) {
         $userName = $conn->real_escape_string($userName);
         $sql = "SELECT * FROM users WHERE user_name LIKE '%$userName%'";
@@ -128,15 +135,13 @@ class User {
         if ($this->id != -1) {
             $sql = "DELETE FROM users WHERE user_id=$this->id";
             $result = $conn->query($sql);
-            if ($result == true) {
+            if ($result) {
                 $this->id = -1;
                 return true;
             }
-            return false;
         }
-        return true;
+        return false;
     }
 
 }
 
-?>
