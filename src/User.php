@@ -26,15 +26,18 @@ class User {
     }
 
     public function setUsername($userName) {
-        $userName = htmlentities($userName, ENT_QUOTES, "UTF-8");
-        $this->username = $userName;
-        return $this;
+        if (is_string($userName) && strlen($userName) <= 65) {
+            $userName = htmlentities($userName, ENT_QUOTES, "UTF-8");
+            $this->username = $userName;
+            return $this;
+        }
     }
 
     public function setEmail($email) {
-        $email = htmlentities($email, ENT_QUOTES, "UTF-8");
-        $this->email = $email;
-        return $this;
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) && strlen($email) <= 250) {
+            $this->email = $email;
+            return $this;
+        }
     }
 
     public function setHashedPassword($hashedPassword) {
