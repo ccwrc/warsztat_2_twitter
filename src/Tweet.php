@@ -32,6 +32,7 @@ class Tweet {
     public function setUserId($userId) {
         if (is_numeric($userId)) {
             $this->userId = $userId;
+            return $this;
         } else {
             return false;
         }
@@ -40,6 +41,7 @@ class Tweet {
     public function setText($text) {
         if ((strlen(trim($text)) >= 3) && (strlen(trim($text)) <= 140)) {
             $this->text = htmlentities($text, ENT_QUOTES, "UTF-8");
+            return $this;
         } else {
             return false;
         }
@@ -48,28 +50,24 @@ class Tweet {
     public function setCreationDate($creationDate) {
         if (DateTime::createFromFormat("Y-m-d H:i:s", $creationDate)) {
             $this->creationDate = $creationDate;
+            return $this;
         } else {
             return false;
         }
     }
-
-    static public function loadTweetById(mysqli $conn, $id) {
-        $id = $conn->real_escape_string($id);
-        $sql = "SELECT * FROM tweet WHERE tweet_id = $id";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows == 1) {
+    
+    public static function loadTweetById(mysqli $conn, $id) {
+        $statament = $conn->prepare("SELECT * FROM tweet WHERE tweet_id=?");
+        $statament->bind_param('i', $id);
+        if ($statament->execute()) {
+            $result = $statament->get_result();
             $row = $result->fetch_assoc();
-
             $loadTweet = new Tweet();
             $loadTweet->id = $row['tweet_id'];
             $loadTweet->userId = $row['tweet_user_id'];
             $loadTweet->text = $row['tweet_text'];
             $loadTweet->creationDate = $row['tweet_date'];
-
             return $loadTweet;
-        } else {
-            return null;
         }
     }
 
@@ -120,19 +118,10 @@ class Tweet {
             if ($statement->execute()) {
                 $this->id = $statement->insert_id;
                 return true;
-            } else { // ponizsza opcja zbedna, niewykorzystana w aplikacji, ew. mozna wykasowac
-                $sql = "UPDATE tweet SET tweet_user_id = $this->userId, "
-                        . "tweet_text = '$this->text', tweet_date = '$this->creationDate'"
-                        . "WHERE tweet_id = $this->id";
-                $result = $conn->query($sql);
-                if ($result) {
-                    return true;
-                }
             }
-            return false;
         }
+        return false;
     }
 
 }
 
-?>

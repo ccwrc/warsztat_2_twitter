@@ -113,7 +113,7 @@ class User {
             $statement = $conn->prepare("INSERT INTO users(user_name, hashed_password, user_email)
             VALUES (?,?,?)");
             $statement->bind_param('sss', $this->username, $this->hashedPassword, $this->email);
-            if ($statement->execute()) {
+            if ($statement->execute()) { 
                 $this->id = $statement->insert_id;
                 return true;
             }
