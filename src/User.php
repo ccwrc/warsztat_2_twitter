@@ -56,6 +56,13 @@ class User {
         return false;
     }
     
+    public function userAuthentication($enteredPassword) {
+        if (password_verify($enteredPassword, $this->getHashedPassword())) {
+            return true;
+        }
+        return false;
+    }
+
     public static function loadUserById(mysqli $conn, $userId) {
         if (!is_numeric($userId)) {
             return null;
@@ -83,6 +90,7 @@ class User {
         if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL) || strlen($userEmail) > 250) {
             return null;
         }
+        $userEmail = strtolower($userEmail);
         $statement = $conn->prepare("SELECT * FROM users WHERE user_email = ?");
         $statement->bind_param('s', $userEmail);
         $statement->execute();

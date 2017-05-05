@@ -1,5 +1,5 @@
 <?php
-session_start();   // strona dostepna bez zalogowania, ale wydaje sie to logiczne...
+session_start();   
 
 if (isset($_SESSION['logged'])) {
     header("location: index.php");
@@ -17,28 +17,18 @@ $message = ""; //wiadomosc podawana po blednej probie zalogowania
 $conn = getDbConnection();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['useremail']) && isset($_POST['userpassword']) 
-            && trim($_POST['useremail']) != '' && trim($_POST['userpassword']) != '') {
+    if (isset($_POST['userEmail']) && isset($_POST['userPassword']) 
+            && trim($_POST['userEmail']) != '' && trim($_POST['userPassword']) != '') {
 
-        $userEmail = strtolower(trim($_POST['useremail']));
-        $userPassword = trim($_POST['userpassword']);
-        $userEmail = $conn->real_escape_string($userEmail);
-        $userPassword = $conn->real_escape_string($userPassword);
+        $loadedUser = User::loadUserByEmail($conn, $_POST['userEmail']);
 
-        $sql = "SELECT * FROM users WHERE user_email = '$userEmail'";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows == 1) {
-            foreach ($result as $row) {
-                $getUserId = $row['user_id'];
-                $getHashedPassword = $row['hashed_password'];
-                $getName = $row['user_name'];
-            }
-            if (password_verify($userPassword, $getHashedPassword)) {
-                $_SESSION['logged'] = $getName;
-                $_SESSION['user_id'] = $getUserId;
-                //sprawdzanie nowych wiadomosci
-                if (checkNewMessages($getUserId, $conn) >= 1) {
+        if ($loadedUser !== null) {
+            $loadedUserId = $loadedUser->getId();
+            $loadedUserUsername = $loadedUser->getUsername();
+            if ($loadedUser->userAuthentication($_POST['userPassword'])) {
+                $_SESSION['logged'] = $loadedUserUsername;
+                $_SESSION['user_id'] = $loadedUserId;
+                if (checkNewMessages($loadedUserId, $conn) >= 1) {
                     $_SESSION['newPrivateMessage'] = "set";
                 }
                 header("location: index.php");
@@ -92,10 +82,10 @@ $conn = null;
                     <form method='POST' action=''>
                         <label> <center>Podaj dane dostępu do dziupli: <br/><br/>
                             </center>
-                            <input type="email" name="useremail" placeholder="Podaj e-mail" 
+                            <input type="email" name="userEmail" placeholder="Podaj e-mail" 
                                    id="userEmailOnLogon" data-max_char_input="250"
                                    pattern=".{5,250}"   required title="Minimalna liczba znaków to 5, maksymalna 250"/>  
-                            <input type="password" name="userpassword" placeholder="I wpisz hasło" 
+                            <input type="password" name="userPassword" placeholder="I wpisz hasło" 
                                    id="userPasswordOnLogon" data-max_char_input="65"
                                    pattern=".{3,65}"   required title="Minimalna liczba znaków to 3, maksymalna 65"/>
                             <input type="submit" value="Wejdź do dziupli"/>
