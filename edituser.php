@@ -17,33 +17,42 @@ $conn = getDbConnection();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $userId = $_SESSION['user_id'];
-    $sql = "SELECT * FROM users WHERE user_id = '$userId'";
-    $result = $conn->query($sql);
-    
-    if ($result->num_rows == 1) {
-        foreach ($result as $row) {
-            $getHashedPassword = $row['hashed_password'];
-        }
-    }
+    $loadedUser = User::loadUserById($conn, $userId);
+    $getHashedPassword = $loadedUser->getHashedPassword();
+//    $sql = "SELECT * FROM users WHERE user_id = '$userId'";
+//    $result = $conn->query($sql);
+//    
+//    if ($result->num_rows == 1) {
+//        foreach ($result as $row) {
+//            $getHashedPassword = $row['hashed_password'];
+//        }
+//    }
 
     // zmiana nazwy usera
     if (isset($_POST['newusername']) && isset($_POST['oldpassword']) 
             && (strlen(trim($_POST['newusername']))) >= 3 
             && (strlen(trim($_POST['newusername']))) <= 65 
             && (password_verify($_POST['oldpassword'], $getHashedPassword))) {
-        $newUserName = trim($_POST['newusername']);
-        $newUserName = $conn->real_escape_string($newUserName);
-        $newUserName = htmlentities($newUserName, ENT_QUOTES, "UTF-8");
-        
-        $sql = "UPDATE users SET user_name = '$newUserName' WHERE user_id = $userId";
-        $result = $conn->query($sql);
-        if ($result == true) {
-            $message = "Nazwa dzięcioła została zmieniona (zmiana będzie widoczna po ponownym zalogowaniu)";
+       // $newUserName = trim($_POST['newusername']);
+//        $newUserName = $conn->real_escape_string($newUserName);
+//        $newUserName = htmlentities($newUserName, ENT_QUOTES, "UTF-8");
+//        
+//        $sql = "UPDATE users SET user_name = '$newUserName' WHERE user_id = $userId";
+//        $result = $conn->query($sql);
+//        if ($result == true) {
+        $loadedUser->setUsername($_POST['newusername']);
+        if ($loadedUser->saveToDB($conn)) {
+            $_SESSION['logged'] = $loadedUser->getUsername();
+            $message = "Nazwa dzięcioła została zmieniona";
             unset($_POST['newusername']);
             unset($_POST['oldpassword']);
         } else {
             $message = "Błąd połączenia z bazą, zapukaj za kilka minut";
         }
+    } else if (isset($_POST['newusername']) && isset($_POST['oldpassword']) 
+            && (strlen(trim($_POST['newusername']))) >= 3 
+            && (strlen(trim($_POST['newusername'])))) {
+        $message = "Błędne hasło";
     }
 
     // zmiana hasła usera
@@ -70,9 +79,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['deleteuser']) 
             && (password_verify($_POST['deleteuser'], $getHashedPassword))) {
         
-        $sql = "DELETE FROM users WHERE user_id = $userId";
-        $result = $conn->query($sql);
-        if ($result) {
+//        $sql = "DELETE FROM users WHERE user_id = $userId";
+//        $result = $conn->query($sql);
+   //     $userToDelete = User::loadUserById($conn, $userId);
+        if ($loadedUser->deleteById($conn)) {
             unset($_POST);
             $conn->close();
             $conn = null;
@@ -82,6 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $message = "Błąd połączenia z bazą, zapukaj za kilka minut";
         }
+    } else if (isset($_POST['deleteuser'])) {
+        $message = "Błędne hasło";
     }
 
     unset($_POST['deleteuser']);

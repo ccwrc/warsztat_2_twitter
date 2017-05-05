@@ -30,8 +30,9 @@ class User {
     }
 
     public function setUsername($userName) {
-        if (is_string($userName) && strlen($userName) <= 65) {
-            $userName = htmlentities($userName, ENT_QUOTES, "UTF-8");
+        if (is_string($userName) && trim(strlen($userName)) <= 65
+                && trim(strlen($userName)) >= 3) {
+            $userName = htmlentities(trim($userName), ENT_QUOTES, "UTF-8");
             $this->username = $userName;
             return $this;
         }

@@ -43,7 +43,7 @@ $(document).ready(function () {
             $("span")[0].innerText = count + "/" + max;
 
             if (count < 3) {
-                $("span").css("color", "greenyellow");
+                $("span").css("color", "black");
             } else if (count < (max * 0.95)) {
                 $("span").css("color", "green");
             } else {

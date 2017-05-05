@@ -68,9 +68,28 @@ class TweetTest extends PHPUnit_Extensions_Database_TestCase {
         $this->assertEquals("tweet 1 text tweet", $tweet->getText());
     }
     
+    public function testLoadAllTweetsByUserId() {
+        $tweets = Tweet::loadAllTweetsByUserId(self::$myConn, 4);
+        $this->assertInternalType("array", $tweets);
+        $this->assertInstanceOf("Tweet", $tweets[1]);
+        $this->assertEmpty(Tweet::loadAllTweetsByUserId(self::$myConn, 49));     
+    }
     
+    public function testLoadAllTweetsLimit300() {
+        $tweets = Tweet::loadAllTweetsLimit300(self::$myConn);
+        $this->assertInternalType("array", $tweets);
+        $this->assertInstanceOf("Tweet", $tweets[1]);       
+    }
     
-    
-    
+    public function testSaveToDb() {
+        $tweet = new Tweet();
+        $tweet->setCreationDate("2018-01-02 2:01:33")->setText("new textx")
+                ->setUserId(4);
+        $this->assertTrue($tweet->saveToDb(self::$myConn));
+        $incorrectTweet = new Tweet();
+        $incorrectTweet->setCreationDate("2018-01-02 2:01:33")->setText("new textx")
+                ->setUserId(42);
+        $this->assertFalse($incorrectTweet->saveToDb(self::$myConn));
+    }
 
 }

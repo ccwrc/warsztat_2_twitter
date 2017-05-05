@@ -57,37 +57,39 @@ class Tweet {
     }
     
     public static function loadTweetById(mysqli $conn, $id) {
-        $statament = $conn->prepare("SELECT * FROM tweet WHERE tweet_id=?");
-        $statament->bind_param('i', $id);
-        if ($statament->execute()) {
-            $result = $statament->get_result();
+        $statement = $conn->prepare("SELECT * FROM tweet WHERE tweet_id=?");
+        $statement->bind_param('i', $id);
+        if ($statement->execute()) {
+            $result = $statement->get_result();
             $row = $result->fetch_assoc();
-            $loadTweet = new Tweet();
-            $loadTweet->id = $row['tweet_id'];
-            $loadTweet->userId = $row['tweet_user_id'];
-            $loadTweet->text = $row['tweet_text'];
-            $loadTweet->creationDate = $row['tweet_date'];
-            return $loadTweet;
+            $loadedTweet = new Tweet();
+            $loadedTweet->id = $row['tweet_id'];
+            $loadedTweet->userId = $row['tweet_user_id'];
+            $loadedTweet->text = $row['tweet_text'];
+            $loadedTweet->creationDate = $row['tweet_date'];
+            $statement->close();
+            return $loadedTweet;
         }
     }
-
-    // ponizsza funkcja jeszcze niewykorzystana
-    static public function loadAllTweetByUserId(mysqli $conn, $userId) {
-        $userId = $conn->real_escape_string($userId);
-        $sql = "SELECT * FROM tweet WHERE tweet_user_id = $userId";
+    
+    // funkcja jeszcze niewykorzystana
+    public static function loadAllTweetsByUserId(mysqli $conn, $userId) {
+        $statement = $conn->prepare("SELECT * FROM tweet WHERE tweet_user_id = ?");
+        $statement->bind_param('i', $userId);
         $ret = [];
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
+        if ($statement->execute()) {
+            $result = $statement->get_result();
+            $result->fetch_assoc();
             foreach ($result as $row) {
                 $loadTweet = new Tweet();
                 $loadTweet->id = $row['tweet_id'];
                 $loadTweet->userId = $row['tweet_user_id'];
                 $loadTweet->text = $row['tweet_text'];
                 $loadTweet->creationDate = $row['tweet_date'];
-                $ret[$loadTweet->id] = $loadTweet;
+                $ret[] = $loadTweet;
             }
         }
+        $statement->close();
         return $ret;
     }
 
@@ -95,16 +97,14 @@ class Tweet {
         $sql = "SELECT * FROM tweet ORDER BY tweet_date DESC LIMIT 300";
         $result = $conn->query($sql);
         $ret = [];
-
         if ($result->num_rows > 0) {
             foreach ($result as $row) {
-                $loadTweet = new Tweet();
-                $loadTweet->tweetId = $row['tweet_id'];
-                $loadTweet->userId = $row['tweet_user_id'];
-                $loadTweet->text = $row['tweet_text'];
-                $loadTweet->creationDate = $row['tweet_date'];
-
-                $ret[$loadTweet->tweetId] = $loadTweet;
+                $loadedTweet = new Tweet();
+                $loadedTweet->tweetId = $row['tweet_id'];
+                $loadedTweet->userId = $row['tweet_user_id'];
+                $loadedTweet->text = $row['tweet_text'];
+                $loadedTweet->creationDate = $row['tweet_date'];
+                $ret[] = $loadedTweet;
             }
         }
         return $ret;
@@ -117,9 +117,11 @@ class Tweet {
             $statement->bind_param("iss", $this->userId, $this->text, $this->creationDate);
             if ($statement->execute()) {
                 $this->id = $statement->insert_id;
+                $statement->close();
                 return true;
             }
         }
+        $statement->close();
         return false;
     }
 
