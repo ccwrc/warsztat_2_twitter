@@ -13,35 +13,25 @@ require_once "src/connect.php";
 
 $randCaptcha = rand(1, 10); //generowanie linka do zabezp. captcha
 $message = ""; //wiadomosc podawana przy zajetym adresie mailowym i bledach hasla
-
 $conn = getDbConnection();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['username']) && trim($_POST['username']) != '' 
-            && isset($_POST['captcha']) && ($_POST['captcha'] >= 10) 
-            && ($_POST['captcha'] <= 85) && is_numeric($_POST['captcha']) 
-            && isset($_POST['useremail']) && trim($_POST['useremail']) != '' 
-            && isset($_POST['userpassword1']) && trim($_POST['userpassword1']) != '' 
-            && isset($_POST['userpassword2']) && trim($_POST['userpassword2']) != '') {
-        if (trim($_POST['userpassword1']) == trim($_POST['userpassword2'])) {
-            $userEmail = strtolower(trim($_POST['useremail']));
-            $userEmail = $conn->real_escape_string($userEmail);
-            $userPassword = trim($_POST['userpassword1']);
-            $userName = trim($_POST['username']);
-
-            $sql = "SELECT * FROM users WHERE user_email = '$userEmail'";
-            $result = $conn->query($sql);
-            if ($result->num_rows > 0) {
+    if (isset($_POST['username']) && trim($_POST['username']) != '' && isset($_POST['captcha']) 
+            && ($_POST['captcha'] >= 10) && ($_POST['captcha'] <= 85) && isset($_POST['userEmail']) 
+            && trim($_POST['userEmail']) != '' && isset($_POST['userPassword1']) 
+            && trim($_POST['userPassword1']) != '' && isset($_POST['userPassword2']) 
+            && trim($_POST['userPassword2']) != '') {
+        if (trim($_POST['userPassword1']) == trim($_POST['userPassword2'])) {
+            if (User::loadUserByEmail($conn, $_POST['userEmail']) !== null) {
                 $message = "Podany adres e-mail ma już dziuplę, wybierz inny";
             } else {
-                $user = new User();
-                $user->setEmail($userEmail);
-                $user->setHashedPassword($userPassword);
-                $user->setUsername($userName);
-                $user->saveToDB($conn); 
-                if ($user->saveToDB($conn) == true) {
-                    $_SESSION['logged'] = $userName;
-                    $_SESSION['user_id'] = $user->getId();
+                $newUser = new User();
+                $newUser->setEmail($_POST['userEmail']);
+                $newUser->setHashedPassword($_POST['userPassword1']);
+                $newUser->setUsername($_POST['username']);
+                if ($newUser->saveToDB($conn) == true) {
+                    $_SESSION['logged'] = $newUser->getUsername();
+                    $_SESSION['user_id'] = $newUser->getId();
                     header("location: index.php");
                 } else {
                     $message = "Błąd połączenia z bazą, spróbuj za kilka minut";
@@ -96,13 +86,13 @@ $conn = null;
                         <input type="text" name="username" placeholder="Podaj nazwę dzięcioła" size="50" 
                                id="usernameCreateUser" data-max_char_input="65"
                                pattern=".{3,65}"   required title="Minimalna liczba znaków to 3, maksymalna 65"/>  <br/> 
-                        <input type="email" name="useremail" placeholder="Tu wpisz e-mail" size="50" 
+                        <input type="email" name="userEmail" placeholder="Tu wpisz e-mail" size="50" 
                                id="userEmailCreateUser" data-max_char_input="250"
                                pattern=".{5,250}"   required title="Minimalna liczba znaków to 5, maksymalna 250"/>  <br/>
-                        <input type="password" name="userpassword1" placeholder="I ustal hasło" size="50" 
+                        <input type="password" name="userPassword1" placeholder="I ustal hasło" size="50" 
                                id="userPassword1CreateUser" data-max_char_input="65"
                                pattern=".{3,65}"   required title="Minimalna liczba znaków to 3, maksymalna 65"/> <br/>
-                        <input type="password" name="userpassword2" placeholder="Dla pewności wpisz hasło ponownie" size="50" 
+                        <input type="password" name="userPassword2" placeholder="Dla pewności wpisz hasło ponownie" size="50" 
                                id="userPassword2CreateUser" data-max_char_input="65"
                                pattern=".{3,65}"   required title="Minimalna liczba znaków to 3, maksymalna 65"/> <br/><br/>
                         Potwierdź, że nie jesteś borsukiem i przepisz drugi i 3 znak: <br/>
