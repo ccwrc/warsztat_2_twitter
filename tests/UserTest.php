@@ -31,9 +31,15 @@ class UserTest extends PHPUnit_Extensions_Database_TestCase {
         $this->assertEquals(2, $user->getId());
     }
 
-    public function testLoadUserByIdIfIdIsIncorrect() {
+    public function testLoadUserByIdIfIdIsIncorrect() { 
         $this->assertNull(User::loadUserById(self::$myConn, 29));
         $this->assertNull(User::loadUserById(self::$myConn, "bla"));
+    }
+    
+    public function testLoadUserById() {
+        $this->assertEmpty(User::loadUserById(self::$myConn, 333));
+        $this->assertNull(User::loadUserById(self::$myConn, "abc"));
+        $this->assertInstanceOf("User", User::loadUserById(self::$myConn, 3));
     }
 
     public function testGetUsername() {
@@ -54,13 +60,13 @@ class UserTest extends PHPUnit_Extensions_Database_TestCase {
 
     public function testSetUsernameIfUsernameIsTooLong() {
         $user = User::loadUserById(self::$myConn, 3);
-        $this->assertNull($user->setUsername("u1234567890u1234567890u1234567890u"
+        $this->assertFalse($user->setUsername("u1234567890u1234567890u1234567890u"
                         . "1234567890u1234567890u1234567890u1234567890"));
     }
 
     public function testSetEmail() {
         $user = User::loadUserById(self::$myConn, 3);
-        $this->assertNull($user->setEmail("false_mail@false"));
+        $this->assertFalse($user->setEmail("false_mail@false"));
         $user->setEmail("true@mail.pl");
         $this->assertSame("true@mail.pl", $user->getEmail());
     }
@@ -72,23 +78,17 @@ class UserTest extends PHPUnit_Extensions_Database_TestCase {
         $this->assertTrue(password_verify("pass", $user->getHashedPassword()));
     }
 
-    public function testLoadUserById() {
-        $this->assertNull(User::loadUserById(self::$myConn, 333));
-        $this->assertNull(User::loadUserById(self::$myConn, "abc"));
-        $this->assertInstanceOf("User", User::loadUserById(self::$myConn, 3));
-    }
-
     public function testLoadAllUsers() {
         $this->assertInternalType("array", User::loadAllUsers(self::$myConn));
         $users = User::loadAllUsers(self::$myConn);
         $this->assertInstanceOf("User", $users[1]);
     }
 
-    public function testLoadAllUsersByUserName() {
-        $users = User::loadAllUsersByUserName(self::$myConn, "user");
+    public function testLoadAllUsersByUsername() {
+        $users = User::loadAllUsersByUsername(self::$myConn, "user");
         $this->assertInternalType("array", $users);
         $this->assertInstanceOf("User", $users[2]);
-        $this->assertEmpty(User::loadAllUsersByUserName(self::$myConn, "us88er"));
+        $this->assertEmpty(User::loadAllUsersByUsername(self::$myConn, "us88er"));
     }
 
     public function testSaveToDb() {

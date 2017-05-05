@@ -31,29 +31,26 @@ class Tweet {
 
     public function setUserId($userId) {
         if (is_numeric($userId)) {
-            $this->userId = $userId;
+            $this->userId = (int)$userId;
             return $this;
-        } else {
-            return false;
-        }
+        } 
+        return false;
     }
 
     public function setText($text) {
         if ((strlen(trim($text)) >= 3) && (strlen(trim($text)) <= 140)) {
-            $this->text = htmlentities($text, ENT_QUOTES, "UTF-8");
+            $this->text = htmlentities(trim($text), ENT_QUOTES, "UTF-8");
             return $this;
-        } else {
-            return false;
-        }
+        } 
+        return false;
     }
 
     public function setCreationDate($creationDate) {
         if (DateTime::createFromFormat("Y-m-d H:i:s", $creationDate)) {
             $this->creationDate = $creationDate;
             return $this;
-        } else {
-            return false;
-        }
+        } 
+        return false;
     }
     
     public static function loadTweetById(mysqli $conn, $id) {
@@ -70,6 +67,7 @@ class Tweet {
             $statement->close();
             return $loadedTweet;
         }
+        $statement->close();
     }
     
     // funkcja jeszcze niewykorzystana

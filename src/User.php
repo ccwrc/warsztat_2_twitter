@@ -36,6 +36,7 @@ class User {
             $this->username = $userName;
             return $this;
         }
+        return false;
     }
 
     public function setEmail($email) {
@@ -43,34 +44,42 @@ class User {
             $this->email = $email;
             return $this;
         }
+        return false;
     }
 
     public function setHashedPassword($password) {
-        if (strlen($password) <= 65) {
+        if (strlen($password) >= 3 && strlen($password) <= 65) {
             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
             $this->hashedPassword = $hashedPassword;
             return $this;
         }
+        return false;
     }
+    
+    public static function loadUserById(mysqli $conn, $userId) {
+        if (!is_numeric($userId)) {
+            return null;
+        }
+        $statement = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
+        $statement->bind_param('i', $userId);
+        $statement->execute();
+        $result = $statement->get_result();
 
-    static public function loadUserById(mysqli $conn, $id) {
-        $id = $conn->real_escape_string($id);
-        $sql = "SELECT * FROM users WHERE user_id = $id";
-        $result = $conn->query($sql);
-
-        if ($result != false && $result->num_rows == 1) {
+        if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
             $loadedUser = new User();
             $loadedUser->id = $row['user_id'];
             $loadedUser->username = $row['user_name'];
             $loadedUser->hashedPassword = $row['hashed_password'];
             $loadedUser->email = $row['user_email'];
+            $statement->close();
             return $loadedUser;
         }
+        $statement->close();
         return null;
     }
 
-    // ponizsza funkcja nie jest jeszcze wykorzystana
+    //funkcja nie jest jeszcze wykorzystana
     static public function loadAllUsers(mysqli $conn) {
         $sql = "SELECT * FROM users";
         $ret = [];
@@ -88,24 +97,26 @@ class User {
         }
         return $ret;
     }
-
-    // ponizsza funkcja nie jest jeszcze wykorzystana
-    static public function loadAllUsersByUserName(mysqli $conn, $userName) {
-        $userName = $conn->real_escape_string($userName);
-        $sql = "SELECT * FROM users WHERE user_name LIKE '%$userName%'";
+    
+    // funkcja jeszcze niewykorzystana
+    public static function loadAllUsersByUsername(mysqli $conn, $partOfUsername) {
+        $partOfUsername = "%" . $partOfUsername . "%";
+        $statement = $conn->prepare("SELECT * FROM users WHERE user_name LIKE ?");
+        $statement->bind_param('s', $partOfUsername);
         $ret = [];
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
+        if ($statement->execute()) {
+            $result = $statement->get_result();
+            $result->fetch_assoc();
             foreach ($result as $row) {
                 $loadedUser = new User();
                 $loadedUser->id = $row['user_id'];
                 $loadedUser->username = $row['user_name'];
                 $loadedUser->hashedPassword = $row['hashed_password'];
                 $loadedUser->email = $row['user_email'];
-                $ret[$loadedUser->id] = $loadedUser;
+                $ret[] = $loadedUser;
             }
         }
+        $statement->close();
         return $ret;
     }
 
@@ -116,6 +127,7 @@ class User {
             $statement->bind_param('sss', $this->username, $this->hashedPassword, $this->email);
             if ($statement->execute()) { 
                 $this->id = $statement->insert_id;
+                $statement->close();
                 return true;
             }
             return false;
@@ -124,6 +136,7 @@ class User {
              hashed_password=? WHERE user_id=?");
             $statement->bind_param('sssi', $this->username, $this->email, $this->hashedPassword, $this->id);
             if ($statement->execute()) {
+                $statement->close();
                 return true;
             }
             return false;
