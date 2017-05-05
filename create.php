@@ -26,9 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $message = "Podany adres e-mail ma już dziuplę, wybierz inny";
             } else {
                 $newUser = new User();
-                $newUser->setEmail($_POST['userEmail']);
-                $newUser->setHashedPassword($_POST['userPassword1']);
-                $newUser->setUsername($_POST['username']);
+                $newUser->setEmail($_POST['userEmail'])->setHashedPassword($_POST['userPassword1'])
+                        ->setUsername($_POST['username']);
                 if ($newUser->saveToDB($conn) == true) {
                     $_SESSION['logged'] = $newUser->getUsername();
                     $_SESSION['user_id'] = $newUser->getId();

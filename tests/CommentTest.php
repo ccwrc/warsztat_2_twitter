@@ -4,6 +4,7 @@ require_once __DIR__ . '/../src/Comment.php';
 
 class CommentTest extends PHPUnit_Extensions_Database_TestCase {
     protected static $myConn;
+    protected static $emptyComment;
 
     public function getConnection() {
         $conn = new PDO($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD']);
@@ -19,14 +20,28 @@ class CommentTest extends PHPUnit_Extensions_Database_TestCase {
         self::$myConn = new mysqli(
                 $GLOBALS['DB_HOST'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD'], $GLOBALS['DB_NAME']
         );
+        self::$emptyComment = new Comment();
     }
 
-    // testy wlasciwe
-
-    public function testTrue() {
-        $this->assertTrue(true);
+    public function testConstruct() {
+        $this->assertInstanceOf("Comment", self::$emptyComment, 
+                "spraw. konstruktora na self-emptyComment");
     }
     
+    public function testGetId() {
+        $this->assertEquals(-1, self::$emptyComment->getId());
+    }
     
-
+    public function testGetUserId() {
+        $this->assertEquals(0, self::$emptyComment->getUserId());
+    }    
+    
+    public function testGetTweetId() {
+        $this->assertEquals(0, self::$emptyComment->getTweetId());
+    }  
+    
+    public function testGetText() {
+        $this->assertEquals("", self::$emptyComment->getText());
+    }      
+    
 }

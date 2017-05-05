@@ -88,7 +88,7 @@ if ($numberOfNewMessages == 1) {
                     echo "<br/> Data: " . $cutMessage->getMessageCreationdate() . " <br/>";
                     echo "Nagłówek wiadomości: " . $cutMessage->getMessageContent() . "<br/>";
                     $messageIdForGet = $cutMessage->getMessageId();
-                    echo "<a href=\"messageinfo.php?messageid=$messageIdForGet&send=true\">Przeczytaj całość</a> ";
+                    echo "<a href=\"messageinfo.php?messageid=$messageIdForGet&send=true\">Wyświetl</a> ";
                     echo " <a href=\"showuser.php?strangeuser=$receiverId\">Wyślij kolejną</a>";
                     echo " <a href=\"messagedelete.php?messageid=$messageIdForGet&send=true\">USUŃ</a> ";
                     echo "</div><br/>";
