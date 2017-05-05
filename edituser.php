@@ -34,7 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $message = "Błąd połączenia z bazą, zapukaj za kilka minut";
         }
-    } else if (isset($_POST['newusername']) && isset($_POST['oldpassword']) && (strlen(trim($_POST['newusername']))) >= 3 && (strlen(trim($_POST['newusername'])))) {
+    } else if (isset($_POST['newusername']) && isset($_POST['oldpassword']) 
+            && (strlen(trim($_POST['newusername']))) >= 3 
+            && (strlen(trim($_POST['newusername'])))) {
         $message = "Błędne hasło";
     }
 
@@ -44,11 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             && (strlen(trim($_POST['newpassword1'])) <= 65) 
             && ($_POST['newpassword1'] === $_POST['newpassword2']) 
             && (password_verify($_POST['oldpassword'], $getHashedPassword))) {
-        $newHashedPassword = password_hash(trim($_POST['newpassword1']), PASSWORD_BCRYPT);
-        
-        $sql = "UPDATE users SET hashed_password = '$newHashedPassword' WHERE user_id = $userId";
-        $result = $conn->query($sql);
-        if ($result) {
+        $loadedUser->setHashedPassword($_POST['newpassword1']);
+        if ($loadedUser->saveToDB($conn)) {
             $message = "Hasło zostało zmienione";
             unset($_POST['newpassword1']);
             unset($_POST['newpassword2']);
@@ -56,6 +55,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $message = "Błąd połączenia z bazą, zapukaj za kilka minut";
         }
+    } else if (isset($_POST['newpassword1']) && isset($_POST['newpassword2']) 
+            && isset($_POST['oldpassword']) && (strlen(trim($_POST['newpassword1'])) >= 3) 
+            && (strlen(trim($_POST['newpassword1'])) <= 65)) {
+        $message = "Błędne hasło";
     }
 
     // usuniecie usera
@@ -147,7 +150,6 @@ if (isset($_GET['changename'])) {
     echo "<input type=\"submit\" value=\"Zatwierdź\"/>";
     echo "</label>";
     echo "</form>";
-    unset($_GET['changename']);
 }
 
 // zmiana hasla
@@ -166,8 +168,6 @@ if (isset($_GET['changepassword'])) {
     echo "<input type=\"submit\" value=\"Zatwierdź\"/>";
     echo "</label>";
     echo "</form>";
-
-    unset($_GET['changepassword']);
 }
 
 // usuniecie usera
@@ -182,8 +182,6 @@ if (isset($_GET['deleteuser'])) {
     echo "<input type=\"submit\" value=\"Usuń dziuplę!\"/>";
     echo "</label>";
     echo "</form>";
-
-    unset($_GET['deleteuser']);
 }
 ?>    
                 <!-- 5x br do odsloniecia tresci (przyklejony dolny panel)-->
