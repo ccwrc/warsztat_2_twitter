@@ -78,6 +78,29 @@ class User {
         $statement->close();
         return null;
     }
+    
+    public static function loadUserByEmail(mysqli $conn, $userEmail) {
+        if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL) || strlen($userEmail) > 250) {
+            return null;
+        }
+        $statement = $conn->prepare("SELECT * FROM users WHERE user_email = ?");
+        $statement->bind_param('s', $userEmail);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            $loadedUser = new User();
+            $loadedUser->id = $row['user_id'];
+            $loadedUser->username = $row['user_name'];
+            $loadedUser->hashedPassword = $row['hashed_password'];
+            $loadedUser->email = $row['user_email'];
+            $statement->close();
+            return $loadedUser;
+        }
+        $statement->close();
+        return null;
+    }
 
     //funkcja nie jest jeszcze wykorzystana
     static public function loadAllUsers(mysqli $conn) {

@@ -106,5 +106,11 @@ class UserTest extends PHPUnit_Extensions_Database_TestCase {
                 ->saveToDB(self::$myConn);
         $this->assertTrue($user->deleteById(self::$myConn));
     }
+    
+    public function testLoadUserByEmail() {
+        $this->assertEmpty(User::loadUserByEmail(self::$myConn, "11user2@mail.bom"));
+        $this->assertNull(User::loadUserByEmail(self::$myConn, "abc"));
+        $this->assertInstanceOf("User", User::loadUserByEmail(self::$myConn, "user2@mail.bom"));
+    }
 
 }
