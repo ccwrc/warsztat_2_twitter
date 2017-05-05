@@ -10,15 +10,16 @@ function __autoload($className) {
     require_once "src/" . $className . ".php";
 }
 require_once "src/connect.php";
-require_once 'src/functions.php';
 
 $conn = getDbConnection();
-
 $titleMessage = "Dzięcioły - wiadomości";
-if (checkNewMessages($_SESSION['user_id'], $conn) == 1) {
+$loadedUser = User::loadUserById($conn, $_SESSION['user_id']);
+$numberOfNewMessages = $loadedUser->countNewMessages($conn);
+
+if ($numberOfNewMessages == 1) {
     $titleMessage = "Jedna nowa wiadomość";
-} else if (checkNewMessages($_SESSION['user_id'], $conn) > 1) {
-    $titleMessage = "Nowe wiadomości: " . checkNewMessages($_SESSION['user_id'], $conn);
+} else if ($numberOfNewMessages > 1) {
+    $titleMessage = "Nowe wiadomości: " . $numberOfNewMessages;
 }
 ?>
 

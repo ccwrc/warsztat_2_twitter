@@ -10,7 +10,6 @@ function __autoload($className) {
     require_once "src/" . $className . ".php";
 }
 require_once "src/connect.php";
-require_once 'src/functions.php';
 
 $message = ""; //wiadomosc podawana po blednej probie zalogowania
 
@@ -28,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($loadedUser->userAuthentication($_POST['userPassword'])) {
                 $_SESSION['logged'] = $loadedUserUsername;
                 $_SESSION['user_id'] = $loadedUserId;
-                if (checkNewMessages($loadedUserId, $conn) >= 1) {
+                if ($loadedUser->countNewMessages($conn) >= 1) {
                     $_SESSION['newPrivateMessage'] = "set";
                 }
                 header("location: index.php");

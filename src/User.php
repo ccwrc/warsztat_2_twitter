@@ -56,6 +56,16 @@ class User {
         return false;
     }
     
+    public function countNewMessages(mysqli $conn) {
+        $sql = "SELECT * FROM message WHERE message_receiver_id ="
+                . " $this->id && message_read = 0 && message_receiver_visible = 0";
+        $result = $conn->query($sql);
+        if ($result->num_rows >= 1) {
+            return $result->num_rows;
+        }
+        return 0;
+    }
+
     public function userAuthentication($enteredPassword) {
         if (password_verify($enteredPassword, $this->getHashedPassword())) {
             return true;
