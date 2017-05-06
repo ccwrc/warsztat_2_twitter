@@ -7,8 +7,8 @@ if (!isset($_SESSION['logged'])) {
 }
 
 // blokada wyslania wiadomosci do samego siebie
-if (isset($_GET['strangeuser']) && (($_GET['strangeuser']) == ($_SESSION['user_id']))) {
-    unset($_GET['strangeuser']);
+if (isset($_GET['strangerUser']) && (($_GET['strangerUser']) == ($_SESSION['user_id']))) {
+    unset($_GET['strangerUser']);
 }
 
 function __autoload($className) {
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($_POST['messageForStranger']) && (trim($_POST['messageForStranger']) != '') 
             && strlen(trim($_POST['messageForStranger'])) <= 25000) {
-        $receiverId = $_SESSION['strangeUserIdForMessage'];
+        $receiverId = $_SESSION['strangerUserIdForMessage'];
         $senderId = $_SESSION['user_id'];
         $messageForStranger = trim($_POST['messageForStranger']);
 
@@ -37,10 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $message = "Wiadomość wysłana <br/><br/>";
     }
+    
 }
 
-if (isset($_SESSION['strangeUserIdForMessage'])) {
-    unset($_SESSION['strangeUserIdForMessage']);
+if (isset($_SESSION['strangerUserIdForMessage'])) {
+    unset($_SESSION['strangerUserIdForMessage']);
 }
 ?>
 
@@ -76,7 +77,7 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
                 <br/> <span class="warning"><?= $message ?></span>
                 <?php
                 // widok strony, gdy user wchodzi ogladac swoj profil
-                if (!isset($_GET['strangeuser'])) {
+                if (!isset($_GET['strangerUser'])) {
                     echo "<strong>";
                     echo "Wszystkie twoje wpisy w lesie: <br/><br/>";
                     echo "</strong>";
@@ -88,8 +89,8 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
                             echo "Wpis o ID " . $tweet->getId() . ": ";
                             echo $tweet->getText() . "<br/>";
                             echo "Data utworzenia wpisu: " . $tweet->getCreationDate() . " <b>Komentarze"
-                            . ": " . $commentsCount . "</b> &nbsp;" . "<a href=\"detail.php?"
-                            . "tweetid=" . $tweet->getId() . "\">Detale wpisu</a>" . "<br/><br/>";
+                                . ": " . $commentsCount . "</b> &nbsp;" . "<a href=\"detail.php?"
+                                . "tweetid=" . $tweet->getId() . "\">Detale wpisu</a>" . "<br/><br/>";
                             echo "</div><br/>";
                         }
                     } else {
@@ -99,16 +100,15 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
                 }
 
                 // widok strony, gdy user wchodzi ogladac cudzy profil
-                if (isset($_GET['strangeuser'])) {
-                    if (!is_numeric($_GET['strangeuser'])) {
+                if (isset($_GET['strangerUser'])) {
+                    if (!is_numeric($_GET['strangerUser'])) {
                         $conn->close();
                         $conn = null;
                         header("location: index.php");
                         exit;
                     }
-                    $userid = $_GET['strangeuser'];
-
-                    if (User::loadUserById($conn, $userid) == null) {
+                    $strangerUser = User::loadUserById($conn, $_GET['strangerUser']);
+                    if ($strangerUser == null) {
                         $conn->close();
                         $conn = null;
                         header("location: index.php");
@@ -116,31 +116,29 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
                     }
 
                     echo "<strong>";
-                    echo "Jesteś na stronie dzięcioła o nicku: " . User::loadUserById($conn, $userid)->getUsername() . "<br/><br/>";
+                    echo "Jesteś na stronie dzięcioła o nicku: " . $strangerUser->getUsername() . "<br/><br/>";
                     echo "</strong>";
 
-                    $_SESSION['strangeUserIdForMessage'] = $userid;
+                    $_SESSION['strangerUserIdForMessage'] = $strangerUser->getId();
                     //formularz wysylania wiadomosci do uzytkownika
                     echo "<form method=\"POST\" action=\"\">";
                     echo "<textarea name=\"messageForStranger\" cols=50 placeholder=\"Tu wpisz wiadomość "
-                    . "do dzięcioła (maksymalnie 25000 znaków).\" maxlength=\"25000\" id=\"newMessageOnShowUser"
-                            . "\" data-max_char_input=\"25000\"></textarea><br/>";
+                        . "do dzięcioła (maksymalnie 25000 znaków).\" maxlength=\"25000\" id=\"newMessageOnShowUser"
+                        . "\" data-max_char_input=\"25000\"></textarea><br/>";
                     echo " <input type=\"submit\" value=\"Kliknij żeby wysłać\"/>";
                     echo "</form> <br/><br/>";
-
-                    $sql = "SELECT * FROM tweet WHERE tweet_user_id = $userid";
-                    $result = $conn->query($sql);
-
-                    if ($result->num_rows > 0) {
-                        foreach ($result as $row) {
-                            $commentsCount = Comment::countAllCommentsByTweetId($conn, $row['tweet_id']);
+                    
+                    $strangerUserTweets = Tweet::loadAllTweetsByUserId($conn, $strangerUser->getId());
+                    if (count($strangerUserTweets) > 0) {
+                        foreach ($strangerUserTweets as $key => $tweet) {
+                            $commentsCount = Comment::countAllCommentsByTweetId($conn, $tweet->getId());
                             echo "<div class=\"tweet\">";
-                            echo "Wpis o ID " . $row['tweet_id'] . ": ";
-                            echo $row['tweet_text'] . "<br/>";
-                            echo "Data utworzenia wpisu: " . $row['tweet_date'] . " <b>Komentarze: " .
-                            $commentsCount . "</b> &nbsp;" . "<a href=\"detail.php?tweetid="
-                            . $row['tweet_id'] . "&strangeuser=" . $_GET['strangeuser'] . "\">Detale "
-                            . "wpisu</a>" . "<br/><br/>";
+                            echo "Wpis o ID " . $tweet->getId() . ": ";
+                            echo $tweet->getText() . "<br/>";
+                            echo "Data utworzenia wpisu: " . $tweet->getCreationDate() . " <b>Komentarze"
+                                . ": " . $commentsCount . "</b> &nbsp;" . "<a href=\"detail.php?"
+                                . "tweetid=" . $tweet->getId() . "&strangerUser=" . $strangerUser->getId() . "\""
+                                . ">Detale wpisu</a><br/><br/>";
                             echo "</div><br/>";
                         }
                     } else {

@@ -73,7 +73,7 @@ $_SESSION['actualTweetId'] = $_GET['tweetid'];
 
                 <?php
                 // wejscie ze strony usera (na swoje konto)  
-                if (isset($_GET['tweetid']) && !isset($_GET['strangeuser']) && !isset($_GET['fromindex'])) {
+                if (isset($_GET['tweetid']) && !isset($_GET['strangerUser']) && !isset($_GET['fromindex'])) {
                     $userId = $tweetDetail->getUserId();
                     $userName = User::loadUserById($conn, $userId)->getUsername();
                     echo "<div class=\"tweetbold\">";
@@ -92,7 +92,7 @@ $_SESSION['actualTweetId'] = $_GET['tweetid'];
                         echo "<tr><td> ";
                         echo "Treść komentarza: " . $comment->getText();
                         echo "</td></tr> <tr><td>";
-                        echo "Autor komentarza: <a href=\"showuser.php?strangeuser=$commentUserId\">" . $commentUserName . "</a> ";
+                        echo "Autor komentarza: <a href=\"showuser.php?strangerUser=$commentUserId\">" . $commentUserName . "</a> ";
                         echo "Data publikacji: " . $comment->getCreationDate();
                         echo "</td></tr>";
                         echo "</table> <br/>";
@@ -104,8 +104,8 @@ $_SESSION['actualTweetId'] = $_GET['tweetid'];
                 }
 
                 // wejscie ze strony usera obcego
-                if (isset($_GET['tweetid']) && isset($_GET['strangeuser'])) {
-                    if (!is_numeric($_GET['strangeuser'])) {
+                if (isset($_GET['tweetid']) && isset($_GET['strangerUser'])) {
+                    if (!is_numeric($_GET['strangerUser'])) {
                         $conn->close();
                         $conn = null;
                         header("location: index.php");
@@ -129,17 +129,17 @@ $_SESSION['actualTweetId'] = $_GET['tweetid'];
                         echo "<tr><td> ";
                         echo "Treść komentarza: " . $comment->getText();
                         echo "</td></tr> <tr><td>";
-                        echo "Autor komentarza: <a href=\"showuser.php?strangeuser=$commentUserId\">" . $commentUserName . "</a> ";
+                        echo "Autor komentarza: <a href=\"showuser.php?strangerUser=$commentUserId\">" . $commentUserName . "</a> ";
                         echo "Data publikacji: " . $comment->getCreationDate();
                         echo "</td></tr>";
                         echo "</table> <br/>";
                     }
 
                     echo "<br/>";
-                    echo "&nbsp;" . "<a href=\"showuser.php?strangeuser=" . $tweetDetail->getUserId() . "\">Powrót do poprzedniej strony</a>";
+                    echo "&nbsp;" . "<a href=\"showuser.php?strangerUser=" . $tweetDetail->getUserId() . "\">Powrót do poprzedniej strony</a>";
                     echo "<br/><br/>";
 
-                    unset($_GET['strangeuser']);
+                    unset($_GET['strangerUser']);
                 }
 
                 // wejscie ze strony glownej
@@ -162,7 +162,7 @@ $_SESSION['actualTweetId'] = $_GET['tweetid'];
                         echo "<tr><td> ";
                         echo "Treść komentarza: " . $comment->getText();
                         echo "</td></tr> <tr><td>";
-                        echo "Autor komentarza: <a href=\"showuser.php?strangeuser=$commentUserId\">" . $commentUserName . "</a> ";
+                        echo "Autor komentarza: <a href=\"showuser.php?strangerUser=$commentUserId\">" . $commentUserName . "</a> ";
                         echo "Data publikacji: " . $comment->getCreationDate();
                         echo "</td></tr>";
                         echo "</table> <br/>";
