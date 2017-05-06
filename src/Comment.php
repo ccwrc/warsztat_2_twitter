@@ -66,26 +66,6 @@ class Comment {
         }
         return false;
     }
-
-    static public function loadCommentById2(mysqli $conn, $commentId) {
-        $commentId = $conn->real_escape_string($commentId);
-        $sql = "SELECT * FROM comment WHERE comment_id = $commentId";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows == 1) {
-            $row = $result->fetch_assoc();
-
-            $loadedComment = new Comment();
-            $loadedComment->id = $row['comment_id'];
-            $loadedComment->userId = $row['comment_user_id'];
-            $loadedComment->tweetId = $row['comment_tweet_id'];
-            $loadedComment->creationDate = $row['comment_creation_date'];
-            $loadedComment->text = $row['comment_text'];
-
-            return $loadedComment;
-        } 
-        return null;
-    }
     
     public static function loadCommentById(mysqli $conn, $commentId) {
         $statement = $conn->prepare("SELECT * FROM comment WHERE comment_id = ?");
@@ -106,15 +86,16 @@ class Comment {
         }
         $statement->close();
     }
-
-    static public function loadAllCommentsByTweetId(mysqli $conn, $commentTweetId) {
-        $commentTweetId = $conn->real_escape_string($commentTweetId);
-        $sql = "SELECT * FROM comment WHERE comment_tweet_id = $commentTweetId "
-                . "ORDER BY comment_creation_date DESC";
+    
+    public static function loadAllCommentsByTweetId(mysqli $conn, $tweetId) {
+        $statement = $conn->prepare("SELECT * FROM comment WHERE comment_tweet_id = ? "
+                . "ORDER BY comment_creation_date DESC");
+        $statement->bind_param('i', $tweetId);
         $ret = [];
-        $result = $conn->query($sql);
 
-        if ($result == true && $result->num_rows != 0) {
+        if ($statement->execute()) {
+            $result = $statement->get_result();
+            $result->fetch_assoc();
             foreach ($result as $row) {
                 $loadedComment = new Comment();
                 $loadedComment->id = $row['comment_id'];
@@ -125,9 +106,10 @@ class Comment {
                 $ret[] = $loadedComment;
             }
         }
+        $statement->close();
         return $ret;
     }
-    
+
     static public function countAllCommentsByTweetId(mysqli $conn, $commentTweetId) {
         $commentTweetId = $conn->real_escape_string($commentTweetId);
         $sql = "SELECT COUNT(comment_tweet_id) AS count_comments FROM comment WHERE "

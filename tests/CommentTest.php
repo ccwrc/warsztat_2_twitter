@@ -81,6 +81,14 @@ class CommentTest extends PHPUnit_Extensions_Database_TestCase {
         $this->assertSame("comment 2", $comment->getText());
     }
     
+    public function testLoadAllCommentsByTweetId() {
+        $comments = Comment::loadAllCommentsByTweetId(self::$myConn, 1);
+        $this->assertInternalType("array", $comments);
+        $this->assertInstanceOf("Comment", $comments[1]);
+        $emptyComments = Comment::loadAllCommentsByTweetId(self::$myConn, 11);
+        $this->assertEmpty($emptyComments);
+    }
+    
     
     
 

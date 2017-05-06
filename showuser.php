@@ -107,7 +107,7 @@ if (isset($_SESSION['strangerUserIdForMessage'])) {
                         header("location: index.php");
                         exit;
                     }
-                    $strangerUser = User::loadUserById($conn, $_GET['strangerUser']);
+                    $strangerUser = User::loadUserById($conn, (int)$_GET['strangerUser']);
                     if ($strangerUser == null) {
                         $conn->close();
                         $conn = null;
@@ -130,6 +130,7 @@ if (isset($_SESSION['strangerUserIdForMessage'])) {
                     
                     $strangerUserTweets = Tweet::loadAllTweetsByUserId($conn, $strangerUser->getId());
                     if (count($strangerUserTweets) > 0) {
+                        echo "<strong>Wiadomości z lasu od użytkownika: </strong><br/><br/>";
                         foreach ($strangerUserTweets as $key => $tweet) {
                             $commentsCount = Comment::countAllCommentsByTweetId($conn, $tweet->getId());
                             echo "<div class=\"tweet\">";
