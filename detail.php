@@ -64,7 +64,7 @@ $_SESSION['actualTweetId'] = $_GET['tweetid'];
                 <center>
                     <form method="POST" action="commentadded.php">
                         Chcesz skomentować poniższy wpis? Do dzieła:
-                        <input type="text" size="60" name="newtweetcomment" 
+                        <input type="text" size="60" name="newTweetComment" 
                                id="newCommentToTweetOnDetail" data-max_char_input="60"
                                pattern=".{3,60}" required title="Minimalna liczba znaków to 3, maksymalna 60"/> <br/>
                         <input type="submit" value="Skomentuj !"/>

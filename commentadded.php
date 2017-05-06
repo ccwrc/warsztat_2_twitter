@@ -3,7 +3,7 @@
 session_start();
 
 if (!isset($_SESSION['logged']) || !isset($_SESSION['actualTweetId']) 
-        || !isset($_POST['newtweetcomment'])) {
+        || !isset($_POST['newTweetComment'])) {
     header("location: logon.php");
     exit;
 }
@@ -11,6 +11,7 @@ if (!isset($_SESSION['logged']) || !isset($_SESSION['actualTweetId'])
 function __autoload($className) {
     require_once "src/" . $className . ".php";
 }
+
 require_once "src/connect.php";
 
 $message = "";
@@ -46,27 +47,22 @@ $message = "";
                 <br/><br/>
                 <?php
                 $conn = getDbConnection();
+                $returnToTweetId = $_SESSION['actualTweetId'];
 
-                if ($_SERVER['REQUEST_METHOD'] == 'POST' && strlen(trim($_POST['newtweetcomment'])) >= 3 
-                        && strlen(trim($_POST['newtweetcomment'])) <= 60) {
-                    $commentText = trim($_POST['newtweetcomment']);
+                if ($_SERVER['REQUEST_METHOD'] == 'POST' && strlen(trim($_POST['newTweetComment'])) >= 3 
+                        && strlen(trim($_POST['newTweetComment'])) <= 60) {
 
                     $newComment = new Comment();
-                    $newComment->setUserId($_SESSION['user_id']);
-                    $newComment->setTweetId($_SESSION['actualTweetId']);
-                    $newComment->setCreationDate(date("Y-m-d H:i:s"));
-                    $newComment->setText($commentText);
-                    $newComment->saveToDb($conn);
-
-                    $returnToTweetId = $_SESSION['actualTweetId'];
-                    $message = "Komentarz dodany!";
-                    unset($_SESSION['actualTweetId']);
+                    $newComment->setUserId($_SESSION['user_id'])->setTweetId($_SESSION['actualTweetId'])
+                            ->setCreationDate(date("Y-m-d H:i:s"))->setText(trim($_POST['newTweetComment']));
+                    if ($newComment->saveToDb($conn)) {
+                        $message = "Komentarz dodany!";
+                    }
                 } else {
                     $message = "Dodanie komentarza nie było możliwe.";
-                    $returnToTweetId = $_SESSION['actualTweetId'];
-                    unset($_SESSION['actualTweetId']);
                 }
 
+                unset($_SESSION['actualTweetId']);
                 $conn->close();
                 $conn = null;
 
@@ -81,9 +77,9 @@ $message = "";
 
             </div>
 
-<?php
-include 'src/bottom_menu_logged.php';
-?>   
+            <?php
+            include 'src/bottom_menu_logged.php';
+            ?>   
 
         </div>
     </body>
