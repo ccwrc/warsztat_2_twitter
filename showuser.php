@@ -77,24 +77,19 @@ if (isset($_SESSION['strangeUserIdForMessage'])) {
                 <?php
                 // widok strony, gdy user wchodzi ogladac swoj profil
                 if (!isset($_GET['strangeuser'])) {
-                    $userid = $_SESSION['user_id'];
-
                     echo "<strong>";
                     echo "Wszystkie twoje wpisy w lesie: <br/><br/>";
                     echo "</strong>";
-
-                    $sql = "SELECT * FROM tweet WHERE tweet_user_id = $userid";
-                    $result = $conn->query($sql);
-
-                    if ($result->num_rows > 0) {
-                        foreach ($result as $row) {
-                            $commentsCount = Comment::countAllCommentsByTweetId($conn, $row['tweet_id']);
+                    $myTweets = Tweet::loadAllTweetsByUserId($conn, $_SESSION['user_id']);
+                    if (count($myTweets) > 0) {
+                        foreach ($myTweets as $key => $tweet) {
+                            $commentsCount = Comment::countAllCommentsByTweetId($conn, $tweet->getId());
                             echo "<div class=\"tweet\">";
-                            echo "Wpis o ID " . $row['tweet_id'] . ": ";
-                            echo $row['tweet_text'] . "<br/>";
-                            echo "Data utworzenia wpisu: " . $row['tweet_date'] . " <b>Komentarze"
+                            echo "Wpis o ID " . $tweet->getId() . ": ";
+                            echo $tweet->getText() . "<br/>";
+                            echo "Data utworzenia wpisu: " . $tweet->getCreationDate() . " <b>Komentarze"
                             . ": " . $commentsCount . "</b> &nbsp;" . "<a href=\"detail.php?"
-                            . "tweetid=" . $row['tweet_id'] . "\">Detale wpisu</a>" . "<br/><br/>";
+                            . "tweetid=" . $tweet->getId() . "\">Detale wpisu</a>" . "<br/><br/>";
                             echo "</div><br/>";
                         }
                     } else {

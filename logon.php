@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['userEmail']) && isset($_POST['userPassword']) 
             && trim($_POST['userEmail']) != '' && trim($_POST['userPassword']) != '') {
 
-        $loadedUser = User::loadUserByEmail($conn, $_POST['userEmail']);
+        $loadedUser = User::loadUserByEmail($conn, strtolower($_POST['userEmail']));
 
         if ($loadedUser !== null) {
             $loadedUserId = $loadedUser->getId();

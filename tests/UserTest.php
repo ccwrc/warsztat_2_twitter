@@ -112,5 +112,20 @@ class UserTest extends PHPUnit_Extensions_Database_TestCase {
         $this->assertNull(User::loadUserByEmail(self::$myConn, "abc"));
         $this->assertInstanceOf("User", User::loadUserByEmail(self::$myConn, "user2@mail.bom"));
     }
+    
+    public function testCountNewMessages() {
+        $userOneMessage = User::loadUserById(self::$myConn, 3);
+        $this->assertEquals(1, $userOneMessage->countNewMessages(self::$myConn));
+        $userNoMessage = User::loadUserById(self::$myConn, 2);
+        $this->assertEquals(0, $userNoMessage->countNewMessages(self::$myConn));
+        $emptyUser = new user();
+        $this->assertEquals(0, $emptyUser->countNewMessages(self::$myConn));
+    }
+    
+    public function testUserAuthentication() {
+        $user = User::loadUserById(self::$myConn, 1);
+        $this->assertTrue($user->userAuthentication("haslo1"));
+        $this->assertFalse($user->userAuthentication("falsepassword"));
+    }
 
 }

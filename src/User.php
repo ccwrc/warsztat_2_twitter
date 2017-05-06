@@ -41,7 +41,7 @@ class User {
 
     public function setEmail($email) {
         if (filter_var($email, FILTER_VALIDATE_EMAIL) && strlen($email) <= 250) {
-            $this->email = $email;
+            $this->email = strtolower(trim($email));
             return $this;
         }
         return false;
@@ -113,7 +113,6 @@ class User {
             return $loadedUser;
         }
         $statement->close();
-        return null;
     }
 
     //funkcja nie jest jeszcze wykorzystana
@@ -183,8 +182,7 @@ class User {
     public function deleteById(mysqli $conn) {
         if ($this->id != -1) {
             $sql = "DELETE FROM users WHERE user_id=$this->id";
-            $result = $conn->query($sql);
-            if ($result) {
+            if ($conn->query($sql)) {
                 $this->id = -1;
                 return true;
             }

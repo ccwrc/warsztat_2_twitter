@@ -51,7 +51,7 @@ class TweetTest extends PHPUnit_Extensions_Database_TestCase {
     }
     
     public function testSetText() {
-        self::$emptyTweet->setText("new");
+        self::$emptyTweet->setText("      new");
         $this->assertEquals("new", self::$emptyTweet->getText());
         $this->assertFalse(self::$emptyTweet->setText("q"));
     }

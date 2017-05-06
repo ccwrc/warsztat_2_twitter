@@ -72,7 +72,6 @@ class Tweet {
         $statement->close();
     }
 
-    // funkcja jeszcze niewykorzystana
     public static function loadAllTweetsByUserId(mysqli $conn, $userId) {
         $statement = $conn->prepare("SELECT * FROM tweet WHERE tweet_user_id = ?");
         $statement->bind_param('i', $userId);
