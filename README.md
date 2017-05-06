@@ -47,5 +47,5 @@ Działanie wersji początkowej - rejestracja:
 
 #
 Działanie wersji początkowej - skrzynka wiadomości: 
-![Alt text](https://images85.fotosik.pl/55/fadd52b49170b5a6.png "poślij_leśniczego_z_listem")
+![Alt text](https://images85.fotosik.pl/150/6e4a21fe57584823.png "poślij_leśniczego_z_listem")
 

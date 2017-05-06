@@ -1,5 +1,5 @@
 <?php
-// zmiana nazwy, hasla i usuniecie konta
+// zmiana nazwy / hasla / usuniecie konta
 session_start();
 
 if (!isset($_SESSION['logged']) || !isset($_SESSION['user_id'])) {
@@ -10,59 +10,59 @@ if (!isset($_SESSION['logged']) || !isset($_SESSION['user_id'])) {
 function __autoload($className) {
     require_once "src/" . $className . ".php";
 }
+
 require_once "src/connect.php";
 
 $message = ""; // wiadomosc informacyjna
 $conn = getDbConnection();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $userId = $_SESSION['user_id'];
-    $loadedUser = User::loadUserById($conn, $userId);
-    $getHashedPassword = $loadedUser->getHashedPassword();
+    $loadedUser = User::loadUserById($conn, $_SESSION['user_id']);
 
     // zmiana nazwy usera
-    if (isset($_POST['newusername']) && isset($_POST['oldpassword']) 
-            && (strlen(trim($_POST['newusername']))) >= 3 
-            && (strlen(trim($_POST['newusername']))) <= 65 
-            && (password_verify($_POST['oldpassword'], $getHashedPassword))) {
-        $loadedUser->setUsername($_POST['newusername']);
+    if (isset($_POST['newUsername']) && isset($_POST['oldPassword']) 
+            && (strlen(trim($_POST['newUsername']))) >= 3 
+            && (strlen(trim($_POST['newUsername']))) <= 65 
+            && ($loadedUser->userAuthentication($_POST['oldPassword']))) {
+        $loadedUser->setUsername($_POST['newUsername']);
         if ($loadedUser->saveToDB($conn)) {
             $_SESSION['logged'] = $loadedUser->getUsername();
             $message = "Nazwa dzięcioła została zmieniona";
-            unset($_POST['newusername']);
-            unset($_POST['oldpassword']);
+            unset($_POST['newUsername']);
+            unset($_POST['oldPassword']);
         } else {
             $message = "Błąd połączenia z bazą, zapukaj za kilka minut";
         }
-    } else if (isset($_POST['newusername']) && isset($_POST['oldpassword']) 
-            && (strlen(trim($_POST['newusername']))) >= 3 
-            && (strlen(trim($_POST['newusername'])))) {
+    } else if (isset($_POST['newUsername']) && isset($_POST['oldPassword']) 
+            && (strlen(trim($_POST['newUsername']))) >= 3 
+            && (strlen(trim($_POST['newUsername'])))) {
         $message = "Błędne hasło";
     }
 
     // zmiana hasła usera
-    if (isset($_POST['newpassword1']) && isset($_POST['newpassword2']) 
-            && isset($_POST['oldpassword']) && (strlen(trim($_POST['newpassword1'])) >= 3) 
-            && (strlen(trim($_POST['newpassword1'])) <= 65) 
-            && ($_POST['newpassword1'] === $_POST['newpassword2']) 
-            && (password_verify($_POST['oldpassword'], $getHashedPassword))) {
-        $loadedUser->setHashedPassword($_POST['newpassword1']);
+    if (isset($_POST['newPassword1']) && isset($_POST['newPassword2']) 
+            && isset($_POST['oldPassword']) && (strlen(trim($_POST['newPassword1'])) >= 3) 
+            && (strlen(trim($_POST['newPassword1'])) <= 65) 
+            && ($_POST['newPassword1'] === $_POST['newPassword2']) 
+            && ($loadedUser->userAuthentication($_POST['oldPassword']))) {
+        $loadedUser->setHashedPassword($_POST['newPassword1']);
         if ($loadedUser->saveToDB($conn)) {
             $message = "Hasło zostało zmienione";
-            unset($_POST['newpassword1']);
-            unset($_POST['newpassword2']);
-            unset($_POST['oldpassword']);
+            unset($_POST['newPassword1']);
+            unset($_POST['newPassword2']);
+            unset($_POST['oldPassword']);
         } else {
             $message = "Błąd połączenia z bazą, zapukaj za kilka minut";
         }
-    } else if (isset($_POST['newpassword1']) && isset($_POST['newpassword2']) 
-            && isset($_POST['oldpassword']) && (strlen(trim($_POST['newpassword1'])) >= 3) 
-            && (strlen(trim($_POST['newpassword1'])) <= 65)) {
+    } else if (isset($_POST['newPassword1']) && isset($_POST['newPassword2']) 
+            && isset($_POST['oldPassword']) && (strlen(trim($_POST['newPassword1'])) >= 3) 
+            && (strlen(trim($_POST['newPassword1'])) <= 65)) {
         $message = "Błędne hasło";
     }
 
     // usuniecie usera
-    if (isset($_POST['deleteuser']) && (password_verify($_POST['deleteuser'], $getHashedPassword))) {
+    if (isset($_POST['deleteUserPassword']) 
+            && ($loadedUser->userAuthentication($_POST['deleteUserPassword']))) {
         if ($loadedUser->deleteById($conn)) {
             unset($_POST);
             $conn->close();
@@ -73,15 +73,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $message = "Błąd połączenia z bazą, zapukaj za kilka minut";
         }
-    } else if (isset($_POST['deleteuser'])) {
+    } else if (isset($_POST['deleteUserPassword'])) {
         $message = "Błędne hasło";
     }
 
-    unset($_POST['deleteuser']);
-    unset($_POST['newusername']);
-    unset($_POST['newpassword1']);
-    unset($_POST['newpassword2']);
-    unset($_POST['oldpassword']);
+    unset($_POST['deleteuUserPassword']);
+    unset($_POST['newUsername']);
+    unset($_POST['newPassword1']);
+    unset($_POST['newPassword2']);
+    unset($_POST['oldPassword']);
 }
 
 $conn->close();
@@ -137,15 +137,13 @@ $conn = null;
                 </center> <br/>
 <?php
 //zmiana nazwy
-if (isset($_GET['changename'])) {
-    if ($_GET['changename'] !== 'true') {
-        $_GET['changename'] = false;
-    }
+if (isset($_GET['changename']) && ($_GET['changename'] === 'true')) {
+
     echo "<form method=\"POST\" action=\"edituser.php\">";
     echo "<label> Podaj nową nazwę dzięcioła i hasło: <br/>";
-    echo "<input type=\"text\" name=\"newusername\" placeholder=\"Tu wpisz nową nazwę (3-65 znaków"
+    echo "<input type=\"text\" name=\"newUsername\" placeholder=\"Tu wpisz nową nazwę (3-65 znaków"
     . ")\" size=\"50\" id=\"newUsernameOnEditUser\" data-max_char_input=\"65\"/> <br/>";
-    echo "<input type=\"password\" name=\"oldpassword\" placeholder=\"Tu wpisz swoje hasło\" siz"
+    echo "<input type=\"password\" name=\"oldPassword\" placeholder=\"Tu wpisz swoje hasło\" siz"
     . "e=\"50\" id=\"oldPasswordOnEditUser\" data-max_char_input=\"65\"/> <br/>";
     echo "<input type=\"submit\" value=\"Zatwierdź\"/>";
     echo "</label>";
@@ -153,17 +151,15 @@ if (isset($_GET['changename'])) {
 }
 
 // zmiana hasla
-if (isset($_GET['changepassword'])) {
-    if ($_GET['changepassword'] !== 'true') {
-        $_GET['changepassword'] = false;
-    }
+if (isset($_GET['changepassword']) && ($_GET['changepassword'] === 'true')) {
+
     echo "<form method=\"POST\" action=\"edituser.php\">";
     echo "<label> Podaj stare i nowe hasło: <br/>";
-    echo "<input type=\"password\" name=\"oldpassword\" placeholder=\"Tu wpisz swoje stare "
+    echo "<input type=\"password\" name=\"oldPassword\" placeholder=\"Tu wpisz swoje stare "
     . "hasło\" size=\"50\" id=\"oldPassword2onEditUser\" data-max_char_input=\"65\"/> <br/>";
-    echo "<input type=\"password\" name=\"newpassword1\" placeholder=\"Tu wpisz swoje nowe "
+    echo "<input type=\"password\" name=\"newPassword1\" placeholder=\"Tu wpisz swoje nowe "
     . "hasło (3-65 znaków)\" size=\"50\" id=\"newPassword1onEditUser\" data-max_char_input=\"65\"/> <br/>";
-    echo "<input type=\"password\" name=\"newpassword2\" placeholder=\"Dla pewności powtórz nowe "
+    echo "<input type=\"password\" name=\"newPassword2\" placeholder=\"Dla pewności powtórz nowe "
     . "hasło\" size=\"50\" id=\"newPassword2onEditUser\" data-max_char_input=\"65\"/> <br/>";
     echo "<input type=\"submit\" value=\"Zatwierdź\"/>";
     echo "</label>";
@@ -171,13 +167,11 @@ if (isset($_GET['changepassword'])) {
 }
 
 // usuniecie usera
-if (isset($_GET['deleteuser'])) {
-    if ($_GET['deleteuser'] !== 'true') {
-        $_GET['deleteuser'] = false;
-    }
+if (isset($_GET['deleteuser']) && ($_GET['deleteuser'] === 'true')) {
+
     echo "<form method=\"POST\" action=\"edituser.php\">";
     echo "<label class=\"warning\"> Usunięcie dziupli jest bezpowrotne! <br/>";
-    echo "<input type=\"password\" name=\"deleteuser\" placeholder=\"Dla potwierdzenia podaj "
+    echo "<input type=\"password\" name=\"deleteUserPassword\" placeholder=\"Dla potwierdzenia podaj "
     . "hasło\" size=\"50\" id=\"oldPassword3onEditUser\" data-max_char_input=\"65\"/> <br/>";
     echo "<input type=\"submit\" value=\"Usuń dziuplę!\"/>";
     echo "</label>";

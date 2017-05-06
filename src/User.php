@@ -74,9 +74,6 @@ class User {
     }
 
     public static function loadUserById(mysqli $conn, $userId) {
-        if (!is_numeric($userId)) {
-            return null;
-        }
         $statement = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
         $statement->bind_param('i', $userId);
         $statement->execute();
@@ -93,7 +90,6 @@ class User {
             return $loadedUser;
         }
         $statement->close();
-        return null;
     }
     
     public static function loadUserByEmail(mysqli $conn, $userEmail) {

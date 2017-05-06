@@ -37,37 +37,37 @@ class Comment {
 
     public function setUserId($userId) {
         if (is_numeric($userId)) {
-            $this->userId = $userId;
-        } else {
-            return false;
-        }
+            $this->userId = (int)$userId;
+            return $this;
+        } 
+        return false;
     }
 
     public function setTweetId($tweetId) {
         if (is_numeric($tweetId)) {
-            $this->tweetId = $tweetId;
-        } else {
-            return false;
-        }
+            $this->tweetId = (int)$tweetId;
+            return $this;
+        } 
+        return false;
     }
 
     public function setText($text) {
         if ((strlen(trim($text)) >= 3) && (strlen(trim($text)) <= 60)) {
-            $this->text = htmlentities($text, ENT_QUOTES, "UTF-8");
-        } else {
-            return false;
-        }
+            $this->text = htmlentities(trim($text), ENT_QUOTES, "UTF-8");
+            return $this;
+        } 
+        return false;
     }
 
     public function setCreationDate($creationDate) {
         if (DateTime::createFromFormat("Y-m-d H:i:s", $creationDate)) {
             $this->creationDate = $creationDate;
-        } else {
-            return false;
+            return $this;
         }
+        return false;
     }
 
-    static public function loadCommentById(mysqli $conn, $commentId) {
+    static public function loadCommentById2(mysqli $conn, $commentId) {
         $commentId = $conn->real_escape_string($commentId);
         $sql = "SELECT * FROM comment WHERE comment_id = $commentId";
         $result = $conn->query($sql);
@@ -83,9 +83,28 @@ class Comment {
             $loadedComment->text = $row['comment_text'];
 
             return $loadedComment;
-        } else {
-            return null;
+        } 
+        return null;
+    }
+    
+    public static function loadCommentById(mysqli $conn, $commentId) {
+        $statement = $conn->prepare("SELECT * FROM comment WHERE comment_id = ?");
+        $statement->bind_param('i', $commentId);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            $loadedComment = new Comment();
+            $loadedComment->id = $row['comment_id'];
+            $loadedComment->userId = $row['comment_user_id'];
+            $loadedComment->tweetId = $row['comment_tweet_id'];
+            $loadedComment->creationDate = $row['comment_creation_date'];
+            $loadedComment->text = $row['comment_text'];
+            $statement->close();
+            return $loadedComment;
         }
+        $statement->close();
     }
 
     static public function loadAllCommentsByTweetId(mysqli $conn, $commentTweetId) {

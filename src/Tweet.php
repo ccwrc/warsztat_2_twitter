@@ -56,8 +56,10 @@ class Tweet {
     public static function loadTweetById(mysqli $conn, $id) {
         $statement = $conn->prepare("SELECT * FROM tweet WHERE tweet_id=?");
         $statement->bind_param('i', $id);
-        if ($statement->execute()) {
-            $result = $statement->get_result();
+        $statement->execute();
+        $result = $statement->get_result();
+
+        if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
             $loadedTweet = new Tweet();
             $loadedTweet->id = $row['tweet_id'];
@@ -69,7 +71,7 @@ class Tweet {
         }
         $statement->close();
     }
-    
+
     // funkcja jeszcze niewykorzystana
     public static function loadAllTweetsByUserId(mysqli $conn, $userId) {
         $statement = $conn->prepare("SELECT * FROM tweet WHERE tweet_user_id = ?");
