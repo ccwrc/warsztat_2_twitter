@@ -89,7 +89,16 @@ class CommentTest extends PHPUnit_Extensions_Database_TestCase {
         $this->assertEmpty($emptyComments);
     }
     
+    public function testCountAllCommentsByTweetId() {
+        $this->assertEquals(2, Comment::countAllCommentsByTweetId(self::$myConn, 1));
+        $this->assertEquals(1, Comment::countAllCommentsByTweetId(self::$myConn, 4));
+        $this->assertEquals(0, Comment::countAllCommentsByTweetId(self::$myConn, "abc"));
+    }
     
-    
+    public function testSaveToDb() {
+        $this->assertTrue(self::$emptyComment->saveToDb(self::$myConn));
+        $comment = Comment::loadCommentById(self::$myConn, 1);
+        $this->assertFalse($comment->saveToDb(self::$myConn));
+    } 
 
 }

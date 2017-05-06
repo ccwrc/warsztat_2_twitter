@@ -109,19 +109,19 @@ class Comment {
         $statement->close();
         return $ret;
     }
+    
+    public static function countAllCommentsByTweetId(mysqli $conn, $tweetId) {
+        $statement = $conn->prepare("SELECT COUNT(comment_tweet_id) AS count_comments "
+                . "FROM comment WHERE comment_tweet_id = ?");
+        $statement->bind_param('i', $tweetId);
+        $statement->execute();
+        $result = $statement->get_result();
+        $ret = 0;
 
-    static public function countAllCommentsByTweetId(mysqli $conn, $commentTweetId) {
-        $commentTweetId = $conn->real_escape_string($commentTweetId);
-        $sql = "SELECT COUNT(comment_tweet_id) AS count_comments FROM comment WHERE "
-                . "comment_tweet_id = $commentTweetId";
-        
-        $ret = null;
-        $result = $conn->query($sql);
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
             $ret = $row['count_comments'];
         }
-
         return $ret;
     }
 
@@ -134,16 +134,8 @@ class Comment {
                 $this->id = $statement->insert_id;
                 return true;
             }
-        } else { // ponizsza opcja zbedna, niewykorzystana w aplikacji, ew. mozna wykasowac
-            $sql = "UPDATE comment SET comment_user_id = $this->userId, comment_tweet_id = "
-                    . "$this->tweetId, comment_creation_date = $this->creationDate, comment_text"
-                    . " = '$this->text' WHERE comment_id = $this->id";
-            $result = $conn->query($sql);
-            if ($result == true) {
-                return true;
-            }
-            return false;
         }
+        return false;
     }
 
 }
