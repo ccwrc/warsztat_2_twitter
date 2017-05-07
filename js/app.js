@@ -58,7 +58,8 @@ $(document).ready(function () {
         "#userPassword1CreateUser", "#userPassword2CreateUser", "#newCommentToTweetOnDetail",
         "#newUsernameOnEditUser", "#oldPasswordOnEditUser", "#oldPassword2onEditUser",
         "#newPassword1onEditUser", "#newPassword2onEditUser", "#oldPassword3onEditUser",
-        "#userEmailOnLogon", "#userPasswordOnLogon", "#newMessageOnShowUser"
+        "#userEmailOnLogon", "#userPasswordOnLogon", "#newMessageOnShowUser",
+        "#usernameSearchUser"
     ];
     // podpinanie licznika do pol tekstowych
     for (var i = 0; i < idsForCounterArray.length; i++) {

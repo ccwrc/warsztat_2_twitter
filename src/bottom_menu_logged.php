@@ -26,7 +26,8 @@ $conn = null;
 <div class ="footer">
     <br/><br/>          <!-- ptasi los - link generowany losowo -->
     <a href="<?= $linkSearch ?><?= $linkWord ?>" target="_blank">Ptasi los</a>
-    <a href="http://www.lesnepogotowie.pl/" target="_blank">Leśne pogotowie</a>
+<!--    <a href="http://www.lesnepogotowie.pl/" target="_blank">Leśne pogotowie</a>-->
+    <a href="searchuser.php">Wyszukaj</a> 
     <a href="index.php">Dzięcioły</a> 
     <a id="footerlink2" href="logon.php">Logowanie</a> 
     <a id="footerlink3" href="create.php">Stwórz dziuplę</a> 

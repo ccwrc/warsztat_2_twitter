@@ -135,7 +135,6 @@ class User {
         return $ret;
     }
     
-    // funkcja jeszcze niewykorzystana
     public static function loadAllUsersByUsername(mysqli $conn, $partOfUsername) {
         $partOfUsername = "%" . $partOfUsername . "%";
         $statement = $conn->prepare("SELECT * FROM users WHERE user_name LIKE ?");

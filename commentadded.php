@@ -11,10 +11,9 @@ if (!isset($_SESSION['logged']) || !isset($_SESSION['actualTweetId'])
 function __autoload($className) {
     require_once "src/" . $className . ".php";
 }
-
 require_once "src/connect.php";
 
-$message = "";
+$infoMessageForUser = "";
 ?>
 
 <!DOCTYPE HTML>
@@ -22,15 +21,11 @@ $message = "";
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-
         <title>Dzięcioły - dodawanie komentarza </title>
-
         <meta name="description" content="Prawie jak Twitter" />
         <meta name="keywords" content="dzięcioły, twitter" />
         <meta name="author" content="ccwrc">
-
         <link rel="stylesheet" href="css/style.css" type="text/css" />
-
         <script src="js/jquery-3.1.1.min.js"></script>
         <script src="js/app.js"></script>	
     </head>
@@ -56,10 +51,10 @@ $message = "";
                     $newComment->setUserId($_SESSION['user_id'])->setTweetId($_SESSION['actualTweetId'])
                             ->setCreationDate(date("Y-m-d H:i:s"))->setText(trim($_POST['newTweetComment']));
                     if ($newComment->saveToDb($conn)) {
-                        $message = "Komentarz dodany!";
+                        $infoMessageForUser = "Komentarz dodany!";
                     }
                 } else {
-                    $message = "Dodanie komentarza nie było możliwe.";
+                    $infoMessageForUser = "Dodanie komentarza nie było możliwe.";
                 }
 
                 unset($_SESSION['actualTweetId']);
@@ -72,7 +67,7 @@ $message = "";
                 ?>
 
                 <br /> <center>
-                    <h4 class="warning"><?= $message ?></h4>
+                    <h4 class="warning"><?= $infoMessageForUser ?></h4>
                 </center>  
 
             </div>
