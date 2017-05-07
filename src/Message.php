@@ -54,8 +54,9 @@ class Message {
     }
 
     public function setMessageContent($messageContent) {
-        if (is_string($messageContent) && (strlen($messageContent) <= 25000)) {
-            $messageContent = htmlentities($messageContent, ENT_QUOTES, "UTF-8");
+        if (is_string($messageContent) && (strlen($messageContent) <= 25000)
+                && (strlen(trim($messageContent)) >= 1) && (trim($messageContent) != '')) {
+            $messageContent = htmlentities(trim($messageContent), ENT_QUOTES, "UTF-8");
             $this->messageContent = $messageContent;
             return $this;
         } else {
@@ -66,6 +67,7 @@ class Message {
     public function setMessageCreationDate($messageDate) {
         if (DateTime::createFromFormat("Y-m-d H:i:s", $messageDate)) {
             $this->messageCreationDate = $messageDate;
+            return $this;
         } else {
             return false;
         }
@@ -82,7 +84,7 @@ class Message {
 
     public function setMessageReceiverId($messageReceiverId) {
         if (is_numeric($messageReceiverId) && $messageReceiverId > 0) {
-            $this->messageReceiverId = $messageReceiverId;
+            $this->messageReceiverId = (int)$messageReceiverId;
             return $this;
         } else {
             return false;
@@ -100,7 +102,7 @@ class Message {
 
     public function setMessageSenderId($messageSenderId) {
         if (is_numeric($messageSenderId) && $messageSenderId > 0) {
-            $this->messageSenderId = $messageSenderId;
+            $this->messageSenderId = (int)$messageSenderId;
             return $this;
         } else {
             return false;
@@ -108,12 +110,26 @@ class Message {
     }
 
     public function setMessageSenderVisible($messageSenderVisible) {
-        if ($messageSenderVisible == 0 || $messageSenderVisible == 1) {
+        if ($messageSenderVisible === 0 || $messageSenderVisible === 1) {
             $this->messageSenderVisible = $messageSenderVisible;
             return $this;
         } else {
             return false;
         }
+    }
+    
+    public static function createMessage($content, $creationDate, $receiverId, $senderId) {
+        $message = new Message();
+        $message->setMessageContent($content);
+        $message->setMessageCreationDate($creationDate);
+        $message->setMessageReceiverId($receiverId);
+        $message->setMessageSenderId($senderId);
+        if (($message->getMessageContent() || $message->getMessageContent() == 0) 
+                && $message->getMessageCreationdate() && $message->getMessageReceiverId() 
+                && $message->getMessageSenderId() && $message->getMessageContent() != '') {
+            return $message;
+        }
+        return false;
     }
 
     static public function loadMessageById(mysqli $conn, $messageId) {

@@ -99,7 +99,7 @@ $_SESSION['actualTweetId'] = $_GET['tweetid'];
                     }
 
                     echo "<br/>";
-                    echo "&nbsp;" . "<a href='showuser.php'>Powrót - twoje wpisy</a>";
+                    echo "&nbsp;" . "<a href=\"showuser.php?strangerUser=" . $tweetDetail->getUserId() . "\">Powrót do poprzedniej strony</a>";
                     echo "<br/><br/>";
                 }
 

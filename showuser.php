@@ -16,28 +16,20 @@ function __autoload($className) {
 }
 require_once "src/connect.php";
 
-$message = ""; //komunikat informacyjny (pomyślne wysłanie wiadomosci do uzytkownika)
-
+$infoMessageForUser = ""; 
 $conn = getDbConnection();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['messageForStranger']) 
+        && strlen(trim($_POST['messageForStranger'])) <= 25000 
+        && strlen(trim($_POST['messageForStranger'])) >= 1) {
 
-    if (isset($_POST['messageForStranger']) && (trim($_POST['messageForStranger']) != '') 
-            && strlen(trim($_POST['messageForStranger'])) <= 25000) {
-        $receiverId = $_SESSION['strangerUserIdForMessage'];
-        $senderId = $_SESSION['user_id'];
-        $messageForStranger = trim($_POST['messageForStranger']);
-
-        $newMessage = new Message();
-        $newMessage->setMessageContent($messageForStranger);
-        $newMessage->setMessageCreationDate(date("Y-m-d H:i:s"));
-        $newMessage->setMessageReceiverId($receiverId);
-        $newMessage->setMessageSenderId($senderId);
-        $newMessage->saveToDb($conn);
-
-        $message = "Wiadomość wysłana <br/><br/>";
+    $newMessage = Message::createMessage($_POST['messageForStranger'], date("Y-m-d H:i:s"), 
+            $_SESSION['strangerUserIdForMessage'], $_SESSION['user_id']);
+    if ($newMessage->saveToDb($conn)) {
+        $infoMessageForUser = "Wiadomość wysłana <br/><br/>";
+    } else {
+        $infoMessageForUser = "Błąd wysyłania wiadomości <br/><br/>";
     }
-    
 }
 
 if (isset($_SESSION['strangerUserIdForMessage'])) {
@@ -74,7 +66,7 @@ if (isset($_SESSION['strangerUserIdForMessage'])) {
 
             <div class="content">
 
-                <br/> <span class="warning"><?= $message ?></span>
+                <br/> <span class="warning"><?= $infoMessageForUser ?></span>
                 <?php
                 // widok strony, gdy user wchodzi ogladac swoj profil
                 if (!isset($_GET['strangerUser'])) {
@@ -120,7 +112,7 @@ if (isset($_SESSION['strangerUserIdForMessage'])) {
                     echo "</strong>";
 
                     $_SESSION['strangerUserIdForMessage'] = $strangerUser->getId();
-                    //formularz wysylania wiadomosci do uzytkownika
+                    //formularz wysylania wiadomosci do obcego uzytkownika
                     echo "<form method=\"POST\" action=\"\">";
                     echo "<textarea name=\"messageForStranger\" cols=50 placeholder=\"Tu wpisz wiadomość "
                         . "do dzięcioła (maksymalnie 25000 znaków).\" maxlength=\"25000\" id=\"newMessageOnShowUser"
