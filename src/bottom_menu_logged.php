@@ -14,8 +14,10 @@ $linkWord = $searchWords[$randWord];
 // zwykły licznik nieprzeczytanych wiadomosci
 $conn = getDbConnection();
 $unreadMessagesCount = "";
-if (Message::countAllNewMessagesByUserId($conn, $_SESSION['user_id']) > 0) {
-    $unreadMessagesCount = " [" . Message::countAllNewMessagesByUserId($conn, $_SESSION['user_id']) . "]";
+$loggedLoadedUser = User::loadUserById($conn, $_SESSION['user_id']);
+
+if ($loggedLoadedUser->countNewMessages($conn) > 0) {
+    $unreadMessagesCount = " [" . $loggedLoadedUser->countNewMessages($conn) . "]";
 }
 $conn->close();
 $conn = null;

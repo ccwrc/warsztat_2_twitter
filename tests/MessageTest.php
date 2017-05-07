@@ -92,7 +92,58 @@ class MessageTest extends PHPUnit_Extensions_Database_TestCase {
         $this->assertFalse(Message::createMessage("11", $actualDate, 1, 0));
         $this->assertFalse(Message::createMessage("11", "2001-11-11 117:11", 2, 1));
         $this->assertFalse(Message::createMessage(" ", $actualDate, 3, 1));
+        $this->assertInstanceOf("Message", Message::createMessage(" 2", $actualDate, 3, 91));
     }
     
-
+    public function testLoadMessageById() {
+        $this->assertInstanceOf("Message", Message::loadMessageById(self::$myConn, 1));
+        $message = Message::loadMessageById(self::$myConn, 2);
+        $this->assertSame("message 2 for user 3", $message->getMessageContent());
+        $this->assertNull(Message::loadMessageById(self::$myConn, 133));
+        $this->assertNull(Message::loadMessageById(self::$myConn, "abc"));
+    }
+    
+    public function testLoadAllMessagesBySenderId() {
+        $this->assertEmpty(Message::loadAllMessagesBySenderId(self::$myConn, 33));
+        $this->assertInternalType('array', Message::loadAllMessagesBySenderId(self::$myConn, 33));
+        $messages = Message::loadAllMessagesBySenderId(self::$myConn, 5);
+        $this->assertInstanceOf("Message", $messages[1]); 
+        $this->assertTrue(strlen($messages[1]->getMessageContent()) > 60);
+        $this->assertEquals(1, $messages[1]->getMessageReceiverId()); 
+    }
+    
+    public function testLoadAllCutMessagesBySenderId() {
+        $this->assertEmpty(Message::loadAllCutMessagesBySenderId(self::$myConn, 33));
+        $this->assertInternalType('array', Message::loadAllCutMessagesBySenderId(self::$myConn, 33));
+        $messages = Message::loadAllCutMessagesBySenderId(self::$myConn, 5);
+        $this->assertInstanceOf("Message", $messages[1]); 
+        $this->assertTrue(strlen($messages[1]->getMessageContent()) == 60);
+        $this->assertEquals(1, $messages[1]->getMessageReceiverId()); 
+    }    
+    
+    public function testLoadAllMessagesByReceiverId() {
+        $this->assertEmpty(Message::loadAllMessagesByReceiverId(self::$myConn, 33));
+        $this->assertInternalType('array', Message::loadAllMessagesByReceiverId(self::$myConn, 33));
+        $messages = Message::loadAllMessagesByReceiverId(self::$myConn, 1);
+        $this->assertInstanceOf("Message", $messages[1]); 
+        $this->assertTrue(strlen($messages[1]->getMessageContent()) > 60);
+        $this->assertEquals(5, $messages[1]->getMessageSenderId()); 
+    }   
+    
+    public function testLoadAllCatMessagesByReceiverId() {
+        $this->assertEmpty(Message::loadAllCutMessagesByReceiverId(self::$myConn, 33));
+        $this->assertInternalType('array', Message::loadAllCutMessagesByReceiverId(self::$myConn, 33));
+        $messages = Message::loadAllCutMessagesByReceiverId(self::$myConn, 1);
+        $this->assertInstanceOf("Message", $messages[1]); 
+        $this->assertTrue(strlen($messages[1]->getMessageContent()) == 60);
+        $this->assertEquals(5, $messages[1]->getMessageSenderId()); 
+    }     
+    
+    public function testSaveToDb() {
+        $actualDate = date("Y-m-d H:i:s");
+        $message = Message::createMessage("abc2", $actualDate, 1, 1);
+        $this->assertTrue($message->saveToDb(self::$myConn));
+        $this->assertFalse(self::$emptyMessage->saveToDb(self::$myConn));
+    }
+    
 }

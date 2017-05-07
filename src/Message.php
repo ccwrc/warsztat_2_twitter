@@ -59,63 +59,56 @@ class Message {
             $messageContent = htmlentities(trim($messageContent), ENT_QUOTES, "UTF-8");
             $this->messageContent = $messageContent;
             return $this;
-        } else {
-            return false;
-        }
+        } 
+        return false;
     }
 
     public function setMessageCreationDate($messageDate) {
         if (DateTime::createFromFormat("Y-m-d H:i:s", $messageDate)) {
             $this->messageCreationDate = $messageDate;
             return $this;
-        } else {
-            return false;
-        }
+        } 
+        return false;
     }
 
     public function setMessageRead($isRead) {
         if ($isRead === 0 || $isRead === 1) {
             $this->messageRead = $isRead;
             return $this;
-        } else {
-            return false;
-        }
+        } 
+        return false;
     }
 
     public function setMessageReceiverId($messageReceiverId) {
         if (is_numeric($messageReceiverId) && $messageReceiverId > 0) {
             $this->messageReceiverId = (int)$messageReceiverId;
             return $this;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public function setMessageReceiverVisible($messageReceiverVisible) {
         if ($messageReceiverVisible === 0 || $messageReceiverVisible === 1) {
             $this->messageReceiverVisible = $messageReceiverVisible;
             return $this;
-        } else {
-            return false;
-        }
+        } 
+        return false;
     }
 
     public function setMessageSenderId($messageSenderId) {
         if (is_numeric($messageSenderId) && $messageSenderId > 0) {
             $this->messageSenderId = (int)$messageSenderId;
             return $this;
-        } else {
-            return false;
-        }
+        } 
+        return false;
     }
 
     public function setMessageSenderVisible($messageSenderVisible) {
         if ($messageSenderVisible === 0 || $messageSenderVisible === 1) {
             $this->messageSenderVisible = $messageSenderVisible;
             return $this;
-        } else {
-            return false;
-        }
+        } 
+        return false;
     }
     
     public static function createMessage($content, $creationDate, $receiverId, $senderId) {
@@ -131,13 +124,14 @@ class Message {
         }
         return false;
     }
+    
+    public static function loadMessageById(mysqli $conn, $messageId) {
+        $statement = $conn->prepare("SELECT * FROM message WHERE message_id = ?");
+        $statement->bind_param('i', $messageId);
+        $statement->execute();
+        $result = $statement->get_result();
 
-    static public function loadMessageById(mysqli $conn, $messageId) {
-        $messageId = $conn->real_escape_string($messageId);
-        $sql = "SELECT * FROM message WHERE message_id = $messageId";
-        $result = $conn->query($sql);
-
-        if ($result != false && $result->num_rows == 1) {
+        if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
 
             $loadedMessage = new Message();
@@ -150,20 +144,21 @@ class Message {
             $loadedMessage->messageSenderId = $row['message_sender_id'];
             $loadedMessage->messageSenderVisible = $row['message_sender_visible'];
 
+            $statement->close();
             return $loadedMessage;
-        } else {
-            return null;
         }
+        $statement->close();
     }
-
-    static public function loadAllMessagesBySenderId(mysqli $conn, $senderId) {
-        $senderId = $conn->real_escape_string($senderId);
+    
+    public static function loadAllMessagesBySenderId(mysqli $conn, $senderId) {
+        $statement = $conn->prepare("SELECT * FROM message WHERE message_sender_id = ? &&"
+                . "message_sender_visible = 0");
+        $statement->bind_param('i', $senderId);
         $ret = [];
-        $sql = "SELECT * FROM message WHERE message_sender_id = $senderId &&"
-                . "message_sender_visible = 0";
-        $result = $conn->query($sql);
 
-        if ($result != false && $result->num_rows != 0) {
+        if ($statement->execute()) {
+            $result = $statement->get_result();
+            $result->fetch_assoc();
             foreach ($result as $row) {
                 $loadedMessage = new Message();
                 $loadedMessage->messageContent = $row['message_content'];
@@ -174,47 +169,25 @@ class Message {
                 $loadedMessage->messageReceiverVisible = $row['message_receiver_visible'];
                 $loadedMessage->messageSenderId = $row['message_sender_id'];
                 $loadedMessage->messageSenderVisible = $row['message_sender_visible'];
-                $ret[$loadedMessage->messageId] = $loadedMessage;
+                $ret[] = $loadedMessage;
             }
         }
+        $statement->close();
         return $ret;
-    }
+    }    
 
-    static public function loadAllCutMessagesBySenderId(mysqli $conn, $senderId) {
-        $senderId = $conn->real_escape_string($senderId);
-        $ret = [];
-        $sql = "SELECT substring(message_content,1,60) as message_content, message_creation_date,"
-                . "message_id, message_read, message_receiver_id, "
+    public static function loadAllCutMessagesBySenderId(mysqli $conn, $senderId) {
+        $statement = $conn->prepare("SELECT substring(message_content,1,60) as message_content,"
+                . " message_creation_date, message_id, message_read, message_receiver_id, "
                 . "message_receiver_visible, message_sender_id, "
-                . "message_sender_visible FROM message WHERE message_sender_id = $senderId &&"
-                . "message_sender_visible = 0 ORDER BY message_creation_date DESC";
-        $result = $conn->query($sql);
-
-        if ($result != false && $result->num_rows != 0) {
-            foreach ($result as $row) {
-                $loadedMessage = new Message();
-                $loadedMessage->messageContent = $row['message_content'];
-                $loadedMessage->messageCreationDate = $row['message_creation_date'];
-                $loadedMessage->messageId = $row['message_id'];
-                $loadedMessage->messageRead = $row['message_read'];
-                $loadedMessage->messageReceiverId = $row['message_receiver_id'];
-                $loadedMessage->messageReceiverVisible = $row['message_receiver_visible'];
-                $loadedMessage->messageSenderId = $row['message_sender_id'];
-                $loadedMessage->messageSenderVisible = $row['message_sender_visible'];
-                $ret[$loadedMessage->messageId] = $loadedMessage;
-            }
-        }
-        return $ret;
-    }
-
-    static public function loadAllMessagesByReceiverId(mysqli $conn, $receiverId) {
-        $receiverId = $conn->real_escape_string($receiverId);
+                . "message_sender_visible FROM message WHERE message_sender_id = ? &&"
+                . "message_sender_visible = 0 ORDER BY message_creation_date DESC");
+        $statement->bind_param('i', $senderId);
         $ret = [];
-        $sql = "SELECT * FROM message WHERE message_receiver_id = $receiverId &&"
-                . "message_receiver_visible = 0";
-        $result = $conn->query($sql);
 
-        if ($result != false && $result->num_rows != 0) {
+        if ($statement->execute()) {
+            $result = $statement->get_result();
+            $result->fetch_assoc();
             foreach ($result as $row) {
                 $loadedMessage = new Message();
                 $loadedMessage->messageContent = $row['message_content'];
@@ -225,23 +198,22 @@ class Message {
                 $loadedMessage->messageReceiverVisible = $row['message_receiver_visible'];
                 $loadedMessage->messageSenderId = $row['message_sender_id'];
                 $loadedMessage->messageSenderVisible = $row['message_sender_visible'];
-                $ret[$loadedMessage->messageId] = $loadedMessage;
+                $ret[] = $loadedMessage;
             }
         }
+        $statement->close();
         return $ret;
-    }
-
-    static public function loadAllCutMessagesByReceiverId(mysqli $conn, $receiverId) {
-        $receiverId = $conn->real_escape_string($receiverId);
+    }    
+    
+    public static function loadAllMessagesByReceiverId(mysqli $conn, $receiverId) {
+        $statement = $conn->prepare("SELECT * FROM message WHERE message_receiver_id "
+                . "= ? && message_receiver_visible = 0");
+        $statement->bind_param('i', $receiverId);
         $ret = [];
-        $sql = "SELECT substring(message_content,1,60) as message_content, message_creation_date,"
-                . "message_id, message_read, message_receiver_id, "
-                . "message_receiver_visible, message_sender_id, "
-                . "message_sender_visible FROM message WHERE message_receiver_id = $receiverId &&"
-                . "message_receiver_visible = 0 ORDER BY message_creation_date DESC";
-        $result = $conn->query($sql);
 
-        if ($result != false && $result->num_rows != 0) {
+        if ($statement->execute()) {
+            $result = $statement->get_result();
+            $result->fetch_assoc();
             foreach ($result as $row) {
                 $loadedMessage = new Message();
                 $loadedMessage->messageContent = $row['message_content'];
@@ -252,26 +224,41 @@ class Message {
                 $loadedMessage->messageReceiverVisible = $row['message_receiver_visible'];
                 $loadedMessage->messageSenderId = $row['message_sender_id'];
                 $loadedMessage->messageSenderVisible = $row['message_sender_visible'];
-                $ret[$loadedMessage->messageId] = $loadedMessage;
+                $ret[] = $loadedMessage;
             }
         }
+        $statement->close();
         return $ret;
     }
     
-    static public function countAllNewMessagesByUserId(mysqli $conn, $userId) {
-        $userId = $conn->real_escape_string($userId);
-        $sql = "SELECT COUNT(message_id) AS new_messages FROM message WHERE message_receiver_id ="
-                . " $userId && message_read = 0 && message_receiver_visible = 0";
+    public static function loadAllCutMessagesByReceiverId(mysqli $conn, $receiverId) {
+        $statement = $conn->prepare("SELECT substring(message_content,1,60) as message_content, "
+                . "message_creation_date, message_id, message_read, message_receiver_id, "
+                . "message_receiver_visible, message_sender_id, "
+                . "message_sender_visible FROM message WHERE message_receiver_id = ? &&"
+                . "message_receiver_visible = 0 ORDER BY message_creation_date DESC");
+        $statement->bind_param('i', $receiverId);
+        $ret = [];
 
-        $ret = null;
-        $result = $conn->query($sql);
-        if ($result->num_rows == 1) {
-            $row = $result->fetch_assoc();
-            $ret = $row['new_messages'];
+        if ($statement->execute()) {
+            $result = $statement->get_result();
+            $result->fetch_assoc();
+            foreach ($result as $row) {
+                $loadedMessage = new Message();
+                $loadedMessage->messageContent = $row['message_content'];
+                $loadedMessage->messageCreationDate = $row['message_creation_date'];
+                $loadedMessage->messageId = $row['message_id'];
+                $loadedMessage->messageRead = $row['message_read'];
+                $loadedMessage->messageReceiverId = $row['message_receiver_id'];
+                $loadedMessage->messageReceiverVisible = $row['message_receiver_visible'];
+                $loadedMessage->messageSenderId = $row['message_sender_id'];
+                $loadedMessage->messageSenderVisible = $row['message_sender_visible'];
+                $ret[] = $loadedMessage;
+            }
         }
-
+        $statement->close();
         return $ret;
-    }
+    }    
 
     public function saveToDb(mysqli $conn) {
         if ($this->messageId == -1) {
@@ -279,14 +266,15 @@ class Message {
                     . "message_creation_date, "
                     . "message_read, message_receiver_id, message_receiver_visible, "
                     . "message_sender_id, message_sender_visible) VALUES(?,?,?,?,?,?,?)");
-            $statement->bind_param('ssiiiii', $this->messageContent, $this->messageCreationDate, $this->messageRead, $this->messageReceiverId, $this->messageReceiverVisible, $this->messageSenderId, $this->messageSenderVisible);
+            $statement->bind_param('ssiiiii', $this->messageContent, $this->messageCreationDate, 
+                    $this->messageRead, $this->messageReceiverId, $this->messageReceiverVisible, 
+                    $this->messageSenderId, $this->messageSenderVisible);
             if ($statement->execute()) {
                 $this->messageId = $statement->insert_id;
                 return true;
-            } else {
-                return false;
-            }
+            } 
         }
+        return false;
     }
 
 }

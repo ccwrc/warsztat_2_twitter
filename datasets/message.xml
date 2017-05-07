@@ -51,6 +51,26 @@
         message_creation_date="2016-10-07 13:33:00"
         message_sender_visible="0"
         message_receiver_visible="0"        />   
+    
+    <message 
+        message_id="6" 
+        message_read="0" 
+        message_sender_id="3"
+        message_receiver_id="4"
+        message_content="Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60. XX w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker"
+        message_creation_date="2016-11-05 13:33:00"
+        message_sender_visible="1"
+        message_receiver_visible="1"        />
+    
+    <message 
+        message_id="7" 
+        message_read="1" 
+        message_sender_id="5"
+        message_receiver_id="1"
+        message_content="Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60. XX w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker"
+        message_creation_date="2016-10-07 13:33:00"
+        message_sender_visible="0"
+        message_receiver_visible="0"        />       
 
 </dataset>
 

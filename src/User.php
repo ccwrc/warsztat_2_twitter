@@ -57,11 +57,12 @@ class User {
     }
     
     public function countNewMessages(mysqli $conn) {
-        $sql = "SELECT * FROM message WHERE message_receiver_id ="
+        $sql = "SELECT COUNT(message_id) AS new_messages FROM message WHERE message_receiver_id ="
                 . " $this->id && message_read = 0 && message_receiver_visible = 0";
         $result = $conn->query($sql);
-        if ($result->num_rows >= 1) {
-            return $result->num_rows;
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            return $row['new_messages'];
         }
         return 0;
     }
