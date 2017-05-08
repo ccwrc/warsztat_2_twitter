@@ -62,7 +62,7 @@ $infoMessageForUser = "";
                 $conn = null;
 
                 echo "<br/>";
-                echo "&nbsp;" . "<a href='detail.php?tweetid=" . $returnToTweetId . "'>Powrót do strony wpisu</a>";
+                echo "&nbsp;" . "<a href='detail.php?tweetId=" . $returnToTweetId . "'>Powrót do strony wpisu</a>";
                 echo "<br/><br/>";
                 ?>
 

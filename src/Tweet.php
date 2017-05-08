@@ -120,7 +120,6 @@ class Tweet {
                 return true;
             }
         }
-        $statement->close();
         return false;
     }
 

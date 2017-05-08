@@ -82,7 +82,7 @@ if (isset($_SESSION['strangerUserIdForMessage'])) {
                             echo $tweet->getText() . "<br/>";
                             echo "Data utworzenia wpisu: " . $tweet->getCreationDate() . " <b>Komentarze"
                                 . ": " . $commentsCount . "</b> &nbsp;" . "<a href=\"detail.php?"
-                                . "tweetid=" . $tweet->getId() . "\">Detale wpisu</a>" . "<br/><br/>";
+                                . "tweetId=" . $tweet->getId() . "\">Detale wpisu</a>" . "<br/><br/>";
                             echo "</div><br/>";
                         }
                     } else {
@@ -130,7 +130,7 @@ if (isset($_SESSION['strangerUserIdForMessage'])) {
                             echo $tweet->getText() . "<br/>";
                             echo "Data utworzenia wpisu: " . $tweet->getCreationDate() . " <b>Komentarze"
                                 . ": " . $commentsCount . "</b> &nbsp;" . "<a href=\"detail.php?"
-                                . "tweetid=" . $tweet->getId() . "&strangerUser=" . $strangerUser->getId() . "\""
+                                . "tweetId=" . $tweet->getId() . "&strangerUser=" . $strangerUser->getId() . "\""
                                 . ">Detale wpisu</a><br/><br/>";
                             echo "</div><br/>";
                         }

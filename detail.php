@@ -7,7 +7,7 @@ if (!isset($_SESSION['logged'])) {
     exit;
 }
 
-if (!isset($_GET['tweetid']) || !is_numeric($_GET['tweetid'])) {
+if (!isset($_GET['tweetId']) || !is_numeric($_GET['tweetId'])) {
     header("location: index.php");
     exit;
 }
@@ -18,7 +18,7 @@ function __autoload($className) {
 require_once "src/connect.php";
 
 $conn = getDbConnection();
-$tweetDetail = Tweet::loadTweetById($conn, $_GET['tweetid']);
+$tweetDetail = Tweet::loadTweetById($conn, $_GET['tweetId']);
 
 if ($tweetDetail == null) {
     $conn->close();
@@ -28,7 +28,7 @@ if ($tweetDetail == null) {
 }
 
 // sesja potrzebna do dodania komentarza - commentadded.php
-$_SESSION['actualTweetId'] = $_GET['tweetid'];
+$_SESSION['actualTweetId'] = $_GET['tweetId'];
 ?>
 
 <!DOCTYPE HTML>
@@ -69,7 +69,7 @@ $_SESSION['actualTweetId'] = $_GET['tweetid'];
 
                 <?php
                 // wejscie ze strony usera (na swoje konto)  
-                if (isset($_GET['tweetid']) && !isset($_GET['strangerUser']) && !isset($_GET['fromindex'])) {
+                if (isset($_GET['tweetId']) && !isset($_GET['strangerUser']) && !isset($_GET['fromindex'])) {
                     $userId = $tweetDetail->getUserId();
                     $userName = User::loadUserById($conn, $userId)->getUsername();
                     echo "<div class=\"tweetbold\">";
@@ -80,7 +80,7 @@ $_SESSION['actualTweetId'] = $_GET['tweetid'];
                     echo "Data utworzenia wpisu: " . $tweetDetail->getCreationDate() . "<br/><br/>";
                     echo "</div><br/>";
 
-                    $allComments = Comment::loadAllCommentsByTweetId($conn, $_GET['tweetid']);
+                    $allComments = Comment::loadAllCommentsByTweetId($conn, $_GET['tweetId']);
                     foreach ($allComments as $comment) {
                         $commentUserId = $comment->getUserId();
                         $commentUserName = User::loadUserById($conn, $commentUserId)->getUsername();
@@ -100,7 +100,7 @@ $_SESSION['actualTweetId'] = $_GET['tweetid'];
                 }
 
                 // wejscie ze strony usera obcego
-                if (isset($_GET['tweetid']) && isset($_GET['strangerUser'])) {
+                if (isset($_GET['tweetId']) && isset($_GET['strangerUser'])) {
                     if (!is_numeric($_GET['strangerUser'])) {
                         $conn->close();
                         $conn = null;
@@ -117,7 +117,7 @@ $_SESSION['actualTweetId'] = $_GET['tweetid'];
                     echo "Data utworzenia wpisu: " . $tweetDetail->getCreationDate() . "<br/><br/>";
                     echo "</div><br/>";
 
-                    $allComments = Comment::loadAllCommentsByTweetId($conn, $_GET['tweetid']);
+                    $allComments = Comment::loadAllCommentsByTweetId($conn, $_GET['tweetId']);
                     foreach ($allComments as $comment) {
                         $commentUserId = $comment->getUserId();
                         $commentUserName = User::loadUserById($conn, $commentUserId)->getUsername();
@@ -139,7 +139,7 @@ $_SESSION['actualTweetId'] = $_GET['tweetid'];
                 }
 
                 // wejscie ze strony glownej
-                if (isset($_GET['tweetid']) && isset($_GET['fromindex'])) {
+                if (isset($_GET['tweetId']) && isset($_GET['fromindex'])) {
                     $userId = $tweetDetail->getUserId();
                     $userName = User::loadUserById($conn, $userId)->getUsername();
                     echo "<div class=\"tweetbold\">";
@@ -150,7 +150,7 @@ $_SESSION['actualTweetId'] = $_GET['tweetid'];
                     echo "Data utworzenia wpisu: " . $tweetDetail->getCreationDate() . "<br/><br/>";
                     echo "</div><br/>";
 
-                    $allComments = Comment::loadAllCommentsByTweetId($conn, $_GET['tweetid']);
+                    $allComments = Comment::loadAllCommentsByTweetId($conn, $_GET['tweetId']);
                     foreach ($allComments as $comment) {
                         $commentUserId = $comment->getUserId();
                         $commentUserName = User::loadUserById($conn, $commentUserId)->getUsername();

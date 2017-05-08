@@ -122,14 +122,14 @@ class User {
         $ret = [];
         $result = $conn->query($sql);
 
-        if ($result == true && $result->num_rows != 0) {
+        if ($result->num_rows > 0) {
             foreach ($result as $row) {
                 $loadedUser = new User();
                 $loadedUser->id = $row['user_id'];
                 $loadedUser->username = $row['user_name'];
                 $loadedUser->hashedPassword = $row['hashed_password'];
                 $loadedUser->email = $row['user_email'];
-                $ret[$loadedUser->id] = $loadedUser;
+                $ret[] = $loadedUser;
             }
         }
         return $ret;
