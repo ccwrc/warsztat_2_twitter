@@ -11,8 +11,7 @@ function __autoload($className) {
 }
 require_once "src/connect.php";
 
-$randCaptcha = rand(1, 10); //generowanie linka do zabezp. captcha
-$message = ""; //wiadomosc podawana przy zajetym adresie mailowym i bledach hasla
+$infoMessageForUser = ""; 
 $conn = getDbConnection();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -23,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             && trim($_POST['userPassword2']) != '') {
         if (trim($_POST['userPassword1']) == trim($_POST['userPassword2'])) {
             if (User::loadUserByEmail($conn, $_POST['userEmail']) !== null) {
-                $message = "Podany adres e-mail ma już dziuplę, wybierz inny";
+                $infoMessageForUser = "Podany adres e-mail ma już dziuplę, wybierz inny";
             } else {
                 $newUser = new User();
                 $newUser->setEmail($_POST['userEmail'])->setHashedPassword($_POST['userPassword1'])
@@ -32,15 +31,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $_SESSION['logged'] = $newUser->getUsername();
                     $_SESSION['user_id'] = $newUser->getId();
                     header("location: index.php");
+                    $conn->close();
+                    $conn = null;
+                    exit;
                 } else {
-                    $message = "Błąd połączenia z bazą, spróbuj za kilka minut";
+                    $infoMessageForUser = "Błąd połączenia z bazą, spróbuj za kilka minut";
                 }
             }
         } else {
-            $message = "Hasła nie są identyczne, trzeba się zdecydować, którego używać";
+            $infoMessageForUser = "Hasła nie są identyczne, trzeba się zdecydować, którego używać";
         }
     } else {
-        $message = "Wypełnij wszystkie pola prawidłowo, nie rób byle jakiej dziupli.";
+        $infoMessageForUser = "Wypełnij wszystkie pola prawidłowo, nie rób byle jakiej dziupli.";
     }
 }
 
@@ -53,15 +55,11 @@ $conn = null;
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-
         <title>Dzięcioły - stwórz własną dziuplę w lesie </title>
-
         <meta name="description" content="Prawie jak Twitter" />
         <meta name="keywords" content="dzięcioły, twitter" />
         <meta name="author" content="ccwrc">
-
         <link rel="stylesheet" href="css/style.css" type="text/css" />
-
         <script src="js/jquery-3.1.1.min.js"></script>
         <script src="js/app.js"></script>	
     </head>
@@ -77,7 +75,7 @@ $conn = null;
             <div class="content">
 
                 <br /> <center>
-                    <h4 class="warning"><?= $message ?></h4>
+                    <h4 class="warning"><?= $infoMessageForUser ?></h4>
                 </center>  
 
                 <form method="POST" action="">
@@ -95,7 +93,7 @@ $conn = null;
                                id="userPassword2CreateUser" data-max_char_input="65"
                                pattern=".{3,65}"   required title="Minimalna liczba znaków to 3, maksymalna 65"/> <br/><br/>
                         Potwierdź, że nie jesteś borsukiem i przepisz drugi i 3 znak: <br/>
-                        <img src="img/<?= $randCaptcha ?>.png"/><br/>
+                        <img src="img/<?= rand(1, 10) ?>.png"/><br/>
                         <input type="text" name="captcha" placeholder=
                                "Tu wpisz drugi i 3 znak z powyższego obrazka" size="50"/><br/>
                         <input type="submit" value=" Kliknij tutaj żeby stworzyć własną dziuplę "/>

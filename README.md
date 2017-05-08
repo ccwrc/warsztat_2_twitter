@@ -6,6 +6,7 @@ Pełna i funkcjonalna aplikacja w stylu twittera. Wprowadzone funkcjonalności:
         - dodawanie, modyfikacja niekluczowych informacji o sobie,    
         - usuwanie swojego konta,     
         - główna funkcjonalność strony dostępna po rejestracji/zalogowaniu,       
+        - proste dynamiczne menu,             
         - oddzielna strona wyświetlania użytkownika ze wszystkimi wpisami i liczbą komentarzy do wpisu,     
         - prosty mechanizm captcha podczas rejestracji,      
         - użytkownik identyfikowany po adresie e-mail.      

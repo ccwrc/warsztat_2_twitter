@@ -62,7 +62,7 @@ $infoMessageForUser = "";
                             $plainUserId = $plainUser->getId();
                             $plainUserUsername = $plainUser->getUsername();
                             echo "Id: " . $plainUserId . "&nbsp;&nbsp;<a href=\"showuser.php?stranger"
-                                    . "User=$plainUserId\">" . $plainUserUsername . "</a><br/><br/>";
+                                    . "User=$plainUserId\"> " . $plainUserUsername . "&nbsp;</a><br/><br/>";
                         }
                     }
                 }

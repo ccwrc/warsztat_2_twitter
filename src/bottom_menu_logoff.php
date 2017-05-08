@@ -2,17 +2,13 @@
 include_once 'arrays_to_rand.php';
 
 // ptasi los - link generowany losowo
-$searchMax = count($searchIn);
-$wordMax = count($searchWords);
-$randSearch = rand(1, $searchMax) - 1;
-$randWord = rand(1, $wordMax) - 1;
-$linkSearch = $searchIn[$randSearch];
-$linkWord = $searchWords[$randWord];
+$randomSearch = $searchIn[rand(1, count($searchIn)) - 1];
+$randomWord = $searchWords[rand(1, count($searchWords)) - 1];
 ?>
 
 <div class ="footer">
     <br/><br/>                      <!-- ptasi los - link generowany losowo -->
-    <a href="<?= $linkSearch ?><?= $linkWord ?>" target="_blank">Ptasi los</a>
+    <a href="<?= $randomSearch ?><?= $randomWord ?>" target="_blank">Ptasi los</a>
     <a href="http://www.lesnepogotowie.pl/" target="_blank">Leśne pogotowie</a>
     <a id="footerlink2" href="index.php">Dzięcioły</a> 
     <a href="logon.php">Logowanie</a> 

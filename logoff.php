@@ -38,7 +38,7 @@ session_unset();
                 <br /><br />
                 <center>
                     <h3>Opuściłeś dziuplę, zostały tylko pióra.</h3>  
-                </center> <br /><br />
+                </center> <br />
 
                 <center>
                     <h4><a href="logon.php">Kliknij tutaj żeby przejść do strony logowania.</a></h4>

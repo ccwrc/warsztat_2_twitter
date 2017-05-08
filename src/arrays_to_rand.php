@@ -5,8 +5,7 @@
 $searchIn = [
     "https://www.google.pl/?gws_rd=ssl#q=", "http://www.bing.com/search?q=",
     "https://yandex.ru/search/?lr=10472&msid=1479322480.01653.22873.4847&text=",
-    "http://www.ask.com/web?q=",
-    "https://duckduckgo.com/?q=", "http://www.entireweb.com/#q="
+    "http://www.ask.com/web?q=", "https://duckduckgo.com/?q="
 ];
 
 $searchWords = [
