@@ -78,7 +78,8 @@ class TweetTest extends PHPUnit_Extensions_Database_TestCase {
     public function testLoadAllTweetsLimit300() {
         $tweets = Tweet::loadAllTweetsLimit300(self::$myConn);
         $this->assertInternalType("array", $tweets);
-        $this->assertInstanceOf("Tweet", $tweets[1]);       
+        $this->assertInstanceOf("Tweet", $tweets[1]);   
+        $this->assertEquals(5, $tweets[0]->getId());
     }
     
     public function testSaveToDb() {

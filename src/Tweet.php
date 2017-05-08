@@ -99,7 +99,7 @@ class Tweet {
         if ($result->num_rows > 0) {
             foreach ($result as $row) {
                 $loadedTweet = new Tweet();
-                $loadedTweet->tweetId = $row['tweet_id'];
+                $loadedTweet->id = $row['tweet_id'];
                 $loadedTweet->userId = $row['tweet_user_id'];
                 $loadedTweet->text = $row['tweet_text'];
                 $loadedTweet->creationDate = $row['tweet_date'];
