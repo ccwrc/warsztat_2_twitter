@@ -92,9 +92,9 @@ foreach ($allTweets as $tweet) {
     echo "Autor: <a href=\"showuser.php?strangerUser=$userId\">" . $userName . "</a> ";
     echo "Data publikacji: " . $tweetDate . " ";
     if ($commentsCount > 0) {
-        echo "<a href=\"detail.php?tweetId=$tweetId&fromindex=true\">Skomentuj (" . $commentsCount . ")</a>";
+        echo "<a href=\"detail.php?tweetId=$tweetId&fromIndex=true\">Skomentuj (" . $commentsCount . ")</a>";
     } else {
-        echo "<a href=\"detail.php?tweetId=$tweetId&fromindex=true\">Skomentuj</a>";
+        echo "<a href=\"detail.php?tweetId=$tweetId&fromIndex=true\">Skomentuj</a>";
     }
     echo "</td></tr> <tr><td>";
     echo $tweetText;

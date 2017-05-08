@@ -27,7 +27,7 @@ if ($tweetDetail == null) {
     exit;
 }
 
-// sesja potrzebna do dodania komentarza - commentadded.php
+// sesja dla commentadded.php (wykorzystane w linku powrotu do tweeta)
 $_SESSION['actualTweetId'] = $_GET['tweetId'];
 ?>
 
@@ -69,7 +69,7 @@ $_SESSION['actualTweetId'] = $_GET['tweetId'];
 
                 <?php
                 // wejscie ze strony usera (na swoje konto)  
-                if (isset($_GET['tweetId']) && !isset($_GET['strangerUser']) && !isset($_GET['fromindex'])) {
+                if (isset($_GET['tweetId']) && !isset($_GET['strangerUser']) && !isset($_GET['fromIndex'])) {
                     $userId = $tweetDetail->getUserId();
                     $userName = User::loadUserById($conn, $userId)->getUsername();
                     echo "<div class=\"tweetbold\">";
@@ -139,7 +139,7 @@ $_SESSION['actualTweetId'] = $_GET['tweetId'];
                 }
 
                 // wejscie ze strony glownej
-                if (isset($_GET['tweetId']) && isset($_GET['fromindex'])) {
+                if (isset($_GET['tweetId']) && isset($_GET['fromIndex'])) {
                     $userId = $tweetDetail->getUserId();
                     $userName = User::loadUserById($conn, $userId)->getUsername();
                     echo "<div class=\"tweetbold\">";
@@ -168,7 +168,7 @@ $_SESSION['actualTweetId'] = $_GET['tweetId'];
                     echo "&nbsp;" . "<a href='index.php'>Powrót do poprzedniej strony</a>";
                     echo "<br/><br/>";
 
-                    unset($_GET['fromindex']);
+                    unset($_GET['fromIndex']);
                 }
 
                 $conn->close();

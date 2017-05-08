@@ -83,7 +83,7 @@ if ($numberOfNewMessages == 1) {
                     $receiverId = $cutMessage->getMessageReceiverId();
                     echo "Odbiorca: <a href=\"showuser.php?strangerUser=$receiverId\">" . User::loadUserById($conn, $cutMessage->getMessageReceiverId())->getUsername() . "</a>";
                     if ($cutMessage->getMessageRead() == 0) {
-                        echo "<span class=\"warning\"> (jeszcze nieprzeczytana) </span>";
+                        echo "<span class=\"warning\"> (nieprzeczytana) </span>";
                     }
                     echo "<br/> Data: " . $cutMessage->getMessageCreationdate() . " <br/>";
                     echo "Nagłówek wiadomości: " . $cutMessage->getMessageContent() . "<br/>";
