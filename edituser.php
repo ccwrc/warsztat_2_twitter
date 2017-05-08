@@ -116,16 +116,13 @@ $conn = null;
                     <p>Wybierz co chcesz zrobić:</p>
                 </center>
                 <center>
-                    <a href="edituser.php?changename=true">&nbsp;Zmień nazwę dzięcioła&nbsp;</a>  
+                    <a style="display:block;width:210px" href="edituser.php?changeName=true">Zmień nazwę dzięcioła</a>  
                 </center> <br/>
                 <center>
-                    <a href="edituser.php?changepassword=true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ustal 
-                        nowe hasło&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>  
+                    <a style="display:block;width:210px" href="edituser.php?changePassword=true">Ustal nowe hasło</a>  
                 </center> <br/>
                 <center>
-                    <a class="warning" href="edituser.php?deleteuser=true" size="55">&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Usuń dziuplę&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    <a style="display:block;width:212px" class="warning" href="edituser.php?deleteUser=true">Usuń dziuplę</a>
                 </center> <br/>
 
                 <center>
@@ -133,7 +130,7 @@ $conn = null;
                 </center> <br/>
 <?php
 //zmiana nazwy
-if (isset($_GET['changename']) && ($_GET['changename'] === 'true')) {
+if (isset($_GET['changeName']) && ($_GET['changeName'] === 'true')) {
 
     echo "<form method=\"POST\" action=\"edituser.php\">";
     echo "<label> Podaj nową nazwę dzięcioła i hasło: <br/>";
@@ -147,7 +144,7 @@ if (isset($_GET['changename']) && ($_GET['changename'] === 'true')) {
 }
 
 // zmiana hasla
-if (isset($_GET['changepassword']) && ($_GET['changepassword'] === 'true')) {
+if (isset($_GET['changePassword']) && ($_GET['changePassword'] === 'true')) {
 
     echo "<form method=\"POST\" action=\"edituser.php\">";
     echo "<label> Podaj stare i nowe hasło: <br/>";
@@ -163,7 +160,7 @@ if (isset($_GET['changepassword']) && ($_GET['changepassword'] === 'true')) {
 }
 
 // usuniecie usera
-if (isset($_GET['deleteuser']) && ($_GET['deleteuser'] === 'true')) {
+if (isset($_GET['deleteUser']) && ($_GET['deleteUser'] === 'true')) {
 
     echo "<form method=\"POST\" action=\"edituser.php\">";
     echo "<label class=\"warning\"> Usunięcie dziupli jest bezpowrotne! <br/>";
