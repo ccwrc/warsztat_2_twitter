@@ -271,10 +271,24 @@ class Message {
                     $this->messageSenderId, $this->messageSenderVisible);
             if ($statement->execute()) {
                 $this->messageId = $statement->insert_id;
+                $statement->close();
                 return true;
-            } 
+            } else {
+                $statement->close();
+                return false;
+            }
+        } else {
+            $statement = $conn->prepare("UPDATE message SET message_read=?, message_receiver_visible=?"
+                    . ", message_sender_visible=? WHERE message_id=?");
+            $statement->bind_param('iiii', $this->messageRead, $this->messageReceiverVisible, 
+                    $this->messageSenderVisible, $this->messageId);
+            if ($statement->execute()) {
+                $statement->close();
+                return true;
+            }
+            $statement->close();
+            return false;
         }
-        return false;
     }
 
 }

@@ -6,7 +6,7 @@ if (!isset($_SESSION['logged'])) {
     exit;
 }
 
-if ((!isset($_GET['messageid'])) || (!is_numeric($_GET['messageid']))) {
+if ((!isset($_GET['messageId'])) || (!is_numeric($_GET['messageId']))) {
     header("location: messages.php");
     exit;
 }
@@ -22,15 +22,11 @@ require_once "src/connect.php";
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-
         <title>Dzięcioły - detale wiadomości </title>
-
         <meta name="description" content="Prawie jak Twitter" />
         <meta name="keywords" content="dzięcioły, twitter" />
         <meta name="author" content="ccwrc">
-
         <link rel="stylesheet" href="css/style.css" type="text/css" />
-
         <script src="js/jquery-3.1.1.min.js"></script>
         <script src="js/app.js"></script>	
     </head>
@@ -52,70 +48,62 @@ require_once "src/connect.php";
                 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     // gdy user wchodzi jako odbiorca wiadomosci
                     if (isset($_GET['reciv']) && ($_GET['reciv'] == 'true')) {
-                        $messageReceiverId = $_SESSION['user_id'];
-
-                        $showmessage = Message::loadMessageById($conn, $_GET['messageid']);
-                        if ($showmessage == null) {
+                        $showMessage = Message::loadMessageById($conn, $_GET['messageId']);
+                        if ($showMessage == null) {
                             $conn->close();
                             $conn = null;
                             header("location: messages.php");
                             exit;
                         }
-                        if (($showmessage->getMessageReceiverId()) != $_SESSION['user_id']) {
+                        if (($showMessage->getMessageReceiverId()) != $_SESSION['user_id']) {
                             $conn->close();
                             $conn = null;
                             header("location: messages.php");
                             exit;
                         }
-                        $messageSenderId = $showmessage->getMessageSenderId();
+                        $messageSenderId = $showMessage->getMessageSenderId();
 
                         echo "<div class=\"tweet\">";
                         echo "<br/>Nadawca: " . User::loadUserById($conn, $messageSenderId)->getUsername() . "<br/>";
-                        echo "Odbiorca: " . User::loadUserById($conn, $messageReceiverId)->getUsername() . "<br/>";
-                        echo "Data i godzina wysłania wiadomości: " . $showmessage->getMessageCreationdate() . "<br/>";
+                        echo "Odbiorca: " . User::loadUserById($conn, $_SESSION['user_id'])->getUsername() . "<br/>";
+                        echo "Data i godzina wysłania wiadomości: " . $showMessage->getMessageCreationdate() . "<br/>";
                         echo "---<br/>";
-                        echo "Treść wiadomości: " . $showmessage->getMessageContent() . "<br/><br/>";
+                        echo "Treść wiadomości: " . $showMessage->getMessageContent() . "<br/><br/>";
                         echo "</div><br/>";
 
-                        $messageIdForHide = $_GET['messageid'];
-                        $sql = "UPDATE message SET message_receiver_visible = 1 WHERE message_id = $messageIdForHide";
-                        $result = $conn->query($sql);
-                        if ($result == true) {
+                        $showMessage->setMessageReceiverVisible(1);
+                        if ($showMessage->saveToDb($conn)) {
                             echo "<span class=\"warning\">Wiadomość usunięta ze skrzynki odbiorczej, widzisz ją po raz ostatni</span><br/><br/>";
                         }
                     }
 
                     // gdy user wchodzi jako nadawca wiadomosci
                     if (isset($_GET['send']) && ($_GET['send'] == 'true')) {
-                        $messageSenderId = $_SESSION['user_id'];
-
-                        $showmessage = Message::loadMessageById($conn, $_GET['messageid']);
-                        if ($showmessage == null) {
+                        $showMessage = Message::loadMessageById($conn, $_GET['messageId']);
+                        if ($showMessage == null) {
                             $conn->close();
                             $conn = null;
                             header("location: messages.php");
                             exit;
                         }
-                        if (($showmessage->getMessageSenderId()) != $_SESSION['user_id']) {
+                        if (($showMessage->getMessageSenderId()) != $_SESSION['user_id']) {
                             $conn->close();
                             $conn = null;
                             header("location: messages.php");
                             exit;
                         }
-                        $messageReceiverId = $showmessage->getMessageReceiverId();
+                        $messageReceiverId = $showMessage->getMessageReceiverId();
 
                         echo "<div class=\"tweet\">";
-                        echo "<br/>Nadawca: " . User::loadUserById($conn, $messageSenderId)->getUsername() . "<br/>";
+                        echo "<br/>Nadawca: " . User::loadUserById($conn, $_SESSION['user_id'])->getUsername() . "<br/>";
                         echo "Odbiorca: " . User::loadUserById($conn, $messageReceiverId)->getUsername() . "<br/>";
-                        echo "Data i godzina wysłania wiadomości: " . $showmessage->getMessageCreationdate() . "<br/>";
+                        echo "Data i godzina wysłania wiadomości: " . $showMessage->getMessageCreationdate() . "<br/>";
                         echo "---<br/>";
-                        echo "Treść wiadomości: " . $showmessage->getMessageContent() . "<br/><br/>";
+                        echo "Treść wiadomości: " . $showMessage->getMessageContent() . "<br/><br/>";
                         echo "</div><br/>";
 
-                        $messageIdForHide = $_GET['messageid'];
-                        $sql = "UPDATE message SET message_sender_visible = 1 WHERE message_id = $messageIdForHide";
-                        $result = $conn->query($sql);
-                        if ($result == true) {
+                        $showMessage->setMessageSenderVisible(1);
+                        if ($showMessage->saveToDb($conn)) {
                             echo "<span class=\"warning\">Wiadomość usunięta ze skrzynki nadawczej, widzisz ją po raz ostatni</span><br/><br/>";
                         }
                     }

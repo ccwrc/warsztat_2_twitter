@@ -11,7 +11,7 @@ function __autoload($className) {
 }
 require_once "src/connect.php";
 
-$message = ""; //wiadomosc podawana po blednej probie zalogowania
+$infoMessageForUser = ""; 
 
 $conn = getDbConnection();
 
@@ -19,23 +19,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['userEmail']) && isset($_POST['userPassword']) 
             && trim($_POST['userEmail']) != '' && trim($_POST['userPassword']) != '') {
 
-        $loadedUser = User::loadUserByEmail($conn, strtolower($_POST['userEmail']));
+        $loadedUser = User::loadUserByEmail($conn, $_POST['userEmail']);
 
         if ($loadedUser !== null) {
-            $loadedUserId = $loadedUser->getId();
-            $loadedUserUsername = $loadedUser->getUsername();
             if ($loadedUser->userAuthentication($_POST['userPassword'])) {
-                $_SESSION['logged'] = $loadedUserUsername;
-                $_SESSION['user_id'] = $loadedUserId;
+                $_SESSION['logged'] = $loadedUser->getUsername();
+                $_SESSION['user_id'] = $loadedUser->getId();
                 if ($loadedUser->countNewMessages($conn) >= 1) {
                     $_SESSION['newPrivateMessage'] = "set";
                 }
                 header("location: index.php");
             } else {
-                $message = "Błędne hasło, albo adres mailowy nie ma własnej dziupli";
+                $infoMessageForUser = "Błędne hasło, albo adres mailowy nie ma własnej dziupli";
             }
         } else {
-            $message = "Błędne hasło, albo adres mailowy nie ma własnej dziupli";
+            $infoMessageForUser = "Błędne hasło, albo adres mailowy nie ma własnej dziupli";
         }
     }
 }
@@ -49,15 +47,11 @@ $conn = null;
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-
         <title>Dzięcioły - zaloguj </title>
-
         <meta name="description" content="Prawie jak Twitter" />
         <meta name="keywords" content="dzięcioły, twitter" />
         <meta name="author" content="ccwrc">
-
         <link rel="stylesheet" href="css/style.css" type="text/css" />
-
         <script src="js/jquery-3.1.1.min.js"></script>
         <script src="js/app.js"></script>
     </head>
@@ -73,7 +67,7 @@ $conn = null;
             <div class="content">
 
                 <br /> <center>
-                    <h4 class="warning"><?= $message ?></h4>
+                    <h4 class="warning"><?= $infoMessageForUser ?></h4>
                 </center>    
 
                 <br />

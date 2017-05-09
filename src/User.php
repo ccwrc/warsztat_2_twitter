@@ -166,6 +166,7 @@ class User {
                 $statement->close();
                 return true;
             }
+            $statement->close();
             return false;
         } else {
             $statement = $conn->prepare("UPDATE users SET user_name=?, user_email=?,
@@ -175,6 +176,7 @@ class User {
                 $statement->close();
                 return true;
             }
+            $statement->close();
             return false;
         }
     }

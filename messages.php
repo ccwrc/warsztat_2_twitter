@@ -28,15 +28,11 @@ if ($numberOfNewMessages == 1) {
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-
         <title><?=$titleMessage?></title>
-
         <meta name="description" content="Prawie jak Twitter" />
         <meta name="keywords" content="dzięcioły, twitter" />
         <meta name="author" content="ccwrc">
-
         <link rel="stylesheet" href="css/style.css" type="text/css" />
-
         <script src="js/jquery-3.1.1.min.js"></script>
         <script src="js/app.js"></script>	
     </head>
@@ -66,9 +62,9 @@ if ($numberOfNewMessages == 1) {
                     echo "<br/> Data: " . $cutMessage->getMessageCreationdate() . " <br/>";
                     echo "Nagłówek wiadomości: " . $cutMessage->getMessageContent() . "<br/>";
                     $messageIdForGet = $cutMessage->getMessageId();
-                    echo "<a href=\"messageinfo.php?messageid=$messageIdForGet&reciv=true\">Przeczytaj całość</a> ";
+                    echo "<a href=\"messageinfo.php?messageId=$messageIdForGet&reciv=true\">Przeczytaj całość</a> ";
                     echo " <a href=\"showuser.php?strangerUser=$senderId\">Odpowiedz</a>";
-                    echo " <a href=\"messagedelete.php?messageid=$messageIdForGet&reciv=true\">USUŃ</a> ";
+                    echo " <a href=\"messagedelete.php?messageId=$messageIdForGet&reciv=true\">USUŃ</a> ";
                     echo "</div><br/>";
                 }
                 ?>
@@ -88,9 +84,9 @@ if ($numberOfNewMessages == 1) {
                     echo "<br/> Data: " . $cutMessage->getMessageCreationdate() . " <br/>";
                     echo "Nagłówek wiadomości: " . $cutMessage->getMessageContent() . "<br/>";
                     $messageIdForGet = $cutMessage->getMessageId();
-                    echo "<a href=\"messageinfo.php?messageid=$messageIdForGet&send=true\">Wyświetl</a> ";
+                    echo "<a href=\"messageinfo.php?messageId=$messageIdForGet&send=true\">Wyświetl</a> ";
                     echo " <a href=\"showuser.php?strangerUser=$receiverId\">Wyślij kolejną</a>";
-                    echo " <a href=\"messagedelete.php?messageid=$messageIdForGet&send=true\">USUŃ</a> ";
+                    echo " <a href=\"messagedelete.php?messageId=$messageIdForGet&send=true\">USUŃ</a> ";
                     echo "</div><br/>";
                 }
                 $conn->close();
