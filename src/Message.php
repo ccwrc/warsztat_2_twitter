@@ -113,18 +113,14 @@ class Message {
     
     public static function createMessage($content, $creationDate, $receiverId, $senderId) {
         $message = new Message();
-        $message->setMessageContent($content);
-        $message->setMessageCreationDate($creationDate);
-        $message->setMessageReceiverId($receiverId);
-        $message->setMessageSenderId($senderId);
-        if (($message->getMessageContent() || $message->getMessageContent() == 0) 
-                && $message->getMessageCreationdate() && $message->getMessageReceiverId() 
-                && $message->getMessageSenderId() && $message->getMessageContent() != '') {
+        if ($message->setMessageContent($content) && $message->setMessageCreationDate($creationDate)
+                && $message->setMessageReceiverId($receiverId) 
+                && $message->setMessageSenderId($senderId)) {
             return $message;
         }
         return false;
     }
-    
+
     public static function loadMessageById(mysqli $conn, $messageId) {
         $statement = $conn->prepare("SELECT * FROM message WHERE message_id = ?");
         $statement->bind_param('i', $messageId);
