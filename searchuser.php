@@ -40,7 +40,7 @@ $infoMessageForUser = "";
                 <br/>
 
                 <form method="POST" action="">
-                    <label> Wypełnij poniższe pole żeby wyszukać dzięcioła: <br/>
+                    <label> Użyj psa tropiącego, żeby wyszukać dzięcioła: <br/>
                         <input type="text" name="username" placeholder="Podaj nazwę - minimum jeden znak" size="50" 
                                id="usernameSearchUser" data-max_char_input="65"
                                pattern=".{1,65}"   required title="Minimalna liczba znaków to 1, maksymalna 65"/>  <br/> 
